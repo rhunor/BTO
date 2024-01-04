@@ -2,16 +2,82 @@
 
 import Link from "next/link";
 import { signIn } from 'next-auth/react';
-
-import { Metadata } from "next";
-
-// export const metadata: Metadata = {
-//   title: "Sign Up Page | Free Next.js Template for Startup and SaaS",
-//   description: "This is Sign Up Page for Startup Nextjs Template",
-//   // other metadata
-// };
+import { useState } from "react";
 
 const SignupPage = () => {
+  const [formData, setFormData] = useState<{
+    firstName: string;
+    lastName: string;
+    country: string;
+    countryCode: string;
+    phoneNumber: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+  }>({
+    firstName: "",
+    lastName: "",
+    country: "",
+    countryCode: "",
+    phoneNumber: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const [errors, setErrors] = useState({});
+ 
+  const [showErrorDialog, setShowErrorDialog] = useState(false);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" })); // Clear any previous errors for this field
+  };
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+
+    const errors = {};
+
+    // Check for required fields
+    if (!formData.firstName) {
+      errors.firstName = "First name is required";
+    }
+    if (!formData.lastName) {
+      errors.lastName = "Last name is required";
+    }
+    if (!formData.country) {
+      errors.country = "country is required";
+    }
+    if (!formData.countryCode) {
+      errors.countryCode = "country code is required";
+    }
+    if (!formData.phoneNumber) {
+      errors.phoneNumber = "phone Number is required";
+    }
+    if (!formData.email) {
+      errors.email = "email is required";
+    }
+    // ... similar checks for other required fields
+
+    // Check for password match
+    if (formData.password !== formData.confirmPassword) {
+      errors.password = "Passwords must match";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors);
+      setShowErrorDialog(true);
+      return;
+    }
+
+    // TODO: Perform signup logic using formData, assuming no errors
+  };
+  const handleErrorDialogClose = () => {
+    setShowErrorDialog(false);
+  };
+
   return (
     <>
       <section className="relative z-10 overflow-hidden pb-16 pt-36 md:pb-20 lg:pb-28 lg:pt-[180px]">
@@ -83,7 +149,7 @@ const SignupPage = () => {
                   </p>
                   <span className="hidden h-[1px] w-full max-w-[60px] bg-body-color/50 sm:block"></span>
                 </div>
-                <form>
+                <form onSubmit={handleSignup}>
                   <div className="mb-8">
                     <label
                       htmlFor="name"
@@ -93,11 +159,14 @@ const SignupPage = () => {
                       First Name{" "}
                     </label>
                     <input
-                      type="text"
-                      name="name"
-                      placeholder="Enter your first name"
-                      className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
-                    />
+      type="text"
+      id="firstName"
+      name="firstName"
+      value={formData.firstName}
+      onChange={handleInputChange}
+      placeholder="Enter your first name"
+      className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+    />
                   </div>
                   <div className="mb-8">
                     <label
@@ -108,11 +177,14 @@ const SignupPage = () => {
                       Last Name{" "}
                     </label>
                     <input
-                      type="text"
-                      name="name"
-                      placeholder="Enter your last name"
-                      className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
-                    />
+      type="text"
+      id="lastName"
+      name="lastName"
+      value={formData.lastName}
+      onChange={handleInputChange}
+      placeholder="Enter your last name"
+      className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+    />
                   </div>
                   {/* <div className="mb-8">
                     <label
@@ -130,35 +202,114 @@ const SignupPage = () => {
                     />
                   </div> */}
                   <div className="mb-8">
-                    <label
-                      htmlFor="name"
-                      className="mb-3 block text-sm text-dark dark:text-white"
-                    >
-                      {" "}
-                      Country{" "}
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="Enter your Country"
-                      className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
-                    />
-                  </div>
-                  <div className="mb-8">
-                    <label
-                      htmlFor="name"
-                      className="mb-3 block text-sm text-dark dark:text-white"
-                    >
-                      {" "}
-                      Phone Number{" "}
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="Enter your Phone Number"
-                      className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
-                    />
-                  </div>
+          <label
+            htmlFor="country"
+            className="mb-3 block text-sm text-dark dark:text-white"
+          >
+            Country
+          </label>
+          <select
+            id="country"
+            name="country"
+            value={formData.country}
+            onChange={handleInputChange}
+            className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+          >
+            {/* Populate this with options for countries */}
+            <option value="">Select your country</option>
+            <option value="">Select country</option>
+    <option value="USA">United States</option>
+    <option value="UK">United Kingdom</option>
+    <option value="Japan">Japan</option>
+    <option value="China">China</option>
+    <option value="India">India</option>
+    <option value="Germany">Germany</option>
+    <option value="France">France</option>
+    <option value="Italy">Italy</option>
+    <option value="Russia">Russia</option>
+    <option value="Brazil">Brazil</option>
+    <option value="South Korea">South Korea</option>
+    <option value="Spain">Spain</option>
+    <option value="Japan">Japan</option>
+    <option value="Pakistan">Pakistan</option>
+    <option value="Indonesia">Indonesia</option>
+    <option value="India">India</option>
+    <option value="Canada">Canada</option>
+    <option value="Australia">Australia</option>
+    <option value="Mexico">Mexico</option>
+    <option value="Singapore">Singapore</option>
+    <option value="Turkey">Turkey</option>
+    <option value="Egypt">Egypt</option>
+    <option value="South Africa">South Africa</option>
+    <option value="Sweden">Sweden</option>
+    <option value="Netherlands">Netherlands</option>
+    <option value="Kazakhstan">Kazakhstan</option>
+    <option value="Vietnam">Vietnam</option>
+    <option value="Philippines">Philippines</option>
+    <option value="Afghanistan">Afghanistan</option>
+    <option value="Belgium">Belgium</option>
+            {/* ... more options ... */}
+          </select>
+        </div>
+        <div className="mb-8">
+          <label
+            htmlFor="phone-number"
+            className="mb-3 block text-sm text-dark dark:text-white"
+          >
+            Phone Number
+          </label>
+          <div className="flex items-center">
+            <select
+              id="country-code"
+              name="countryCode"
+              value={formData.countryCode}
+              onChange={handleInputChange}
+              className="border-stroke dark:text-body-color-dark dark:shadow-two w-20 mr-4 rounded-sm border bg-[#f8f8f8] px-4 py-2 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+            >
+              {/* Populate this with country codes */}
+              <option value="+1">+1 (USA)</option>
+    <option value="+44">+44 (UK)</option>
+    <option value="+81">+81 (Japan)</option>
+    <option value="+86">+86 (China)</option>
+    <option value="+91">+91 (India)</option>
+    <option value="+49">+49 (Germany)</option>
+    <option value="+33">+33 (France)</option>
+    <option value="+39">+39 (Italy)</option>
+    <option value="+7">+7 (Russia)</option>
+    <option value="+55">+55 (Brazil)</option>
+    <option value="+82">+82 (South Korea)</option>
+    <option value="+34">+34 (Spain)</option>
+    <option value="+81">+81 (Japan)</option>
+    <option value="+92">+92 (Pakistan)</option>
+    <option value="+62">+62 (Indonesia)</option>
+    <option value="+91">+91 (India)</option>
+    <option value="+1">+1 (Canada)</option>
+    <option value="+61">+61 (Australia)</option>
+    <option value="+52">+52 (Mexico)</option>
+    <option value="+65">+65 (Singapore)</option>
+    <option value="+90">+90 (Turkey)</option>
+    <option value="+20">+20 (Egypt)</option>
+    <option value="+27">+27 (South Africa)</option>
+    <option value="+46">+46 (Sweden)</option>
+    <option value="+31">+31 (Netherlands)</option>
+    <option value="+7">+7 (Kazakhstan)</option>
+    <option value="+84">+84 (Vietnam)</option>
+    <option value="+63">+63 (Philippines)</option>
+    <option value="+92">+92 (Afghanistan)</option>
+    <option value="+33">+33 (Belgium)</option>
+              {/* ... more options ... */}
+            </select>
+            <input
+              type="number"
+              id="phone-number"
+              name="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={handleInputChange}
+              placeholder="Enter phone number"
+              className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+            />
+          </div>
+        </div>
                   <div className="mb-8">
                     <label
                       htmlFor="email"
@@ -169,7 +320,10 @@ const SignupPage = () => {
                     </label>
                     <input
                       type="email"
+                      id="email"
                       name="email"
+                      value={formData.email}
+              onChange={handleInputChange}
                       placeholder="Enter your Email"
                       className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
                     />
@@ -184,7 +338,10 @@ const SignupPage = () => {
                     </label>
                     <input
                       type="password"
+                      id="password"
                       name="password"
+                      value={formData.password}
+                      onChange={handleInputChange}
                       placeholder="Enter your Password"
                       className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
                     />
@@ -199,7 +356,10 @@ const SignupPage = () => {
                     </label>
                     <input
                       type="password"
-                      name="password"
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      value={formData.confirmPassword}
+                      onChange={handleInputChange}
                       placeholder="Enter your Password"
                       className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
                     />
@@ -248,12 +408,33 @@ const SignupPage = () => {
                       </span>
                     </label>
                   </div>
+                    {/* Display errors */}
+          {/* {Object.keys(errors).length > 0 && (
+            <div className="mb-4 p-3 bg-red-200 text-red-700 rounded-md">
+              <ul>
+                {Object.values(errors).map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ul>
+            </div>
+          )} */}
                   <div className="mb-6">
-                    <button className="shadow-submit dark:shadow-submit-dark flex w-full items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium text-white duration-300 hover:bg-primary/90">
+                    <button type="submit" disabled={Object.keys(errors).length > 0} className="shadow-submit dark:shadow-submit-dark flex w-full items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium text-white duration-300 hover:bg-primary/90">
                       Sign up
                     </button>
                   </div>
                 </form>
+                {showErrorDialog && (
+        <div className="error-dialog">
+          <h2>Please correct the following errors:</h2>
+          <ul>
+            {Object.entries(errors).map(([field, error]) => (
+              <li key={field}>{error}</li>
+            ))}
+          </ul>
+          <button onClick={handleErrorDialogClose}>Close</button>
+        </div>
+      )}
                 <p className="text-center text-base font-medium text-body-color">
                   Already using Binary Trading Options?{" "}
                   <Link href="/signin" className="text-primary hover:underline">

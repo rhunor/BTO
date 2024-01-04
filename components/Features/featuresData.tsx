@@ -14,7 +14,7 @@ const featuresData: Feature[] = [
     ),
     title: "STRONG SECURITY",
     paragraph:
-      "Protection against DDoS attacks, full data encryption",
+      "Protection against MFA attacks, full data encryption",
   },
   {
     id: 1,
@@ -29,7 +29,7 @@ const featuresData: Feature[] = [
     ),
     title: "WORLD COVERAGE",
     paragraph:
-      "Providing services in 99% countries around all the globe",
+      "Providing services in over 30 countries around all the globe",
   },
   {
     id: 1,
