@@ -42,7 +42,7 @@ const Hero = () => {
                       data-wow-delay=".2s"
                     >
                       <Image
-                        src="/images/images/7.JPG"
+                        src="/images/images/5.JPG"
                         alt="about-image"
                         fill
                         className="mx-auto max-w-full drop-shadow-three dark:hidden dark:drop-shadow-none lg:mr-0 "

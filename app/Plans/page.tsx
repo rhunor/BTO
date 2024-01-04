@@ -11,12 +11,24 @@ import PricingBox from "./PricingBox";
 //   // other metadata
 // };
 
+
 const Pricing = () => {
   const [isMonthly, setIsMonthly] = useState(true);
+
+  const blurStyle = isMonthly ? { filter: "blur(5px)" } : {};
+
+  
 
   return (
     <section id="pricing" className="relative z-10 py-16 md:py-20 lg:py-28">
       <div className="container">
+      {!isMonthly && (
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-20">
+            <p className="font-bold text-2xl text-primary bg-white p-4 rounded-md">
+              These packages are visible and available for only long term investors
+            </p>
+          </div>
+        )}
         <SectionTitle
           title="Become  Top investor In the Crypto Market Today"
           paragraph="Choose a plan and start investing today"
@@ -49,6 +61,7 @@ const Pricing = () => {
                   className={`${
                     isMonthly ? "" : "translate-x-full"
                   } shadow-switch-1 absolute left-0 top-[-4px] flex h-7 w-7 items-center justify-center rounded-full bg-primary transition`}
+                 
                 >
                   <span className="active h-4 w-4 rounded-full bg-white"></span>
                 </div>
@@ -61,6 +74,7 @@ const Pricing = () => {
                   ? "text-dark dark:text-white"
                   : "pointer-events-none text-primary"
               } ml-4 cursor-pointer text-base font-semibold`}
+              
             >
               Monthly
             </span>
