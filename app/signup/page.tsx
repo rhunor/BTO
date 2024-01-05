@@ -184,7 +184,7 @@ const SignupPage = () => {
                   </p>
                   <span className="hidden h-[1px] w-full max-w-[60px] bg-body-color/50 sm:block"></span>
                 </div>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} method="post">
                   <div className="mb-8">
                     <label
                       htmlFor="name"
@@ -223,21 +223,7 @@ const SignupPage = () => {
                       className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                     />
                   </div>
-                  {/* <div className="mb-8">
-                    <label
-                      htmlFor="name"
-                      className="mb-3 block text-sm text-dark dark:text-white"
-                    >
-                      {" "}
-                      Bitcoin Address{" "}
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="Bitcoin Address"
-                      className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
-                    />
-                  </div> */}
+                 
                   <div className="mb-8">
                     <label
                       htmlFor="country"
@@ -467,6 +453,7 @@ const SignupPage = () => {
                   <div className="mb-6">
                     <button
                       type="submit"
+                      value="Create User"
                       // disabled={Object.keys(errors).length > 0}
                       className="flex w-full items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium text-white shadow-submit duration-300 hover:bg-primary/90 dark:shadow-submit-dark"
                     >
@@ -474,6 +461,7 @@ const SignupPage = () => {
                     </button>
                   </div>
                 </form>
+                <p className="text-red-500">{errorMessage}</p> 
                 {/* {showErrorDialog && (
         <div className="error-dialog">
           <h2>Please correct the following errors:</h2>
