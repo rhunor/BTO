@@ -1,15 +1,14 @@
-"use client"
+"use client";
 
 import Link from "next/link";
-import { signIn } from 'next-auth/react';
+import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-
 const SignupPage = () => {
   const router = useRouter();
-  
-  const [formData, setFormData] = useState({});
+
+
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
@@ -27,7 +26,9 @@ const SignupPage = () => {
     const res = await fetch("/api/Users", {
       method: "POST",
       body: JSON.stringify({ formData }),
-      "content-type": "application/json",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
     if (!res.ok) {
@@ -38,28 +39,28 @@ const SignupPage = () => {
       router.push("/");
     }
   };
-  // const [formData, setFormData] = useState<{
-  //   firstName: string;
-  //   lastName: string;
-  //   country: string;
-  //   countryCode: string;
-  //   phoneNumber: string;
-  //   email: string;
-  //   password: string;
-  //   confirmPassword: string;
-  // }>({
-  //   firstName: "",
-  //   lastName: "",
-  //   country: "",
-  //   countryCode: "",
-  //   phoneNumber: "",
-  //   email: "",
-  //   password: "",
-  //   confirmPassword: "",
-  // });
+  const [formData, setFormData] = useState<{
+    firstName: string;
+    lastName: string;
+    country: string;
+    countryCode: string;
+    phoneNumber: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+  }>({
+    firstName: "",
+    lastName: "",
+    country: "",
+    countryCode: "",
+    phoneNumber: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
   // const [errors, setErrors] = useState({});
- 
+
   // const [showErrorDialog, setShowErrorDialog] = useState(false);
 
   // const handleInputChange = (e) => {
@@ -73,38 +74,38 @@ const SignupPage = () => {
 
   //   const errors = {};
 
-    // Check for required fields
-    // if (!formData.firstName) {
-    //   errors.firstName = "First name is required";
-    // }
-    // if (!formData.lastName) {
-    //   errors.lastName = "Last name is required";
-    // }
-    // if (!formData.country) {
-    //   errors.country = "country is required";
-    // }
-    // if (!formData.countryCode) {
-    //   errors.countryCode = "country code is required";
-    // }
-    // if (!formData.phoneNumber) {
-    //   errors.phoneNumber = "phone Number is required";
-    // }
-    // if (!formData.email) {
-    //   errors.email = "email is required";
-    // }
-    
-    // if (formData.password !== formData.confirmPassword) {
-    //   errors.password = "Passwords must match";
-    // }
+  // Check for required fields
+  // if (!formData.firstName) {
+  //   errors.firstName = "First name is required";
+  // }
+  // if (!formData.lastName) {
+  //   errors.lastName = "Last name is required";
+  // }
+  // if (!formData.country) {
+  //   errors.country = "country is required";
+  // }
+  // if (!formData.countryCode) {
+  //   errors.countryCode = "country code is required";
+  // }
+  // if (!formData.phoneNumber) {
+  //   errors.phoneNumber = "phone Number is required";
+  // }
+  // if (!formData.email) {
+  //   errors.email = "email is required";
+  // }
 
-    // if (Object.keys(errors).length > 0) {
-    //   setErrors(errors);
-    //   setShowErrorDialog(true);
-    //   return;
-    // }
+  // if (formData.password !== formData.confirmPassword) {
+  //   errors.password = "Passwords must match";
+  // }
 
-    // TODO: Perform signup logic using formData, assuming no errors
- // };
+  // if (Object.keys(errors).length > 0) {
+  //   setErrors(errors);
+  //   setShowErrorDialog(true);
+  //   return;
+  // }
+
+  // TODO: Perform signup logic using formData, assuming no errors
+  // };
   // const handleErrorDialogClose = () => {
   //   setShowErrorDialog(false);
   // };
@@ -115,14 +116,17 @@ const SignupPage = () => {
         <div className="container">
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
-              <div className="shadow-three mx-auto max-w-[500px] rounded bg-white px-6 py-10 dark:bg-dark sm:p-[60px]">
+              <div className="mx-auto max-w-[500px] rounded bg-white px-6 py-10 shadow-three dark:bg-dark sm:p-[60px]">
                 <h3 className="mb-3 text-center text-2xl font-bold text-black dark:text-white sm:text-3xl">
                   Create your account
                 </h3>
                 <p className="mb-11 text-center text-base font-medium text-body-color">
                   It’s totally free and super easy
                 </p>
-                <button  className="border-stroke dark:text-body-color-dark dark:shadow-two mb-6 flex w-full items-center justify-center rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none"  onClick={() => signIn('google')}>
+                <button
+                  className="mb-6 flex w-full items-center justify-center rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none"
+                  onClick={() => signIn("google")}
+                >
                   <span className="mr-3">
                     <svg
                       width="20"
@@ -190,15 +194,15 @@ const SignupPage = () => {
                       First Name{" "}
                     </label>
                     <input
-      type="text"
-      id="firstName"
-      name="firstName"
-      required={true}
-      value={formData.firstName}
-      onChange={handleChange}
-      placeholder="Enter your first name"
-      className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
-    />
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      required={true}
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      placeholder="Enter your first name"
+                      className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
+                    />
                   </div>
                   <div className="mb-8">
                     <label
@@ -209,15 +213,15 @@ const SignupPage = () => {
                       Last Name{" "}
                     </label>
                     <input
-      type="text"
-      id="lastName"
-      name="lastName"
-      required={true}
-      value={formData.lastName}
-      onChange={handleChange}
-      placeholder="Enter your last name"
-      className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
-    />
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      required={true}
+                      value={formData.lastName}
+                      onChange={handleChange}
+                      placeholder="Enter your last name"
+                      className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
+                    />
                   </div>
                   {/* <div className="mb-8">
                     <label
@@ -235,117 +239,117 @@ const SignupPage = () => {
                     />
                   </div> */}
                   <div className="mb-8">
-          <label
-            htmlFor="country"
-            className="mb-3 block text-sm text-dark dark:text-white"
-          >
-            Country
-          </label>
-          <select
-            id="country"
-            name="country"
-            required={true}
-            value={formData.country}
-            onChange={handleChange}
-            className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
-          >
-            {/* Populate this with options for countries */}
-            <option value="">Select your country</option>
-            <option value="">Select country</option>
-    <option value="USA">United States</option>
-    <option value="UK">United Kingdom</option>
-    <option value="Japan">Japan</option>
-    <option value="China">China</option>
-    <option value="India">India</option>
-    <option value="Germany">Germany</option>
-    <option value="France">France</option>
-    <option value="Italy">Italy</option>
-    <option value="Russia">Russia</option>
-    <option value="Brazil">Brazil</option>
-    <option value="South Korea">South Korea</option>
-    <option value="Spain">Spain</option>
-    <option value="Japan">Japan</option>
-    <option value="Pakistan">Pakistan</option>
-    <option value="Indonesia">Indonesia</option>
-    <option value="India">India</option>
-    <option value="Canada">Canada</option>
-    <option value="Australia">Australia</option>
-    <option value="Mexico">Mexico</option>
-    <option value="Singapore">Singapore</option>
-    <option value="Turkey">Turkey</option>
-    <option value="Egypt">Egypt</option>
-    <option value="South Africa">South Africa</option>
-    <option value="Sweden">Sweden</option>
-    <option value="Netherlands">Netherlands</option>
-    <option value="Kazakhstan">Kazakhstan</option>
-    <option value="Vietnam">Vietnam</option>
-    <option value="Philippines">Philippines</option>
-    <option value="Afghanistan">Afghanistan</option>
-    <option value="Belgium">Belgium</option>
-            {/* ... more options ... */}
-          </select>
-        </div>
-        <div className="mb-8">
-          <label
-            htmlFor="phone-number"
-            className="mb-3 block text-sm text-dark dark:text-white"
-          >
-            Phone Number
-          </label>
-          <div className="flex items-center">
-            <select
-              id="country-code"
-              name="countryCode"
-              required={true}
-              value={formData.countryCode}
-              onChange={handleChange}
-              className="border-stroke dark:text-body-color-dark dark:shadow-two w-20 mr-4 rounded-sm border bg-[#f8f8f8] px-4 py-2 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
-            >
-              {/* Populate this with country codes */}
-              <option value="+1">+1 (USA)</option>
-    <option value="+44">+44 (UK)</option>
-    <option value="+81">+81 (Japan)</option>
-    <option value="+86">+86 (China)</option>
-    <option value="+91">+91 (India)</option>
-    <option value="+49">+49 (Germany)</option>
-    <option value="+33">+33 (France)</option>
-    <option value="+39">+39 (Italy)</option>
-    <option value="+7">+7 (Russia)</option>
-    <option value="+55">+55 (Brazil)</option>
-    <option value="+82">+82 (South Korea)</option>
-    <option value="+34">+34 (Spain)</option>
-    <option value="+81">+81 (Japan)</option>
-    <option value="+92">+92 (Pakistan)</option>
-    <option value="+62">+62 (Indonesia)</option>
-    <option value="+91">+91 (India)</option>
-    <option value="+1">+1 (Canada)</option>
-    <option value="+61">+61 (Australia)</option>
-    <option value="+52">+52 (Mexico)</option>
-    <option value="+65">+65 (Singapore)</option>
-    <option value="+90">+90 (Turkey)</option>
-    <option value="+20">+20 (Egypt)</option>
-    <option value="+27">+27 (South Africa)</option>
-    <option value="+46">+46 (Sweden)</option>
-    <option value="+31">+31 (Netherlands)</option>
-    <option value="+7">+7 (Kazakhstan)</option>
-    <option value="+84">+84 (Vietnam)</option>
-    <option value="+63">+63 (Philippines)</option>
-    <option value="+92">+92 (Afghanistan)</option>
-    <option value="+33">+33 (Belgium)</option>
-              {/* ... more options ... */}
-            </select>
-            <input
-              type="number"
-              id="phone-number"
-              name="phoneNumber"
-              required={true}
-              value={formData.phoneNumber}
-              onChange={handleChange}
-              placeholder="Enter phone number"
-              className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
-            />
-          </div>
-        </div>
+                    <label
+                      htmlFor="country"
+                      className="mb-3 block text-sm text-dark dark:text-white"
+                    >
+                      Country
+                    </label>
+                    <select
+                      id="country"
+                      name="country"
+                      required={true}
+                      value={formData.country}
+                      onChange={handleChange}
+                      className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
+                    >
+                      {/* Populate this with options for countries */}
+                      <option value="">Select your country</option>
+
+                      <option value="USA">United States</option>
+                      <option value="UK">United Kingdom</option>
+                      <option value="Japan">Japan</option>
+                      <option value="China">China</option>
+                      <option value="India">India</option>
+                      <option value="Germany">Germany</option>
+                      <option value="France">France</option>
+                      <option value="Italy">Italy</option>
+                      <option value="Russia">Russia</option>
+                      <option value="Brazil">Brazil</option>
+                      <option value="South Korea">South Korea</option>
+                      <option value="Spain">Spain</option>
+                      <option value="Japan">Japan</option>
+                      <option value="Pakistan">Pakistan</option>
+                      <option value="Indonesia">Indonesia</option>
+                      <option value="India">India</option>
+                      <option value="Canada">Canada</option>
+                      <option value="Australia">Australia</option>
+                      <option value="Mexico">Mexico</option>
+                      <option value="Singapore">Singapore</option>
+                      <option value="Turkey">Turkey</option>
+                      <option value="Egypt">Egypt</option>
+                      <option value="South Africa">South Africa</option>
+                      <option value="Sweden">Sweden</option>
+                      <option value="Netherlands">Netherlands</option>
+                      <option value="Kazakhstan">Kazakhstan</option>
+                      <option value="Vietnam">Vietnam</option>
+                      <option value="Philippines">Philippines</option>
+                      <option value="Afghanistan">Afghanistan</option>
+                      <option value="Belgium">Belgium</option>
+                      {/* ... more options ... */}
+                    </select>
+                  </div>
+                  <div className="mb-8">
+                    <label
+                      htmlFor="phone-number"
+                      className="mb-3 block text-sm text-dark dark:text-white"
+                    >
+                      Phone Number
+                    </label>
+                    <div className="flex items-center">
+                      <select
+                        id="country-code"
+                        name="countryCode"
+                        required={true}
+                        value={formData.countryCode}
+                        onChange={handleChange}
+                        className="mr-4 w-20 rounded-sm border border-stroke bg-[#f8f8f8] px-4 py-2 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
+                      >
+                        {/* Populate this with country codes */}
+                        <option value="+1">+1 (USA)</option>
+                        <option value="+44">+44 (UK)</option>
+                        <option value="+81">+81 (Japan)</option>
+                        <option value="+86">+86 (China)</option>
+                        <option value="+91">+91 (India)</option>
+                        <option value="+49">+49 (Germany)</option>
+                        <option value="+33">+33 (France)</option>
+                        <option value="+39">+39 (Italy)</option>
+                        <option value="+7">+7 (Russia)</option>
+                        <option value="+55">+55 (Brazil)</option>
+                        <option value="+82">+82 (South Korea)</option>
+                        <option value="+34">+34 (Spain)</option>
+                        <option value="+81">+81 (Japan)</option>
+                        <option value="+92">+92 (Pakistan)</option>
+                        <option value="+62">+62 (Indonesia)</option>
+                        <option value="+91">+91 (India)</option>
+                        <option value="+1">+1 (Canada)</option>
+                        <option value="+61">+61 (Australia)</option>
+                        <option value="+52">+52 (Mexico)</option>
+                        <option value="+65">+65 (Singapore)</option>
+                        <option value="+90">+90 (Turkey)</option>
+                        <option value="+20">+20 (Egypt)</option>
+                        <option value="+27">+27 (South Africa)</option>
+                        <option value="+46">+46 (Sweden)</option>
+                        <option value="+31">+31 (Netherlands)</option>
+                        <option value="+7">+7 (Kazakhstan)</option>
+                        <option value="+84">+84 (Vietnam)</option>
+                        <option value="+63">+63 (Philippines)</option>
+                        <option value="+92">+92 (Afghanistan)</option>
+                        <option value="+33">+33 (Belgium)</option>
+                        {/* ... more options ... */}
+                      </select>
+                      <input
+                        type="number"
+                        id="phone-number"
+                        name="phoneNumber"
+                        required={true}
+                        value={formData.phoneNumber}
+                        onChange={handleChange}
+                        placeholder="Enter phone number"
+                        className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
+                      />
+                    </div>
+                  </div>
                   <div className="mb-8">
                     <label
                       htmlFor="email"
@@ -360,9 +364,9 @@ const SignupPage = () => {
                       name="email"
                       required={true}
                       value={formData.email}
-              onChange={handleChange}
+                      onChange={handleChange}
                       placeholder="Enter your Email"
-                      className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+                      className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                     />
                   </div>
                   <div className="mb-8">
@@ -381,7 +385,7 @@ const SignupPage = () => {
                       value={formData.password}
                       onChange={handleChange}
                       placeholder="Enter your Password"
-                      className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+                      className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                     />
                   </div>
                   <div className="mb-8">
@@ -400,7 +404,7 @@ const SignupPage = () => {
                       value={formData.confirmPassword}
                       onChange={handleChange}
                       placeholder="Enter your Password"
-                      className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+                      className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                     />
                   </div>
                   <div className="mb-8 flex">
@@ -435,7 +439,10 @@ const SignupPage = () => {
                       </div>
                       <span>
                         By creating account means you agree to the
-                        <a href="/Terms" className="text-primary hover:underline">
+                        <a
+                          href="/Terms"
+                          className="text-primary hover:underline"
+                        >
                           {" "}
                           Terms and Conditions{" "}
                         </a>
@@ -447,8 +454,8 @@ const SignupPage = () => {
                       </span>
                     </label>
                   </div>
-                    {/* Display errors */}
-          {/* {Object.keys(errors).length > 0 && (
+                  {/* Display errors */}
+                  {/* {Object.keys(errors).length > 0 && (
             <div className="mb-4 p-3 bg-red-200 text-red-700 rounded-md">
               <ul>
                 {Object.values(errors).map((error, index) => (
@@ -458,7 +465,11 @@ const SignupPage = () => {
             </div>
           )} */}
                   <div className="mb-6">
-                    <button type="submit" disabled={Object.keys(errors).length > 0} className="shadow-submit dark:shadow-submit-dark flex w-full items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium text-white duration-300 hover:bg-primary/90">
+                    <button
+                      type="submit"
+                      // disabled={Object.keys(errors).length > 0}
+                      className="flex w-full items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium text-white shadow-submit duration-300 hover:bg-primary/90 dark:shadow-submit-dark"
+                    >
                       Sign up
                     </button>
                   </div>
