@@ -3,80 +3,111 @@
 import Link from "next/link";
 import { signIn } from 'next-auth/react';
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 
 const SignupPage = () => {
-  const [formData, setFormData] = useState<{
-    firstName: string;
-    lastName: string;
-    country: string;
-    countryCode: string;
-    phoneNumber: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-  }>({
-    firstName: "",
-    lastName: "",
-    country: "",
-    countryCode: "",
-    phoneNumber: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const router = useRouter();
+  
+  const [formData, setFormData] = useState({});
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const [errors, setErrors] = useState({});
- 
-  const [showErrorDialog, setShowErrorDialog] = useState(false);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" })); // Clear any previous errors for this field
+  const handleChange = (e) => {
+    const value = e.target.value;
+    const name = e.target.name;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
-  const handleSignup = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage("");
+    const res = await fetch("/api/Users", {
+      method: "POST",
+      body: JSON.stringify({ formData }),
+      "content-type": "application/json",
+    });
 
-    const errors = {};
+    if (!res.ok) {
+      const response = await res.json();
+      setErrorMessage(response.message);
+    } else {
+      router.refresh();
+      router.push("/");
+    }
+  };
+  // const [formData, setFormData] = useState<{
+  //   firstName: string;
+  //   lastName: string;
+  //   country: string;
+  //   countryCode: string;
+  //   phoneNumber: string;
+  //   email: string;
+  //   password: string;
+  //   confirmPassword: string;
+  // }>({
+  //   firstName: "",
+  //   lastName: "",
+  //   country: "",
+  //   countryCode: "",
+  //   phoneNumber: "",
+  //   email: "",
+  //   password: "",
+  //   confirmPassword: "",
+  // });
+
+  // const [errors, setErrors] = useState({});
+ 
+  // const [showErrorDialog, setShowErrorDialog] = useState(false);
+
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData({ ...formData, [name]: value });
+  //   setErrors((prevErrors) => ({ ...prevErrors, [name]: "" })); // Clear any previous errors for this field
+  // };
+
+  // const handleSignup = async (e) => {
+  //   e.preventDefault();
+
+  //   const errors = {};
 
     // Check for required fields
-    if (!formData.firstName) {
-      errors.firstName = "First name is required";
-    }
-    if (!formData.lastName) {
-      errors.lastName = "Last name is required";
-    }
-    if (!formData.country) {
-      errors.country = "country is required";
-    }
-    if (!formData.countryCode) {
-      errors.countryCode = "country code is required";
-    }
-    if (!formData.phoneNumber) {
-      errors.phoneNumber = "phone Number is required";
-    }
-    if (!formData.email) {
-      errors.email = "email is required";
-    }
-    // ... similar checks for other required fields
+    // if (!formData.firstName) {
+    //   errors.firstName = "First name is required";
+    // }
+    // if (!formData.lastName) {
+    //   errors.lastName = "Last name is required";
+    // }
+    // if (!formData.country) {
+    //   errors.country = "country is required";
+    // }
+    // if (!formData.countryCode) {
+    //   errors.countryCode = "country code is required";
+    // }
+    // if (!formData.phoneNumber) {
+    //   errors.phoneNumber = "phone Number is required";
+    // }
+    // if (!formData.email) {
+    //   errors.email = "email is required";
+    // }
+    
+    // if (formData.password !== formData.confirmPassword) {
+    //   errors.password = "Passwords must match";
+    // }
 
-    // Check for password match
-    if (formData.password !== formData.confirmPassword) {
-      errors.password = "Passwords must match";
-    }
-
-    if (Object.keys(errors).length > 0) {
-      setErrors(errors);
-      setShowErrorDialog(true);
-      return;
-    }
+    // if (Object.keys(errors).length > 0) {
+    //   setErrors(errors);
+    //   setShowErrorDialog(true);
+    //   return;
+    // }
 
     // TODO: Perform signup logic using formData, assuming no errors
-  };
-  const handleErrorDialogClose = () => {
-    setShowErrorDialog(false);
-  };
+ // };
+  // const handleErrorDialogClose = () => {
+  //   setShowErrorDialog(false);
+  // };
 
   return (
     <>
@@ -149,7 +180,7 @@ const SignupPage = () => {
                   </p>
                   <span className="hidden h-[1px] w-full max-w-[60px] bg-body-color/50 sm:block"></span>
                 </div>
-                <form onSubmit={handleSignup}>
+                <form onSubmit={handleSubmit}>
                   <div className="mb-8">
                     <label
                       htmlFor="name"
@@ -162,8 +193,9 @@ const SignupPage = () => {
       type="text"
       id="firstName"
       name="firstName"
+      required={true}
       value={formData.firstName}
-      onChange={handleInputChange}
+      onChange={handleChange}
       placeholder="Enter your first name"
       className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
     />
@@ -180,8 +212,9 @@ const SignupPage = () => {
       type="text"
       id="lastName"
       name="lastName"
+      required={true}
       value={formData.lastName}
-      onChange={handleInputChange}
+      onChange={handleChange}
       placeholder="Enter your last name"
       className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
     />
@@ -211,8 +244,9 @@ const SignupPage = () => {
           <select
             id="country"
             name="country"
+            required={true}
             value={formData.country}
-            onChange={handleInputChange}
+            onChange={handleChange}
             className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
           >
             {/* Populate this with options for countries */}
@@ -262,8 +296,9 @@ const SignupPage = () => {
             <select
               id="country-code"
               name="countryCode"
+              required={true}
               value={formData.countryCode}
-              onChange={handleInputChange}
+              onChange={handleChange}
               className="border-stroke dark:text-body-color-dark dark:shadow-two w-20 mr-4 rounded-sm border bg-[#f8f8f8] px-4 py-2 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
             >
               {/* Populate this with country codes */}
@@ -303,8 +338,9 @@ const SignupPage = () => {
               type="number"
               id="phone-number"
               name="phoneNumber"
+              required={true}
               value={formData.phoneNumber}
-              onChange={handleInputChange}
+              onChange={handleChange}
               placeholder="Enter phone number"
               className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
             />
@@ -322,8 +358,9 @@ const SignupPage = () => {
                       type="email"
                       id="email"
                       name="email"
+                      required={true}
                       value={formData.email}
-              onChange={handleInputChange}
+              onChange={handleChange}
                       placeholder="Enter your Email"
                       className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
                     />
@@ -340,8 +377,9 @@ const SignupPage = () => {
                       type="password"
                       id="password"
                       name="password"
+                      required={true}
                       value={formData.password}
-                      onChange={handleInputChange}
+                      onChange={handleChange}
                       placeholder="Enter your Password"
                       className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
                     />
@@ -358,8 +396,9 @@ const SignupPage = () => {
                       type="password"
                       id="confirmPassword"
                       name="confirmPassword"
+                      required={true}
                       value={formData.confirmPassword}
-                      onChange={handleInputChange}
+                      onChange={handleChange}
                       placeholder="Enter your Password"
                       className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
                     />
@@ -424,7 +463,7 @@ const SignupPage = () => {
                     </button>
                   </div>
                 </form>
-                {showErrorDialog && (
+                {/* {showErrorDialog && (
         <div className="error-dialog">
           <h2>Please correct the following errors:</h2>
           <ul>
@@ -434,7 +473,7 @@ const SignupPage = () => {
           </ul>
           <button onClick={handleErrorDialogClose}>Close</button>
         </div>
-      )}
+      )} */}
                 <p className="text-center text-base font-medium text-body-color">
                   Already using Binary Trading Options?{" "}
                   <Link href="/signin" className="text-primary hover:underline">

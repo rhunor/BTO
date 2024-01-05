@@ -32,15 +32,11 @@ const Hero = async () => {
                 data-wow-delay=".2s"
               >
                 <h1 className="z-index mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
-                Private Account Funding
+                Denied-You do not have access to this page
                 </h1>
                 <p className="mb-12 text-base !leading-relaxed text-body-color dark:text-body-color-dark sm:text-lg md:text-xl">
                 
-Transfer funds in BTC by scanning the QR code on your secure crypto wallet or sending to the wallet address below. Upload the proof of payment below and submit for verification (takes 0 - 24hrs)
 
-
-Click to copy wallet Address
-bc1qcw3l8nl9s29lv7cv8ykxvk9w8xkwltfy6t3zk6
 
 
                 </p>

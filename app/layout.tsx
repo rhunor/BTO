@@ -21,17 +21,21 @@ export default function RootLayout({
         head.js. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
-
+      
       <body className={`bg-[#FCFCFC] dark:bg-black ${inter.className}`}>
+        
         <Providers>
           <Header />
           {children}
           <Footer />
           <ScrollToTop />
         </Providers>
+        
       </body>
+    
     </html>
   );
 }
 
-import { Providers } from "./providers";
+import { Providers } from "./providers";import AuthProvider from "./(components)/Authprovider";
+
