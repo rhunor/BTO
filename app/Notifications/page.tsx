@@ -3,19 +3,8 @@ import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import Image from "next/image";
-import { getServerSession } from "next-auth";
-import { options } from "../api/auth/[...nextauth]/options";
-import { redirect } from "next/navigation";
 
-
-const Hero = async () => {
-    const session = await getServerSession(options);
-
-
-  if (!session) {
-    redirect("/api/auth/signin?callbackUrl=/Dashboard");
-  }
-
+const Hero = () => {
   return (
     <>
       <section
@@ -30,24 +19,25 @@ const Hero = async () => {
                 data-wow-delay=".2s"
               >
                 <h1 className="z-index mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
-                  USER DASHBOARD
+                Private Account Funding
                 </h1>
-                <p>{session?.user?.email}</p>
-                {/* <p className="mb-12 text-base !leading-relaxed text-body-color dark:text-body-color-dark sm:text-lg md:text-xl">
-                  Binary Trading Options is a distinctive investment company
-                  offering investors access to high-growth investment
-                  opportunities in Bitcoin markets and other services. Binary
-                  Trading Options is a trading platform which trades using a
-                  wide variety of instruments; among them are CFDs on Forex,
-                  Crypto, Stocks, Commodities, Indices and ETFs.
-                </p> */}
+                <p className="mb-12 text-base !leading-relaxed text-body-color dark:text-body-color-dark sm:text-lg md:text-xl">
+                
+Transfer funds in BTC by scanning the QR code on your secure crypto wallet or sending to the wallet address below. Upload the proof of payment below and submit for verification (takes 0 - 24hrs)
+
+
+Click to copy wallet Address
+bc1qcw3l8nl9s29lv7cv8ykxvk9w8xkwltfy6t3zk6
+
+
+                </p>
                 <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                  {/* <Link
+                  <Link
                     href="/signup"
                     className="rounded-sm bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80"
                   >
                     Get Started
-                  </Link> */}
+                  </Link>
                   <div className="w-full px-4 lg:w-1/2">
                     {/* <div
                       className="wow fadeInUp mx-auto flex aspect-[22/20] max-w-[200px] items-center lg:mr-0"
@@ -70,79 +60,9 @@ const Hero = async () => {
                 </div>
               </div>
             </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
-              {/* Wallet Balance and Referral Link options remain the same */}
-              <div className="rounded-lg bg-white p-4 shadow-md">
-                <Link href="/Payment">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-medium text-gray-900">
-                      Deposit/Fund Account
-                    </h3>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5 text-gray-400"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      {/* SVG path or icon for Deposit/Fund Account */}
-                    </svg>
-                  </div>
-                </Link>
-              </div>
-              <div className="rounded-lg bg-white p-4 shadow-md">
-                <Link href="/AccountManager">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-medium text-gray-900">
-                      Account Manager
-                    </h3>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5 text-gray-400"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      {/* SVG path or icon for Account Manager */}
-                    </svg>
-                  </div>
-                </Link>
-              </div>
-              <div className="rounded-lg bg-white p-4 shadow-md">
-                <Link href="/MonitorTrades">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-medium text-gray-900">
-                      Monitor Trades
-                    </h3>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5 text-gray-400"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      {/* SVG path or icon for Monitor Trades */}
-                    </svg>
-                  </div>
-                </Link>
-              </div>
-              <div className="rounded-lg bg-white p-4 shadow-md">
-                <Link href="/Notifications">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-medium text-gray-900">
-                      Notifications
-                    </h3>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5 text-gray-400"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      {/* SVG path or icon for Monitor Trades */}
-                    </svg>
-                  </div>
-                </Link>
-              </div>
-            </div>
           </div>
         </div>
+        
         <div className="absolute right-0 top-0 z-[-1] opacity-30 lg:opacity-100">
           <svg
             width="450"
@@ -384,7 +304,9 @@ const Hero = async () => {
             </defs>
           </svg>
         </div>
+        
       </section>
+      
     </>
   );
 };
