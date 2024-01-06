@@ -37,5 +37,5 @@ export default function RootLayout({
   );
 }
 
-import { Providers } from "./providers";import AuthProvider from "./(components)/Authprovider";
+import { Providers } from "./providers";
 

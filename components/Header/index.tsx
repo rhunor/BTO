@@ -8,7 +8,7 @@ import ThemeToggler from "./ThemeToggler";
 import menuData from "./menuData";
 import { MouseEvent } from 'react';
 import { getServerSession } from "next-auth";
-import { options } from "../../app/api/auth/[...nextauth]/options";
+import  options  from "../../app/api/auth/[...nextauth]/options";
 import {  getProviders } from 'next-auth/react';
 
 //import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
