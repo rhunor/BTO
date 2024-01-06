@@ -16,6 +16,7 @@ import {  getProviders } from 'next-auth/react';
 
 
 const Header =  () => {
+  
   const [session, setSession] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
@@ -328,12 +329,7 @@ const Header =  () => {
                   <Link href="/profile">
                     <Image src="/images/logo/logo-2.svg" width={37} height={37} className="rounded-full" alt="profile"/>
                   </Link>
-                  {/* <button type="button" onClick={signOut} className="outline_btn" >
-                    SignOut
-                  </button> */}
-                  {/* <div>
-                    <ThemeToggler />
-                  </div> */}
+                
                   </div>
                 ):(
                   <div className="flex items-center justify-end pr-16 lg:pr-0">

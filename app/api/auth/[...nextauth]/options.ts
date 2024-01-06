@@ -1,7 +1,12 @@
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import User from "@/app/(models)/User";
-import { NextAuthOptions } from "next-auth";
+// import User from "@/app/(models)/User";
+import  { NextAuthOptions,Profile, JWT, Session }  from "next-auth";
+
+interface Credentials {
+  email: string;
+  password: string;
+}
 
 interface FoundUser {
   email: string;
@@ -26,47 +31,49 @@ const options: NextAuthOptions = {
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_Secret,
     }),
-    CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        email: {
-          label: "email:",
-          type: "text",
-          placeholder: "your-email",
-        },
-        password: {
-          label: "password:",
-          type: "password",
-          placeholder: "your-password",
-        },
-      },
-      async authorize(credentials) {
-        try {
-          const foundUser: FoundUser | null = await User.findOne({
-            email: credentials.email,
-          })
-            .lean()
-            .exec();
+    // CredentialsProvider({
+    //   name: "Credentials",
+    //   credentials: {
+    //     email: {
+    //       label: "email:",
+    //       type: "text",
+    //       placeholder: "your-email",
+    //     },
+    //     password: {
+    //       label: "password:",
+    //       type: "password",
+    //       placeholder: "your-password",
+    //     },
+    //   },
+    //   async authorize(credentials) {
+    //     try {
+    //       const foundUser: FoundUser | null = await User.findOne({
+    //         email: credentials.email,
+    //       })
+    //         .lean()
+    //         .exec();
 
-          if (foundUser && foundUser.password === credentials.password) {
-            console.log("Good Pass");
-            delete foundUser.password;
-            foundUser.role = "Unverified Email";
-            return foundUser;
-          }
-        } catch (error) {
-          console.log(error);
-        }
-        return null;
-      },
-    }),
+    //       if (foundUser && foundUser.password === credentials.password) {
+    //         console.log("Good Pass");
+    //         delete foundUser.password;
+    //         if (foundUser.hasOwnProperty("role")) {
+    //           foundUser.role = "Unverified Email";
+    //         }
+    //         return foundUser;
+    //       }
+    //     } catch (error) {
+    //       console.log(error);
+    //     }
+    //     return null;
+    //   },
+    // }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user }: JWT) {
       if (user) token.role = user.role;
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token }: Session) {
       if (session?.user) session.user.role = token.role;
       return session;
     },
