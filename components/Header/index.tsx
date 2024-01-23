@@ -9,7 +9,7 @@ import menuData from "./menuData";
 // import { MouseEvent } from 'react';
 import { getServerSession } from "next-auth";
 // import  options  from "../../app/api/auth/[...nextauth]/options";
-import {  getProviders } from 'next-auth/react';
+import {  getProviders, signOut } from 'next-auth/react';
 import { authOptions } from "@/lib/auth";
 
 //import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
@@ -294,24 +294,29 @@ import { authOptions } from "@/lib/auth";
 
 
               <div className="sm:flex hidden" >
-                {session ? (
-                  <div className="flex gap-3 md:gap-5"><Link href="/" 
-                  className="hidden px-7 py-3 text-base font-medium text-dark hover:opacity-70 dark:text-white md:block">
-                    Menu
-                  </Link>
-                   <Link
-                    href="/api/auth/signout?callbackUrl=/"
-                    className="ease-in-up shadow-btn hover:shadow-btn-hover hidden rounded-sm bg-primary px-8 py-3 text-base font-medium text-white transition duration-300 hover:bg-opacity-90 md:block md:px-9 lg:px-6 xl:px-9"
-
-                  >
-                    Sign out
-                  </Link>
-                  <Link href="/profile">
-                    <Image src="/images/logo/logo-2.svg" width={37} height={37} className="rounded-full" alt="profile"/>
-                  </Link>
-                
-                  </div>
-                ):(
+              <p>{session?.user?.email}</p>
+                {getServerSession?(
+                   <div className="flex items-center justify-end pr-16 lg:pr-0">
+                   <Link href="/" 
+                 className="hidden px-7 py-3 text-base font-medium text-dark hover:opacity-70 dark:text-white md:block">
+                   Menu
+                 </Link>
+                  <Link
+                   href="/api/auth/signout?callbackUrl=/"
+                   className="ease-in-up shadow-btn hover:shadow-btn-hover hidden rounded-sm bg-primary px-8 py-3 text-base font-medium text-white transition duration-300 hover:bg-opacity-90 md:block md:px-9 lg:px-6 xl:px-9"
+                    onClick={()=>signOut({
+                      redirect: true,
+                      callbackUrl:`${window.location.origin}/signin`
+                    })}
+                 >
+                   Sign out
+                 </Link>
+                 <Link href="/profile">
+                   <Image src="/images/logo/logo-2.svg" width={37} height={37} className="rounded-full" alt="profile"/>
+                 </Link>
+               
+                 </div>
+                ) : (
                   <div className="flex items-center justify-end pr-16 lg:pr-0">
                   <Link
                     href="/signin"
@@ -328,6 +333,8 @@ import { authOptions } from "@/lib/auth";
                   
                 </div>
                 )}
+                
+                
                 <div>
                     <ThemeToggler />
                   </div>
