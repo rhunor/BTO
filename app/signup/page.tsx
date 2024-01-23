@@ -23,20 +23,21 @@ const SignupPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage("");
-    const res = await fetch("/api/Users", {
+    const res = await fetch("/api/user", {
       method: "POST",
-      body: JSON.stringify({ formData }),
+      body: JSON.stringify( formData ),
       headers: {
         "Content-Type": "application/json",
       },
     });
 
     if (!res.ok) {
+      // console.error("registration failed");
       const response = await res.json();
       setErrorMessage(response.message);
     } else {
-      router.refresh();
-      router.push("/");
+      // router.refresh();
+      router.push("/signin");
     }
   };
   const [formData, setFormData] = useState<{
@@ -59,56 +60,7 @@ const SignupPage = () => {
     confirmPassword: "",
   });
 
-  // const [errors, setErrors] = useState({});
-
-  // const [showErrorDialog, setShowErrorDialog] = useState(false);
-
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData({ ...formData, [name]: value });
-  //   setErrors((prevErrors) => ({ ...prevErrors, [name]: "" })); // Clear any previous errors for this field
-  // };
-
-  // const handleSignup = async (e) => {
-  //   e.preventDefault();
-
-  //   const errors = {};
-
-  // Check for required fields
-  // if (!formData.firstName) {
-  //   errors.firstName = "First name is required";
-  // }
-  // if (!formData.lastName) {
-  //   errors.lastName = "Last name is required";
-  // }
-  // if (!formData.country) {
-  //   errors.country = "country is required";
-  // }
-  // if (!formData.countryCode) {
-  //   errors.countryCode = "country code is required";
-  // }
-  // if (!formData.phoneNumber) {
-  //   errors.phoneNumber = "phone Number is required";
-  // }
-  // if (!formData.email) {
-  //   errors.email = "email is required";
-  // }
-
-  // if (formData.password !== formData.confirmPassword) {
-  //   errors.password = "Passwords must match";
-  // }
-
-  // if (Object.keys(errors).length > 0) {
-  //   setErrors(errors);
-  //   setShowErrorDialog(true);
-  //   return;
-  // }
-
-  // TODO: Perform signup logic using formData, assuming no errors
-  // };
-  // const handleErrorDialogClose = () => {
-  //   setShowErrorDialog(false);
-  // };
+ 
 
   return (
     <>
@@ -389,7 +341,7 @@ const SignupPage = () => {
                       required={true}
                       value={formData.confirmPassword}
                       onChange={handleChange}
-                      placeholder="Enter your Password"
+                      placeholder="Re-enter your Password"
                       className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                     />
                   </div>

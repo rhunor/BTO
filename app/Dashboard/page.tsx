@@ -4,12 +4,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import Image from "next/image";
 import { getServerSession } from "next-auth";
-import  options  from "../api/auth/[...nextauth]/options";
+
 import { redirect } from "next/navigation";
+import { authOptions } from "@/lib/auth";
 
 
 const Hero = async () => {
-    const session = await getServerSession(options);
+    const session = await getServerSession(authOptions);
 
 
   if (!session) {

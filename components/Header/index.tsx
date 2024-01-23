@@ -6,64 +6,44 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import ThemeToggler from "./ThemeToggler";
 import menuData from "./menuData";
-import { MouseEvent } from 'react';
+// import { MouseEvent } from 'react';
 import { getServerSession } from "next-auth";
-import  options  from "../../app/api/auth/[...nextauth]/options";
+// import  options  from "../../app/api/auth/[...nextauth]/options";
 import {  getProviders } from 'next-auth/react';
+import { authOptions } from "@/lib/auth";
 
 //import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
 
 
 
-const Header =  () => {
-  
-  const [session, setSession] = useState(null);
-  useEffect(() => {
-    const fetchData = async () => {
-      const sessionData = await getServerSession(options);
-      setSession(sessionData);
 
-      const providersData = await getProviders();
-      setProviders(providersData);
+  const Header = ({ session }) => {
+    const [providers, setProviders] = useState(null);
+    const [navbarOpen, setNavbarOpen] = useState(false);
+    const [sticky, setSticky] = useState(false);
+    const [openIndex, setOpenIndex] = useState(-1);
+    const usePathName = usePathname();
+  
+    // Fetch session asynchronously
+    const getSession = async () => {
+      try {
+        const session = await getServerSession(authOptions);
+        return session;
+      } catch (error) {
+        console.error("Error fetching session:", error);
+        return null;
+      }
     };
-
-    fetchData();
-  }, []); 
-
-  // const handleSignOut = async (event: MouseEvent<HTMLButtonElement>) => {
-  //   event.preventDefault(); // Prevent the default behavior of the button if needed
-  
-  //   try {
-  //     await signOut({ redirect: false, callbackUrl: '/' }); // Adjust parameters as needed
-  //   } catch (error) {
-  //     console.error('Sign out error:', error);
-  //   }
-  // };
-  
-
-  // const isUserLoggedin = false;
-
-  const [providers, setProviders]= useState(null);
-
-  // useEffect(() => {
-  //   const setProviders = async () => {
-  //   const response = await getProviders();
-
-  //   setProviders(response);
-  //   }
-  //   setProviders();
-  // }, [])
-
  
   
   // Navbar toggle
-  const [navbarOpen, setNavbarOpen] = useState(false);
+  
   const navbarToggleHandler = () => {
     setNavbarOpen(!navbarOpen);
   };
 
   // Sticky Navbar
-  const [sticky, setSticky] = useState(false);
+  
   const handleStickyNavbar = () => {
     if (window.scrollY >= 80) {
       setSticky(true);
@@ -82,7 +62,7 @@ const Header =  () => {
 
 
   // submenu handler
-  const [openIndex, setOpenIndex] = useState(-1);
+ 
   const handleSubmenu = (index) => {
     if (openIndex === index) {
       setOpenIndex(-1);
@@ -91,7 +71,7 @@ const Header =  () => {
     }
   };
 
-  const usePathName = usePathname();
+ 
 
   return (
     <>

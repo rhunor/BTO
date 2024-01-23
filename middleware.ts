@@ -1,23 +1,11 @@
 import { withAuth } from "next-auth/middleware";
-import { NextResponse } from "next/server";
 
-export default withAuth(
-  function middleware(req) {
-    console.log(req.nextUrl.pathname);
-    console.log(req.nextauth.token.role);
-
-    if (
-      req.nextUrl.pathname.startsWith("/AdminPanel") &&
-      req.nextauth.token.role != "admin"
-    ) {
-      return NextResponse.rewrite(new URL("/Denied", req.url));
-    }
-  },
-  {
-    callbacks: {
-      authorized: ({ token }) => !!token,
+export default withAuth({
+  callbacks: {
+    authorized: async ({ req, token }) => {
+      if (req.nextUrl.pathname.startsWith("/admin")) return token?.role === "admin";
+      return !!token;
     },
-  }
-);
-
-export const config = { matcher: ["/AdminPanel"] };
+  },
+});
+export const config = { matcher: ["/admin:path*", "/profile"] };
