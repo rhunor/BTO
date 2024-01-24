@@ -11,22 +11,24 @@ import { getServerSession } from "next-auth";
 // import  options  from "../../app/api/auth/[...nextauth]/options";
 import {  getProviders, signOut } from 'next-auth/react';
 import { authOptions } from "@/lib/auth";
+import { useSession } from "next-auth/react";
 
 //import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
 
-export async function getServerSideProps(authOptions) {
-  try {
-    const session = await getServerSession(authOptions);
-    const providers = await getProviders();
-    return { props: { session, providers } };
-  } catch (error) {
-    console.error("Error fetching session or providers:", error);
-    return { props: {} }; // Return empty props on error
-  }
-}
+// export async function getServerSideProps(authOptions) {
+//   try {
+//     const session = await getServerSession(authOptions);
+//     const providers = await getProviders();
+//     return { props: { session, providers } };
+//   } catch (error) {
+//     console.error("Error fetching session or providers:", error);
+//     return { props: {} };
+//   }
+// }
 
 
-  const Header = ({session}) => {
+  const Header : ({ session }: { session: any }) => JSX.Element = () =>{
+    const { data: session, status } = useSession();
     const [providers, setProviders] = useState(null);
     const [navbarOpen, setNavbarOpen] = useState(false);
     const [sticky, setSticky] = useState(false);
@@ -145,7 +147,7 @@ export async function getServerSideProps(authOptions) {
             <div className="flex w-full items-center justify-between px-4">
 
             <div >
-            {session ? (
+            {getSession ? (
               
               <div>
                  
@@ -327,8 +329,8 @@ export async function getServerSideProps(authOptions) {
 
 
               <div className="sm:flex hidden" >
-              <p>{session?.user?.email}</p>
-                {getSession?(
+              {/* <p>{session?.user?.email}</p> */}
+                {session ?(
                    <div className="flex items-center justify-end pr-16 lg:pr-0">
                    <Link href="/" 
                  className="hidden px-7 py-3 text-base font-medium text-dark hover:opacity-70 dark:text-white md:block">
