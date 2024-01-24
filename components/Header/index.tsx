@@ -14,15 +14,25 @@ import { authOptions } from "@/lib/auth";
 
 //import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
 
+export async function getServerSideProps(authOptions) {
+  try {
+    const session = await getServerSession(authOptions);
+    const providers = await getProviders();
+    return { props: { session, providers } };
+  } catch (error) {
+    console.error("Error fetching session or providers:", error);
+    return { props: {} }; // Return empty props on error
+  }
+}
 
 
-
-  const Header = ({ session }) => {
+  const Header = ({session}) => {
     const [providers, setProviders] = useState(null);
     const [navbarOpen, setNavbarOpen] = useState(false);
     const [sticky, setSticky] = useState(false);
     const [openIndex, setOpenIndex] = useState(-1);
     const usePathName = usePathname();
+    // const [session, setSession] = useState(null);
   
     // Fetch session asynchronously
     const getSession = async () => {
@@ -34,6 +44,29 @@ import { authOptions } from "@/lib/auth";
         return null;
       }
     };
+    // useEffect(() => {
+    //   const fetchSession = async () => {
+    //     try {
+    //       const sessionData = await getServerSession(authOptions);
+    //       setSession(sessionData);
+    //       setProviders(await getProviders());
+    //     } catch (error) {
+    //       console.error("Error fetching session:", error);
+    //     }
+    //   };
+    
+    //   fetchSession();
+    // }, []);
+
+// export async function getServerSideProps(context) {
+//   try {
+//     const session = await getServerSession(context);
+//     return { props: { session } };
+//   } catch (error) {
+//     console.error("Error fetching session:", error);
+//     return { props: {} }; // Return empty props on error
+//   }
+// }
  
   
   // Navbar toggle
@@ -295,7 +328,7 @@ import { authOptions } from "@/lib/auth";
 
               <div className="sm:flex hidden" >
               <p>{session?.user?.email}</p>
-                {getServerSession?(
+                {getSession?(
                    <div className="flex items-center justify-end pr-16 lg:pr-0">
                    <Link href="/" 
                  className="hidden px-7 py-3 text-base font-medium text-dark hover:opacity-70 dark:text-white md:block">
