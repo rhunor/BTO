@@ -11,9 +11,58 @@ const Hero = () => {
         id="home"
         className="relative z-10 overflow-hidden bg-white pb-16 pt-[120px] dark:bg-gray-dark md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px]"
       >
-        <div className="container">
-          <div className="-mx-4 flex flex-wrap">
-            <div className="w-full px-4">
+         <div className="container">
+        {/* <SectionTitle
+          title="We are ready to help"
+          paragraph="Heres a brief Video explaining bitcoin mining"
+          center
+          mb="80px"
+        /> */}
+
+        <div className="-mx-4 flex flex-wrap">
+          <div className="w-full px-4">
+            <div
+              className="wow fadeInUp mx-auto max-w-[770px] overflow-hidden rounded-md"
+              data-wow-delay=".15s"
+            >
+              <div className="relative aspect-[77/40] items-center justify-center">
+                <Image src="/images/images/8.JPG" alt="video image" fill />
+                <div className="absolute right-0 top-0 flex h-full w-full items-center justify-center">
+                  
+                   
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        {/* <div className="container">
+          <div className="flex h-screen flex-col items-center justify-center">
+            <div className="relative z-10">
+              <div className="-mx-4 flex flex-wrap">
+                <div className="w-full lg:w-1/2">
+                  <div className="relative h-0 w-full pb-[50%]">
+                    <Image
+                      src="/images/images/5.JPG"
+                      alt="about-image"
+                      fill
+                      className="absolute inset-0 h-full w-full max-w-full object-cover drop-shadow-three dark:hidden dark:drop-shadow-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="w-full lg:w-1/2">
+                  <div className="relative h-0 w-full pb-[50%]">
+                    <Image
+                      src="/images/images/8.JPG"
+                      alt="about-image"
+                      fill
+                      className="absolute inset-0 h-full w-full max-w-full object-cover drop-shadow-three dark:block dark:drop-shadow-none"
+                    />
+                  </div>
+                </div>
+              </div>
+
               <div
                 className="wow fadeInUp mx-auto max-w-[800px] text-center"
                 data-wow-delay=".2s"
@@ -40,26 +89,14 @@ const Hero = () => {
                     <div
                       className="wow fadeInUp mx-auto flex aspect-[22/20] max-w-[200px] items-center lg:mr-0"
                       data-wow-delay=".2s"
-                    >
-                      <Image
-                        src="/images/images/5.JPG"
-                        alt="about-image"
-                        fill
-                        className="mx-auto max-w-full drop-shadow-three dark:hidden dark:drop-shadow-none lg:mr-0 "
-                      />
-                      <Image
-                        src="/images/images/8.JPG"
-                        alt="about-image"
-                        fill
-                        className="mx-auto hidden max-w-full drop-shadow-three dark:block dark:drop-shadow-none lg:mr-0 "
-                      />
-                    </div>
+                    ></div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
+
         <div className="absolute right-0 top-0 z-[-1] opacity-30 lg:opacity-100">
           <svg
             width="450"
