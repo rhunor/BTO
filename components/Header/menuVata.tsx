@@ -1,6 +1,6 @@
 import { Menu } from "@/types/menu";
 
-const menuData: Menu[] = [
+const menuVata: Menu[] = [
 
   
   {
@@ -62,24 +62,24 @@ const menuData: Menu[] = [
       //   path: "/blog-details",
       //   newTab: false,
       // },
-      // {
-      //   id: 46,
-      //   title: "Sign In ",
-      //   path: "/signin",
-      //   newTab: false,
-      // },
-      // {
-      //   id: 47,
-      //   title: "Sign Up ",
-      //   path: "/signup",
-      //   newTab: false,
-      // },
       {
-        id: 47,
-        title: "Sign out ",
-        path: "/api/auth/signout?callbackUrl=/",
+        id: 46,
+        title: "Sign In ",
+        path: "/signin",
         newTab: false,
       },
+      {
+        id: 47,
+        title: "Sign Up ",
+        path: "/signup",
+        newTab: false,
+      },
+      // {
+      //   id: 47,
+      //   title: "Sign out ",
+      //   path: "/api/auth/signout?callbackUrl=/",
+      //   newTab: false,
+      // },
       // {
       //   id: 48,
       //   title: "Error Page",
@@ -89,4 +89,4 @@ const menuData: Menu[] = [
     ],
   },
 ];
-export default menuData;
+export default menuVata;

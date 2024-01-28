@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import ThemeToggler from "./ThemeToggler";
 import menuData from "./menuData";
+import menuVata from "./menuVata";
 // import { MouseEvent } from 'react';
 import { getServerSession } from "next-auth";
 // import  options  from "../../app/api/auth/[...nextauth]/options";
@@ -147,7 +148,7 @@ import { useSession } from "next-auth/react";
             <div className="flex w-full items-center justify-between px-4">
 
             <div >
-            {getSession ? (
+            {session ? (
               
               <div>
                  
@@ -240,6 +241,7 @@ import { useSession } from "next-auth/react";
               </div>
               ):(
                 <div>
+                 
                 <button
                   onClick={navbarToggleHandler}
                   id="navbarToggler"
@@ -271,7 +273,7 @@ import { useSession } from "next-auth/react";
                   }`}
                 >
                   <ul className="block lg:flex lg:space-x-12">
-                    {menuData.map((menuItem, index) => (
+                    {menuVata.map((menuItem, index) => (
                       <li key={index} className="group relative">
                         {menuItem.path ? (
                           <Link
@@ -316,6 +318,9 @@ import { useSession } from "next-auth/react";
                                   {submenuItem.title}
                                 </Link>
                               ))}
+                               {/* <div>
+                    <ThemeToggler />
+                  </div> */}
                             </div>
                           </>
                         )}
