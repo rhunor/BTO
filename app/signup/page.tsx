@@ -4,11 +4,12 @@ import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { EyeInvisibleOutlined,EyeOutlined } from "@ant-design/icons";
 
 const SignupPage = () => {
   const router = useRouter();
 
-
+  const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
@@ -18,6 +19,10 @@ const SignupPage = () => {
       ...prevState,
       [name]: value,
     }));
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleSubmit = async (e) => {
@@ -315,8 +320,9 @@ const SignupPage = () => {
                       {" "}
                       Your Password{" "}
                     </label>
+                    <div className="relative">
                     <input
-                      type="password"
+                      type={showPassword ? 'text' : 'password'}
                       id="password"
                       name="password"
                       required={true}
@@ -325,6 +331,14 @@ const SignupPage = () => {
                       placeholder="Enter your Password"
                       className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                     />
+                      <button
+          type="button"
+          className="absolute top-1/2 right-4 transform -translate-y-1/2"
+          onClick={togglePasswordVisibility}
+        >
+         {showPassword ? <EyeOutlined/> : <EyeInvisibleOutlined/>}
+        </button>
+        </div>
                   </div>
                   <div className="mb-8">
                     <label
@@ -334,8 +348,9 @@ const SignupPage = () => {
                       {" "}
                       Your Password (confirm){" "}
                     </label>
+                    <div className="relative">
                     <input
-                      type="password"
+                      type={showPassword ? 'text' : 'password'}
                       id="confirmPassword"
                       name="confirmPassword"
                       required={true}
@@ -344,6 +359,14 @@ const SignupPage = () => {
                       placeholder="Re-enter your Password"
                       className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                     />
+                      <button
+          type="button"
+          className="absolute top-1/2 right-4 transform -translate-y-1/2"
+          onClick={togglePasswordVisibility}
+        >
+          {showPassword ? <EyeOutlined/> : <EyeInvisibleOutlined/>}
+        </button>
+        </div>
                   </div>
                   <div className="mb-8 flex">
                     <label

@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 
 
@@ -23,6 +24,13 @@ const FormSchema = z.object({
  
 
 const SigninPage = () => {
+
+  const [showPassword, setShowPassword] = useState(false);
+
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   // const handleChange = (e) => {
   //   const value = e.target.value;
@@ -149,8 +157,9 @@ const SigninPage = () => {
                     >
                       Your Password
                     </label>
+                    <div className="relative">
                     <input
-                      type="password"
+                      type={showPassword ? 'text' : 'password'}
                       name="password"
                       required={true}
                       // value={formData.password}
@@ -158,6 +167,14 @@ const SigninPage = () => {
                       placeholder="Enter your Password"
                       className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
                     />
+                    <button
+          type="button"
+          className="absolute top-1/2 right-4 transform -translate-y-1/2"
+          onClick={togglePasswordVisibility}
+        >
+          {showPassword ? <EyeOutlined/> : <EyeInvisibleOutlined/>}
+        </button>
+        </div>
                   </div>
                   <div className="mb-8 flex flex-col justify-between sm:flex-row sm:items-center">
                     <div className="mb-4 sm:mb-0">
