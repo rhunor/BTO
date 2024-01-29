@@ -6,10 +6,11 @@ import ScrollUp from "@/components/Common/ScrollUp";
 import Contact from "@/components/Contact";
 import Features from "@/components/Features";
 import Hero from "@/components/Hero";
-import Pricing from "@/components/Pricing";
+import CoinPrices from "@/components/CoinPrices";
 import Testimonials from "@/components/Testimonials";
 import Video from "@/components/Video";
 import { Metadata } from "next";
+import Widget from "@/components/Widget";
 
 export const metadata: Metadata = {
   title: "Binary Trading Options",
@@ -21,6 +22,7 @@ export default function Home() {
   return (
     <>
       <ScrollUp />
+      <Widget/>
       <Hero />
       <Features />
       <Video />
@@ -28,7 +30,7 @@ export default function Home() {
       <AboutSectionOne />
       <AboutSectionTwo />
       <Testimonials />
-      {/* <Pricing /> */}
+      {/* <CoinPrices/> */}
       {/* <Blog /> */}
       <Contact />
     </>

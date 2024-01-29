@@ -107,7 +107,7 @@ import { useSession } from "next-auth/react";
     }
   };
 
- 
+
 
   return (
     <>
@@ -120,7 +120,9 @@ import { useSession } from "next-auth/react";
         }`}
       >
         <div className="container">
+        
           <div className="relative -mx-4 flex items-center justify-between">
+          
             <div className="w-60 max-w-full px-4 xl:mr-12">
               <Link
                 href="/"
@@ -148,6 +150,7 @@ import { useSession } from "next-auth/react";
             <div className="flex w-full items-center justify-between px-4">
 
             <div >
+              
             {session ? (
               
               <div>
@@ -318,6 +321,7 @@ import { useSession } from "next-auth/react";
                                   {submenuItem.title}
                                 </Link>
                               ))}
+           
                                {/* <div>
                     <ThemeToggler />
                   </div> */}
@@ -383,6 +387,9 @@ import { useSession } from "next-auth/react";
             </div>
           </div>
         </div>
+        <div>
+     
+    </div>
       </header>
      
     
