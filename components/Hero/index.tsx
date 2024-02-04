@@ -1,130 +1,66 @@
+"use client"
 import Head from "next/head";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { log } from "console";
 
 const Hero = () => {
+  const [page, setPage]= useState<number>(3);
+
+
+  useEffect(()=>{
+    let int = setInterval(()=>{ setPage(prev=>((prev+1) >=8 ? 1 : prev+1));
+  },4000);
+
+  return ()=> clearInterval(int);
+},[]);
+
+const handlePrevPage =()=>{
+console.log("prev");
+setPage(prev=>((prev-1) <=0 ? 7 : prev-1))
+
+}
+const handleNextPage =()=>{
+  console.log("prev");
+  setPage(prev=>((prev+1) >=8 ? 1 : prev+1))
+}
   return (
     <>
       <section
         id="home"
-        className="relative z-10 overflow-hidden bg-white pb-16 pt-[120px] dark:bg-gray-dark md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px]"
+        className="relative z-10 overflow-hidden bg-white pb-16 pt-[20px] dark:bg-gray-dark md:pb-[120px] md:pt-[30px] xl:pb-[80px] xl:pt-[30px] 2xl:pb-[40px] 2xl:pt-[10px]"
       >
-         <div className="container">
-        {/* <SectionTitle
-          title="We are ready to help"
-          paragraph="Heres a brief Video explaining bitcoin mining"
-          center
-          mb="80px"
-        /> */}
+        {/* <div className="container"> */}
+        <div className="relative flex h-[calc(100vh-70px)] sm:h-[calc(100vh-90px)] md:h-[calc(100vh-120px)] lg:h-[calc(100vh-150px)] xl:h-[calc(100vh-180px)] w-full flex-col justify-center items-center">
+  <div className="absolute w-full h-full">
+    <Image className="w-full h-full object-cover object-center" sizes="100vw" fill alt="image" src={`/images/images/${page}.JPG`} />
+    <div className="absolute bottom-8 left-10 py-3 px-6 bg-[#0000007c] rounded-lg">
+      <h1 className="z-index mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
+        Best Trading Options in The world
+      </h1>
+      <p className="text-2xl mt-4 text-purple-200  pb-8">Binary Crypto Options is a distinctive investment company offering investors access to high-growth investment opportunities in Bitcoin markets and other services.</p>
+      <Link
+        href="/signup"
+        className="rounded-sm bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80"
+      >
+        Get Started
+      </Link>
+    </div>
+    {/* left arrow */}
+    <div className="z-10 absolute bottom-1/2 left-4 text-2xl">
+      <span onClick={handlePrevPage} className="inline-block transition-transform hover:-translate-x-1 motion-reduce:transform-none cursor-pointer hover:text-blue-500">&lt;-</span>
+    </div>
+    {/* right arrow */}
+    <div className="z-10 absolute bottom-1/2 right-4 text-2xl">
+      <span onClick={handleNextPage} className="inline-block transition-transform hover:translate-x-1 motion-reduce:transform-none cursor-pointer hover:text-blue-500">-&gt;</span>
+    </div>
+  </div>
+</div>
 
-        <div className="-mx-4 flex flex-wrap">
-          <div className="w-full px-4">
-            <div
-              className="wow fadeInUp mx-auto max-w-[770px] overflow-hidden rounded-md"
-              data-wow-delay=".15s"
-            >
-              <div className="relative aspect-[77/40] items-center justify-center">
-                <Image src="/images/images/8.JPG" alt="video image" fill />
-                <div className="absolute right-0 top-0 flex h-full w-full items-center justify-center">
-                <div
-                className="wow fadeInUp mx-auto max-w-[800px] text-center"
-                data-wow-delay=".2s"
-              >
-                {/* <h1 className="z-index mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
-                  Best Trading Options in The world
-                </h1>
-                <p className="mb-12 text-base !leading-relaxed text-body-color dark:text-body-color-dark sm:text-lg md:text-xl">
-                  Binary Trading Options is a distinctive investment company
-                  offering investors access to high-growth investment
-                  opportunities in Bitcoin markets and other services. Binary
-                  Trading Options is a trading platform which trades using a
-                  wide variety of instruments; among them are CFDs on Forex,
-                  Crypto, Stocks, Commodities, Indices and ETFs.
-                </p> */}
-                <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                  <Link
-                    href="/signup"
-                    className="rounded-sm bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80"
-                  >
-                    Get Started
-                  </Link>
-                  <div className="w-full px-4 lg:w-1/2">
-                    <div
-                      className="wow fadeInUp mx-auto flex aspect-[22/20] max-w-[200px] items-center lg:mr-0"
-                      data-wow-delay=".2s"
-                    ></div>
-                  </div>
-                </div>
-              </div>
-                   
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-        {/* <div className="container">
-          <div className="flex h-screen flex-col items-center justify-center">
-            <div className="relative z-10">
-              <div className="-mx-4 flex flex-wrap">
-                <div className="w-full lg:w-1/2">
-                  <div className="relative h-0 w-full pb-[50%]">
-                    <Image
-                      src="/images/images/5.JPG"
-                      alt="about-image"
-                      fill
-                      className="absolute inset-0 h-full w-full max-w-full object-cover drop-shadow-three dark:hidden dark:drop-shadow-none"
-                    />
-                  </div>
-                </div>
-
-                <div className="w-full lg:w-1/2">
-                  <div className="relative h-0 w-full pb-[50%]">
-                    <Image
-                      src="/images/images/8.JPG"
-                      alt="about-image"
-                      fill
-                      className="absolute inset-0 h-full w-full max-w-full object-cover drop-shadow-three dark:block dark:drop-shadow-none"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div
-                className="wow fadeInUp mx-auto max-w-[800px] text-center"
-                data-wow-delay=".2s"
-              >
-                <h1 className="z-index mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
-                  Best Trading Options in The world
-                </h1>
-                <p className="mb-12 text-base !leading-relaxed text-body-color dark:text-body-color-dark sm:text-lg md:text-xl">
-                  Binary Trading Options is a distinctive investment company
-                  offering investors access to high-growth investment
-                  opportunities in Bitcoin markets and other services. Binary
-                  Trading Options is a trading platform which trades using a
-                  wide variety of instruments; among them are CFDs on Forex,
-                  Crypto, Stocks, Commodities, Indices and ETFs.
-                </p>
-                <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                  <Link
-                    href="/signup"
-                    className="rounded-sm bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80"
-                  >
-                    Get Started
-                  </Link>
-                  <div className="w-full px-4 lg:w-1/2">
-                    <div
-                      className="wow fadeInUp mx-auto flex aspect-[22/20] max-w-[200px] items-center lg:mr-0"
-                      data-wow-delay=".2s"
-                    ></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
+        {/* </div> */}
 
         <div className="absolute right-0 top-0 z-[-1] opacity-30 lg:opacity-100">
           <svg

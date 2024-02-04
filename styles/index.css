@@ -34,3 +34,10 @@
 #crypto-widget-CoinMarquee {
   background-color: #f0f0f0;
 }
+.loading-spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+}

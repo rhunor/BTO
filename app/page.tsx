@@ -13,12 +13,13 @@ import { Metadata } from "next";
 import Widget from "@/components/Widget";
 
 export const metadata: Metadata = {
-  title: "Binary Trading Options",
+  title: "Binary Crypto Options",
   description: " ",
   // other metadata
 };
 
 export default function Home() {
+  
   return (
     <>
       <ScrollUp />

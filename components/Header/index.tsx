@@ -130,7 +130,7 @@ import { useSession } from "next-auth/react";
                   sticky ? "py-5 lg:py-2" : "py-8"
                 } `}
               >
-                <p className="logo_text">Binary Trading Options</p>
+                <p className="logo_text">Binary Crypto Options</p>
                 {/* <Image
                   src="/images/logo/logo-2.svg"
                   alt="logo"

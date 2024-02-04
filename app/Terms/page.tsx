@@ -5,8 +5,8 @@ import "swiper/css";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms  | Binary Trading options",
-  description: "This is About Page for Binary Trading Options",
+  title: "Terms  | Binary Crypto options",
+  description: "This is About Page for Binary Crypto Options",
   // other metadata
 };
 
@@ -34,11 +34,11 @@ const Hero = () => {
                 <p className="dark:text-body-color-dark mb-12 text-base !leading-relaxed text-body-color sm:text-lg md:text-xl">
                 Last Updated: 08.12.23
 
-These Terms constitute a legally binding agreement between you (“you” or “your”) and Binary Trading Options (“Binary Trading Options”, “we”, “our” or “us”). The Terms govern your use of the Binance Services made available to you on or through the Platform or otherwise. Binance Services may be provided by Binance or, if specified in these Terms, any Product Terms or any additional terms, by any Binance Affiliate.
+These Terms constitute a legally binding agreement between you (“you” or “your”) and Binary Crypto Options (“Binary Crypto Options”, “we”, “our” or “us”). The Terms govern your use of the Binance Services made available to you on or through the Platform or otherwise. Binance Services may be provided by Binance or, if specified in these Terms, any Product Terms or any additional terms, by any Binance Affiliate.
 
-By registering for a Binary Trading Options Account, accessing the Platform and/or using the Binary Trading Options Services, you agree that you have read, understood and accepted these Terms, together with any additional documents or terms referred to in these Terms. You acknowledge and agree that you will be bound by and will comply with these Terms, as updated and amended from time to time.
+By registering for a Binary Crypto Options Account, accessing the Platform and/or using the Binary Crypto Options Services, you agree that you have read, understood and accepted these Terms, together with any additional documents or terms referred to in these Terms. You acknowledge and agree that you will be bound by and will comply with these Terms, as updated and amended from time to time.
 
-If you do not understand and accept these Terms in their entirety, you should not register for a Binary Trading Options Account or access or use the Platform or any Binary Trading Options Service.
+If you do not understand and accept these Terms in their entirety, you should not register for a Binary Crypto Options Account or access or use the Platform or any Binary Crypto Options Service.
 
 RISK WARNING
 
@@ -56,7 +56,7 @@ INFORMATION ABOUT OUR AGREEMENT WITH YOU
 
 1.	Introduction
 
-1.1.	About us. The Binary Trading Options group is an ecosystem centred around an online exchange for Digital Assets trading. The Binary Trading Options group provides users with a trading platform to buy and sell Digital Assets, integrated custody solution allowing users to store their Digital Assets and other Digital Asset-related services.
+1.1.	About us. The Binary Crypto Options group is an ecosystem centred around an online exchange for Digital Assets trading. The Binary Crypto Options group provides users with a trading platform to buy and sell Digital Assets, integrated custody solution allowing users to store their Digital Assets and other Digital Asset-related services.
 
 1.2.	These Terms. By registering to open a Binary Trading Options Account you are entering into a legally binding agreement with us. These Terms will govern your use of the Binance Services and tell you who we are, how we will provide the Binance Services to you, how these Terms may be changed or terminated, what to do if there is a problem, along with other important information.
 
@@ -110,7 +110,7 @@ Where we are unable to give you advance notice, we will let you know of the chan
 
 3.	How we contact each other
 
-3.1.	How you can contact us. For more information on Binary Trading Options, you may refer to the information found on our Website. If you have questions, feedback or complaints you can contact us via our Customer Support team at https://www.binance.com/en/chat. These Terms may specify contact details for particular notices. This address is not monitored for those notices.
+3.1.	How you can contact us. For more information on Binary Crypto Options, you may refer to the information found on our Website. If you have questions, feedback or complaints you can contact us via our Customer Support team at https://www.binance.com/en/chat. These Terms may specify contact details for particular notices. This address is not monitored for those notices.
 
 3.2.	How we will contact you. We will contact you using the details you provide to us. This may include contacting you by email, SMS or telephone. It is important that you ensure that your contact details are correct and up to date. If your contact details change, you must let us know immediately. If you do not, we will not be responsible if you do not receive information, notices or other important information from us. 
                 </p>
