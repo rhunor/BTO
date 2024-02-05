@@ -39,12 +39,23 @@ const Hero = async () => {
                   bc1qcw3l8nl9s29lv7cv8ykxvk9w8xkwltfy6t3zk6
                 </p>
                 <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                  <Link
-                    href="/signup"
-                    className="rounded-sm bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80"
-                  >
-                    Get Started
-                  </Link>
+                  <div className="absolute h-full w-full">
+                    <Image
+                      className="h-full w-full object-cover object-center"
+                      sizes="100vw"
+                      fill
+                      alt="image"
+                      src={`/images/images/BTC barcode.JPG`}
+                    />
+                    <div className="absolute bottom-8 left-10 rounded-lg bg-[#0000007c] px-6 py-3">
+                      <Link
+                        href="/signup"
+                        className="rounded-sm bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80"
+                      >
+                        Get Started
+                      </Link>
+                    </div>
+                  </div>
                   <div className="w-full px-4 lg:w-1/2">
                     {/* <div
                       className="wow fadeInUp mx-auto flex aspect-[22/20] max-w-[200px] items-center lg:mr-0"

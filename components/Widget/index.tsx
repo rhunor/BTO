@@ -35,7 +35,7 @@ const Widget = () => {
 
     return () => {
       // Cleanup script on component unmount
-      if (container) {
+      if (container && container.contains(script)) {
         container.removeChild(script);
       }
     };
