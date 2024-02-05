@@ -5,8 +5,8 @@ import Breadcrumb from "@/components/Common/Breadcrumb";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About  | Binary Trading options",
-  description: "This is About Page for Binary Trading Options",
+  title: "About  | Binary crypto options",
+  description: "This is About Page for Binary crypto Options",
   // other metadata
 };
 

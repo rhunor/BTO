@@ -1,66 +1,50 @@
-"use client"
 import Head from "next/head";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { log } from "console";
+import { getServerSession } from "next-auth";
 
-const Hero = () => {
-  const [page, setPage]= useState<number>(3);
+import { redirect } from "next/navigation";
+import { authOptions } from "@/lib/auth";
 
+const PaymentSectionTwo = async () => {
+  const session = await getServerSession(authOptions);
 
-  useEffect(()=>{
-    let int = setInterval(()=>{ setPage(prev=>((prev+1) >=8 ? 1 : prev+1));
-  },4000);
+  if (!session) {
+    redirect("/api/auth/signin?callbackUrl=/Member");
+  }
 
-  return ()=> clearInterval(int);
-},[]);
-
-const handlePrevPage =()=>{
-console.log("prev");
-setPage(prev=>((prev-1) <=0 ? 7 : prev-1))
-
-}
-const handleNextPage =()=>{
-  console.log("prev");
-  setPage(prev=>((prev+1) >=8 ? 1 : prev+1))
-}
   return (
     <>
       <section
         id="home"
-        className="relative z-10 overflow-hidden bg-white pb-16 pt-[20px] dark:bg-gray-dark md:pb-[120px] md:pt-[30px] xl:pb-[80px] xl:pt-[30px] 2xl:pb-[40px] 2xl:pt-[10px]"
+        className="relative z-10 overflow-hidden bg-white pb-8 pt-[20px] dark:bg-gray-dark md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[70px] 2xl:pt-[50px]"
       >
-        {/* <div className="container"> */}
-        <div className="relative flex h-[calc(100vh-70px)] sm:h-[calc(100vh-90px)] md:h-[calc(100vh-120px)] lg:h-[calc(100vh-150px)] xl:h-[calc(100vh-180px)] w-full flex-col justify-center items-center">
-  <div className="absolute w-full h-full">
-    <Image className="w-full h-full object-cover object-center" sizes="100vw" fill alt="image" src={`/images/images/${page}.JPG`}  onError={(e) => console.error("Error loading image:", e)}/>
-    <div className="absolute bottom-8 left-10 py-3 px-6 bg-[#0000007c] rounded-lg">
-      <h1 className="z-index mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
-        Best Trading Options in The world
-      </h1>
-      <p className="text-2xl mt-4 text-purple-200  pb-8">Binary Crypto Options is a distinctive investment company offering investors access to high-growth investment opportunities in Bitcoin markets and other services.</p>
-      <Link
-        href="/signup"
-        className="rounded-sm bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80"
-      >
-        Get Started
-      </Link>
-    </div>
-    {/* left arrow */}
-    <div className="z-10 absolute bottom-1/2 left-4 text-2xl">
-      <span onClick={handlePrevPage} className="inline-block transition-transform hover:-translate-x-1 motion-reduce:transform-none cursor-pointer hover:text-blue-500">&lt;-</span>
-    </div>
-    {/* right arrow */}
-    <div className="z-10 absolute bottom-1/2 right-4 text-2xl">
-      <span onClick={handleNextPage} className="inline-block transition-transform hover:translate-x-1 motion-reduce:transform-none cursor-pointer hover:text-blue-500">-&gt;</span>
-    </div>
+        <div className="container mx-auto">
+          <div className="-mx-4 flex flex-wrap">
+            <div className="w-full px-4">
+              <div
+                className="wow fadeInUp mx-auto max-w-[800px] text-center"
+                data-wow-delay=".2s"
+              >
+              
+               <div className="container flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+  <div className="relative h-96 md:w-96 w-full">
+    <Image
+      className="object-cover object-center h-full w-full"
+      sizes="100vw"
+      fill
+      alt="image"
+      src="/images/images/BTC barcode.JPG"
+    />
   </div>
 </div>
 
-        {/* </div> */}
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div className="absolute right-0 top-0 z-[-1] opacity-30 lg:opacity-100">
           <svg
@@ -308,4 +292,4 @@ const handleNextPage =()=>{
   );
 };
 
-export default Hero;
+export default PaymentSectionTwo;
