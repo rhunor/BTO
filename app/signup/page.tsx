@@ -449,7 +449,7 @@ const SignupPage = () => {
         </div>
       )} */}
                 <p className="text-center text-base font-medium text-body-color">
-                  Already using Binary Trading Options?{" "}
+                  Already using Binary Crypto Options?{" "}
                   <Link href="/signin" className="text-primary hover:underline">
                     Sign in
                   </Link>

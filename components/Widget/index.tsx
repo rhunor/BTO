@@ -46,7 +46,7 @@ const Widget = () => {
         id="home"
         className="relative z-10 overflow-hidden bg-white pb-2 pt-[80px] dark:bg-gray-dark md:pb-[2px] md:pt-[85px] xl:pb-[2px] xl:pt-[90px] 2xl:pb-[2px] 2xl:pt-[105px]"
       >
-        <div className="container">
+        {/* <div className="container"> */}
         <div id="tradingview-widget-container" className="tradingview-widget-container">
         <div className="tradingview-widget-container__widget"></div>
         {/* <div className="tradingview-widget-copyright">
@@ -57,7 +57,7 @@ const Widget = () => {
       </div>
 
           <div className="-mx-4 flex flex-wrap"></div>
-        </div>
+        {/* </div> */}
 
         <div className="absolute right-0 top-0 z-[-1] opacity-30 lg:opacity-100">
           <svg
