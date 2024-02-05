@@ -38,7 +38,7 @@ const Testimonials = () => {
       <div className="container">
         <SectionTitle
           title="What Our Users Says"
-          paragraph="There are many variations of passages of Lorem Ipsum available but the majority have suffered alteration in some form."
+          paragraph=" With our team of specially trained financial management advisors, Binary Trading Options is sure to give you the best investment opportunities and strategies to tailor your personal goals and budget"
           center
         />
 

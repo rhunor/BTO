@@ -1,3 +1,6 @@
+
+// import { useRouter } from "next/router";
+
 const PricingBox = (props: {
   price: string;
   duration: string;
@@ -6,7 +9,12 @@ const PricingBox = (props: {
   children: React.ReactNode;
 }) => {
   const { price, duration, packageName, subtitle, children } = props;
-
+  // const router = useRouter();
+  
+  // const handleClick = () => {
+  //   // Navigate to the /payment page
+  //   router.push("/payment");
+  // };
   return (
     <div className="w-full">
       <div
