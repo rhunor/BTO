@@ -34,39 +34,11 @@ const Hero = async () => {
                   USER DASHBOARD
                 </h1>
                 <p>{session?.user?.email}</p>
-                {/* <p className="mb-12 text-base !leading-relaxed text-body-color dark:text-body-color-dark sm:text-lg md:text-xl">
-                  Binary Trading Options is a distinctive investment company
-                  offering investors access to high-growth investment
-                  opportunities in Bitcoin markets and other services. Binary
-                  Trading Options is a trading platform which trades using a
-                  wide variety of instruments; among them are CFDs on Forex,
-                  Crypto, Stocks, Commodities, Indices and ETFs.
-                </p> */}
+               
                 <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                  {/* <Link
-                    href="/signup"
-                    className="rounded-sm bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80"
-                  >
-                    Get Started
-                  </Link> */}
+                 
                   <div className="w-full px-4 lg:w-1/2">
-                    {/* <div
-                      className="wow fadeInUp mx-auto flex aspect-[22/20] max-w-[200px] items-center lg:mr-0"
-                      data-wow-delay=".2s"
-                    >
-                      <Image
-                        src="/images/images/5.JPG"
-                        alt="about-image"
-                        fill
-                        className="mx-auto max-w-full drop-shadow-three dark:hidden dark:drop-shadow-none lg:mr-0 "
-                      />
-                      <Image
-                        src="/images/images/8.JPG"
-                        alt="about-image"
-                        fill
-                        className="mx-auto hidden max-w-full drop-shadow-three dark:block dark:drop-shadow-none lg:mr-0 "
-                      />
-                    </div> */}
+                  
                   </div>
                 </div>
               </div>
