@@ -1,29 +1,157 @@
-import Head from "next/head";
+"use client"
+// import Head from "next/head";
 import Link from "next/link";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import Image from "next/image";
+// import { Swiper, SwiperSlide } from "swiper/react";
+// import "swiper/css";
+// import Image from "next/image";
 import { getServerSession } from "next-auth";
-
+// import DashboardCard from "@/components/DashboardCard";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
+import SwiperCore, { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper-bundle.css';
+import { Card, Metric, Text, Title, BarList, Flex, Grid } from '@tremor/react';
+import Chart from './Chart';
+
+
 
 
 const Hero = async () => {
-    const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
 
 
   if (!session) {
     redirect("/api/auth/signin?callbackUrl=/Dashboard");
   }
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(' ');
+  }
+
+  const website = [
+    { name: '/Sol', value: 0 },
+    { name: '/btc', value: 0 },
+    { name: '/eth', value: 0 },
+    { name: '/shiba-inu', value: 0 },
+    { name: '/usdt', value: 0 }
+  ];
+  
+  const shop = [
+    { name: '/sol', value: 0 },
+    { name: '/btc', value: 0 },
+    { name: '/eth', value: 0 },
+    { name: '/shiba-inu', value: 0 }
+  ];
+  
+  const app = [
+    { name: '/sol', value: 0 },
+    { name: '/btc', value: 0 },
+    { name: '/eth', value: 0 },
+    { name: '/shiba-inu', value: 0 },
+    { name: '/usdt', value: 0 }
+  ];
+  
+  const data = [
+    {
+      category: 'Profits',
+      stat: '0',
+      data: website
+    },
+    {
+      category: 'Losses',
+      stat: '0',
+      data: shop
+    },
+    {
+      category: 'Revenue',
+      stat: '0',
+      data: app
+    },
+    {
+      name: 'Recurring revenue',
+      value: '0',
+      change: '+0%',
+      changeType: 'positive',
+    },
+    {
+      name: 'Wallet balance',
+      value: '0',
+      change: '+0%',
+      changeType: 'positive',
+    },
+    {
+      name: 'Percentage earned by trade',
+      value: '0%',
+      change: '0%',
+      changeType: 'none',
+    },
+  ];
+ 
+   
 
   return (
     <>
+   
+    
       <section
         id="home"
         className="relative z-10 overflow-hidden bg-white pb-16 pt-[120px] dark:bg-gray-dark md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px]"
       >
-        <div className="container">
+          <main className="p-4 md:p-10 mx-auto max-w-7xl">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {data.map((item,index) => (
+          <Card key={index}>
+            <p className="flex items-start justify-between">
+              <span className="text-tremor-metric font-semibold text-tremor-content-strong dark:text-dark-tremor-content-strong">
+                {item.value}
+              </span>
+              <span
+                className={classNames(
+                  item.changeType === 'positive'
+                    ? 'text-emerald-700 dark:text-emerald-500'
+                    : 'text-red-700 dark:text-red-500',
+                  'text-tremor-default font-medium',
+                )}
+              >
+                {item.change}
+              </span>
+            </p>
+            <p className="mt-1 text-tremor-default text-tremor-content dark:text-dark-tremor-content">
+              {item.name}
+            </p>
+          </Card>
+        ))}
+      </div>
+          <h1 className="z-index mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
+                  TRADE UPDATES
+                </h1>
+      <Grid numItemsSm={2} numItemsLg={3} className="gap-6">
+        {data.map((item,index) => (
+          <Card key={index}>
+            <Title>{item.category}</Title>
+            <Flex
+              justifyContent="start"
+              alignItems="baseline"
+              className="space-x-2"
+            >
+              <Metric>{item.stat}</Metric>
+              <Text>Total views</Text>
+            </Flex>
+            <Flex className="mt-6">
+              <Text>Pages</Text>
+              <Text className="text-right">Views</Text>
+            </Flex>
+            <BarList
+              data={item.data}
+              valueFormatter={(number: number) =>
+                Intl.NumberFormat('us').format(number).toString()
+              }
+              className="mt-2"
+            />
+          </Card>
+        ))}
+      </Grid>
+      {/* <Chart /> */}
+      <div className="container">
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
               <div
@@ -43,8 +171,9 @@ const Hero = async () => {
                 </div>
               </div>
             </div>
+            
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
-              {/* Wallet Balance and Referral Link options remain the same */}
+           
               <div className="rounded-lg bg-white p-4 shadow-md">
                 <Link href="/Payment">
                   <div className="flex items-center justify-between">
@@ -116,6 +245,8 @@ const Hero = async () => {
             </div>
           </div>
         </div>
+    </main>
+        
         <div className="absolute right-0 top-0 z-[-1] opacity-30 lg:opacity-100">
           <svg
             width="450"

@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
+import 'swiper/swiper-bundle.css';
 import Image from "next/image";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -19,7 +19,7 @@ const Hero = async () => {
         id="home"
         className="relative z-10 overflow-hidden bg-white pb-16 pt-[120px] dark:bg-gray-dark md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px]"
       >
-        <div className="container">
+          <div className="container">
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
               <div
@@ -27,41 +27,28 @@ const Hero = async () => {
                 data-wow-delay=".2s"
               >
                 <h1 className="z-index mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
-                  Private Account Funding
+                  Mr Romano
                 </h1>
                 <p className="mb-12 text-base !leading-relaxed text-body-color dark:text-body-color-dark sm:text-lg md:text-xl">
-                  Transfer funds in BTC by scanning the QR code on your secure
-                  crypto wallet or sending to the wallet address below. Upload
-                  the proof of payment below and submit for verification (takes
-                  0 - 24hrs) Click to copy wallet Address
-                  bc1qcw3l8nl9s29lv7cv8ykxvk9w8xkwltfy6t3zk6
+                In the dynamic world of trading, where every move counts and every decision can have significant ramifications, the role of a dedicated account manager stands out as a crucial element in ensuring seamless operations and optimal performance. Within trading firms, each trading account is entrusted to its own unique account manager, a practice that underscores the paramount importance of personalized attention and expertise in navigating the complexities of the financial markets.
+
+At the heart of this structure lies the recognition that every trading account is distinct, characterized by its own set of objectives, risk tolerance, investment preferences, and market dynamics. By assigning a dedicated account manager to each account, trading firms acknowledge the need for tailored strategies and individualized support to effectively meet the diverse needs and goals of their clients.
                 </p>
-                <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                  <Link
-                    href="/signup"
-                    className="rounded-sm bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80"
-                  >
-                    Get Started
+                <div className="mt-8 space-x-4 flex items-center justify-center">
+                  <Link href="https://t.me/gabrielromanofinance" passHref>
+                    {/* <a target="_blank" rel="noopener noreferrer"> */}
+                      <Image
+                        src="/images/images/ACMG2.JPG"
+                        alt="Account Manager Avatar"
+                        width={200}
+                        height={200}
+                        className="rounded-full"
+                      />
+                    {/* </a> */}
                   </Link>
-                  <div className="w-full px-4 lg:w-1/2">
-                    {/* <div
-                      className="wow fadeInUp mx-auto flex aspect-[22/20] max-w-[200px] items-center lg:mr-0"
-                      data-wow-delay=".2s"
-                    >
-                      <Image
-                        src="/images/images/5.JPG"
-                        alt="about-image"
-                        fill
-                        className="mx-auto max-w-full drop-shadow-three dark:hidden dark:drop-shadow-none lg:mr-0 "
-                      />
-                      <Image
-                        src="/images/images/8.JPG"
-                        alt="about-image"
-                        fill
-                        className="mx-auto hidden max-w-full drop-shadow-three dark:block dark:drop-shadow-none lg:mr-0 "
-                      />
-                    </div> */}
-                  </div>
+                  <Link href="https://t.me/gabrielromanofinance">
+                   Click here to contact account manager
+                  </Link>
                 </div>
               </div>
             </div>

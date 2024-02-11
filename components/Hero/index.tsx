@@ -2,10 +2,11 @@
 import Head from "next/head";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
+// import "swiper/css";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { log } from "console";
+import "swiper/swiper-bundle.css";
 
 const Hero = () => {
   const [page, setPage]= useState<number>(3);

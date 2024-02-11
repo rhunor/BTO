@@ -5,6 +5,8 @@ import PaymentSectionTwo from "@/components/payment/PaymentSectionTwo";
 
 import { Metadata } from "next";
 
+
+
 export const metadata: Metadata = {
   title: "Deposit  | Binary crypto options",
   description: "This is About Page for Binary Trading Options",
