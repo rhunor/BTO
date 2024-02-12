@@ -1,8 +1,8 @@
-"use client"
+
 // import Head from "next/head";
 import Link from "next/link";
 // import { Swiper, SwiperSlide } from "swiper/react";
-// import "swiper/css";
+
 // import Image from "next/image";
 import { getServerSession } from "next-auth";
 // import DashboardCard from "@/components/DashboardCard";
