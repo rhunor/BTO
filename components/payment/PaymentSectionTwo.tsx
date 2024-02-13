@@ -36,7 +36,7 @@ const PaymentSectionTwo = async () => {
       sizes="100vw"
       fill
       alt="image"
-      src="/images/images/BTC barcode.JPG"
+      src="/images/images/BTCbarcode.jpg"
     />
   </div>
 </div>
