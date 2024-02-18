@@ -1,76 +1,64 @@
-'use client';
+"use client";
 import Link from "next/link";
 
-import * as z from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
-
-
+import  createError  from "next-auth"
 
 const FormSchema = z.object({
-  email: z.string().min(1, 'Email is required').email('Invalid email'),
+  email: z.string().min(1, "Email is required").email("Invalid email"),
   password: z
     .string()
-    .min(1, 'Password is required')
-    .min(8, 'Password must have than 8 characters'),
+    .min(1, "Password is required")
+    .min(8, "Password must have than 8 characters"),
 });
 
-
-
- 
-
 const SigninPage = () => {
-
   const [showPassword, setShowPassword] = useState(false);
-
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  // const handleChange = (e) => {
-  //   const value = e.target.value;
-  //   const name = e.target.name;
-  //   setFormData((prevState) => ({
-  //     ...prevState,
-  //     [name]: value,
-  //   }));
-  // };
-  // const [formData, setFormData] = useState<{
-   
-  //   email: string;
-  //   password: string;
-    
-  // }>({
-    
-  //   email: "",
-  //   password: "",
-    
-  // });
-
   const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
   });
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-    const signInData = await signIn("credentials",{
+    const signInData = await signIn("credentials", {
       email: values.email,
       password: values.password,
       redirect: false,
-    } );
+    });
     if (signInData?.error) {
-      console.log(signInData.error);
-    }else{
+      if (signInData.error === "Email not found") {
+        form.setError("email", {
+          type: "manual",
+          message: "Error: Incorrect email address",
+        });
+      } else if (signInData.error === "Incorrect password") {
+        form.setError("password", {
+          type: "manual",
+          message: "Error: Incorrect password",
+        });
+      } else {
+        form.setError("root.general", {
+          type: "manual",
+          message: "Error: An unexpected error occurred",
+        });
+      }
+    } else {
       router.refresh();
-      router.push("/Dashboard")
+      router.push("/Dashboard");
     }
   };
   return (
@@ -79,14 +67,14 @@ const SigninPage = () => {
         <div className="container">
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
-              <div className="shadow-three mx-auto max-w-[500px] rounded bg-white px-6 py-10 dark:bg-dark sm:p-[60px]">
+              <div className="mx-auto max-w-[500px] rounded bg-white px-6 py-10 shadow-three dark:bg-dark sm:p-[60px]">
                 <h3 className="mb-3 text-center text-2xl font-bold text-black dark:text-white sm:text-3xl">
                   Sign in to your account
                 </h3>
                 <p className="mb-11 text-center text-base font-medium text-body-color">
                   Login to your account and preview your ongoing trades.
                 </p>
-                <button className="border-stroke dark:text-body-color-dark dark:shadow-two mb-6 flex w-full items-center justify-center rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none">
+                <button className="mb-6 flex w-full items-center justify-center rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none">
                   <span className="mr-3">
                     <svg
                       width="20"
@@ -123,7 +111,6 @@ const SigninPage = () => {
                   Sign in with Google
                 </button>
 
-               
                 <div className="mb-8 flex items-center justify-center">
                   <span className="hidden h-[1px] w-full max-w-[70px] bg-body-color/50 sm:block"></span>
                   <p className="w-full px-5 text-center text-base font-medium text-body-color">
@@ -131,7 +118,7 @@ const SigninPage = () => {
                   </p>
                   <span className="hidden h-[1px] w-full max-w-[70px] bg-body-color/50 sm:block"></span>
                 </div>
-                <form onSubmit={ form.handleSubmit(onSubmit)} >
+                <form onSubmit={form.handleSubmit(onSubmit)}>
                   <div className="mb-8">
                     <label
                       htmlFor="email"
@@ -143,11 +130,10 @@ const SigninPage = () => {
                       type="email"
                       name="email"
                       required={true}
-                      
                       // value={formData.email}
-                      {...form.register('email')}
+                      {...form.register("email")}
                       placeholder="Enter your Email"
-                      className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+                      className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                     />
                   </div>
                   <div className="mb-8">
@@ -158,23 +144,27 @@ const SigninPage = () => {
                       Your Password
                     </label>
                     <div className="relative">
-                    <input
-                      type={showPassword ? 'text' : 'password'}
-                      name="password"
-                      required={true}
-                      // value={formData.password}
-                      {...form.register('password')}
-                      placeholder="Enter your Password"
-                      className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
-                    />
-                    <button
-          type="button"
-          className="absolute top-1/2 right-4 transform -translate-y-1/2"
-          onClick={togglePasswordVisibility}
-        >
-          {showPassword ? <EyeOutlined/> : <EyeInvisibleOutlined/>}
-        </button>
-        </div>
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        required={true}
+                        // value={formData.password}
+                        {...form.register("password")}
+                        placeholder="Enter your Password"
+                        className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
+                      />
+                      <button
+                        type="button"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 transform"
+                        onClick={togglePasswordVisibility}
+                      >
+                        {showPassword ? (
+                          <EyeOutlined />
+                        ) : (
+                          <EyeInvisibleOutlined />
+                        )}
+                      </button>
+                    </div>
                   </div>
                   <div className="mb-8 flex flex-col justify-between sm:flex-row sm:items-center">
                     <div className="mb-4 sm:mb-0">
@@ -220,10 +210,20 @@ const SigninPage = () => {
                     </div>
                   </div>
                   <div className="mb-6">
-                    <button type="submit" className="shadow-submit dark:shadow-submit-dark flex w-full items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium text-white duration-300 hover:bg-primary/90">
+                    <button
+                      type="submit"
+                      className="flex w-full items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium text-white shadow-submit duration-300 hover:bg-primary/90 dark:shadow-submit-dark"
+                    >
                       Sign in
                     </button>
                   </div>
+                  {Object.entries(form.formState.errors).map(
+                    ([field, error]) => (
+                      <p key={field} className="mt-1 text-xs text-red-500">
+                        {error.message}
+                      </p>
+                    ),
+                  )}
                 </form>
                 <p className="text-center text-base font-medium text-body-color">
                   Don’t you have an account?{" "}

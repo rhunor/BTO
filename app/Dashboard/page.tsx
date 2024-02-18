@@ -12,6 +12,7 @@ import SwiperCore, { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import { Card, Metric, Text, Title, BarList, Flex, Grid } from '@tremor/react';
 import Chart from './Chart';
+import ButtonWithPopup from "@/components/ButtonWithPopup";
 
 
 
@@ -97,7 +98,9 @@ const Hero = async () => {
         className="relative z-10 overflow-hidden bg-white pb-16 pt-[120px] dark:bg-gray-dark md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px]"
       >
           <main className="p-4 md:p-10 mx-auto max-w-7xl">
+          {session && (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          
         {data.map((item,index) => (
           <Card key={index}>
             <p className="flex items-start justify-between">
@@ -119,16 +122,20 @@ const Hero = async () => {
               {item.name}
             </p>
           </Card>
+          
         ))}
+        
       </div>
+          )}
           <h1 className="z-index mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
                   TRADE UPDATES
                 </h1>
+                <ButtonWithPopup />
       <Grid numItemsSm={2} numItemsLg={3} className="gap-6">
         {data.map((item,index) => (
           <Card key={index}>
             <Title>{item.category}</Title>
-            <Flex
+            {/* <Flex
               justifyContent="start"
               alignItems="baseline"
               className="space-x-2"
@@ -139,7 +146,7 @@ const Hero = async () => {
             <Flex className="mt-6">
               <Text>Pages</Text>
               <Text className="text-right">Views</Text>
-            </Flex>
+            </Flex> */}
             <BarList
               data={item.data}
               valueFormatter={(number: number) =>
@@ -161,7 +168,7 @@ const Hero = async () => {
                 <h1 className="z-index mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
                   USER DASHBOARD
                 </h1>
-                <p>{session?.user?.email}</p>
+                {/* <p>{session?.user?.email}</p> */}
                
                 <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
                  
