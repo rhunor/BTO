@@ -8,7 +8,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
-import  createError  from "next-auth"
+import  createError  from "next-auth";
 
 const FormSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email"),
@@ -45,7 +45,7 @@ const SigninPage = () => {
           type: "manual",
           message: "Error: Incorrect email address",
         });
-      } else if (signInData.error === "Incorrect password") {
+      } else if (signInData.error === "CredentialsSignin") {
         form.setError("password", {
           type: "manual",
           message: "Error: Incorrect password",
@@ -60,6 +60,8 @@ const SigninPage = () => {
       router.refresh();
       router.push("/Dashboard");
     }
+    console.log(signInData.error);
+    
   };
   return (
     <>

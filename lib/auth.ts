@@ -88,3 +88,9 @@ export const authOptions: NextAuthOptions = {
 //       if (!session) router.push("/");
 //     }
 //   }
+
+// try {
+  
+// } catch (error) {
+  
+// }
