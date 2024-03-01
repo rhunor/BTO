@@ -11,6 +11,7 @@ const SignupPage = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -26,6 +27,7 @@ const SignupPage = () => {
   };
 
   const handleSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     setErrorMessage("");
     const res = await fetch("/api/user", {
@@ -35,6 +37,7 @@ const SignupPage = () => {
         "Content-Type": "application/json",
       },
     });
+    setIsLoading(false);
 
     if (!res.ok) {
       // console.error("registration failed");
@@ -142,6 +145,11 @@ const SignupPage = () => {
                   <span className="hidden h-[1px] w-full max-w-[60px] bg-body-color/50 sm:block"></span>
                 </div>
                 <form onSubmit={handleSubmit} method="post">
+                {isLoading && (
+  <div className="flex items-center justify-center">
+    <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary"></div>
+  </div>
+)}
                   <div className="mb-8">
                     <label
                       htmlFor="name"
