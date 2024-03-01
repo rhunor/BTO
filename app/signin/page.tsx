@@ -20,6 +20,7 @@ const FormSchema = z.object({
 
 const SigninPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -34,12 +35,15 @@ const SigninPage = () => {
     },
   });
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
+    setIsLoading(true);
     const signInData = await signIn("credentials", {
       email: values.email,
       password: values.password,
       redirect: false,
     });
+    setIsLoading(false);
     if (signInData?.error) {
+      console.log(signInData)
       if (signInData.error === "Email not found") {
         form.setError("email", {
           type: "manual",
@@ -120,7 +124,13 @@ const SigninPage = () => {
                   </p>
                   <span className="hidden h-[1px] w-full max-w-[70px] bg-body-color/50 sm:block"></span>
                 </div>
+   
                 <form onSubmit={form.handleSubmit(onSubmit)}>
+                {isLoading && (
+  <div className="flex items-center justify-center">
+    <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary"></div>
+  </div>
+)}
                   <div className="mb-8">
                     <label
                       htmlFor="email"
