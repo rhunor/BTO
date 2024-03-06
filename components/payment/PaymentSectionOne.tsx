@@ -1,3 +1,4 @@
+"use client"
 import Head from "next/head";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -7,21 +8,50 @@ import { getServerSession } from "next-auth";
 
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
+import { useState, useRef, useEffect } from 'react';
 
-const PaymentSectionOne = async () => {
-  const session = await getServerSession(authOptions);
+
+
+const PaymentSectionOne = () => {
+  
+  const funct = async () =>{
+    const session = await getServerSession(authOptions);
 
   if (!session) {
     redirect("/api/auth/signin?callbackUrl=/Member");
   }
+  }
+
+  // useEffect(()=>{
+  //   funct()
+  // }, [])
+  
+  const [copied, setCopied] = useState(false);
+ const [first, setFirst] = useState("bc1qcw3l8nl9s29lv7cv8ykxvk9w8xkwltfy6t3zk6")
+  const walletRef = useRef(null);
+
+  const copyToClipboard = async () => {
+    if (first) {
+      try {
+        await navigator.clipboard.writeText(first);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch (err) {
+        console.error('Failed to copy text: ', err);
+      }
+    }
+  };
 
   return (
     <>
+      
       <section
         id="home"
         className="relative z-10 overflow-hidden bg-white pb-16 pt-[120px] dark:bg-gray-dark md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px]"
       >
+      
         <div className="container">
+        
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
               <div
@@ -32,48 +62,22 @@ const PaymentSectionOne = async () => {
                   Private Account Funding
                 </h1>
                 <p className="mb-12 text-base !leading-relaxed text-body-color dark:text-body-color-dark sm:text-lg md:text-xl">
-                  Transfer funds in BTC by scanning the QR code on your secure
+                  Transfer funds in BTC by scanning the QR code on your secure 
                   crypto wallet or sending to the wallet address below. Upload
                   the proof of payment below and submit for verification (takes
-                  0 - 24hrs) Click to copy wallet Address
-                  bc1qcw3l8nl9s29lv7cv8ykxvk9w8xkwltfy6t3zk6
+                  0 - 24hrs)
+                  <br/>
+                  <button className="cursor-pointer" onClick={() => copyToClipboard()}>
+                    {first}
+                  </button>
+                  {copied && (
+                    <div className="copied-message">Copied to clipboard!</div>
+                  )}
                 </p>
                 <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                  <div className="absolute h-full w-full">
-                    {/* <Image
-                      className="h-full w-full object-cover object-center"
-                      sizes="100vw"
-                      fill
-                      alt="image"
-                      src={`/images/images/BTC barcode.JPG`}
-                    /> */}
-                    <div className="absolute bottom-8 left-10 rounded-lg bg-[#0000007c] px-6 py-3">
-                      <Link
-                        href="/signup"
-                        className="rounded-sm bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80"
-                      >
-                        Get Started
-                      </Link>
-                    </div>
-                  </div>
+                 
                   <div className="w-full px-4 lg:w-1/2">
-                    {/* <div
-                      className="wow fadeInUp mx-auto flex aspect-[22/20] max-w-[200px] items-center lg:mr-0"
-                      data-wow-delay=".2s"
-                    >
-                      <Image
-                        src="/images/images/5.JPG"
-                        alt="about-image"
-                        fill
-                        className="mx-auto max-w-full drop-shadow-three dark:hidden dark:drop-shadow-none lg:mr-0 "
-                      />
-                      <Image
-                        src="/images/images/8.JPG"
-                        alt="about-image"
-                        fill
-                        className="mx-auto hidden max-w-full drop-shadow-three dark:block dark:drop-shadow-none lg:mr-0 "
-                      />
-                    </div> */}
+                  
                   </div>
                 </div>
               </div>

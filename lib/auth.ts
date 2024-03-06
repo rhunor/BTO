@@ -53,7 +53,7 @@ export const authOptions: NextAuthOptions = {
       ],
       callbacks: {
         async jwt({ token, user }){
-            // console.log(token, user);
+            // console.log(token);
             if (user) {
                 return{
                     ...token,
