@@ -12,6 +12,7 @@ import { useState, useRef, useEffect } from 'react';
 
 
 
+
 const PaymentSectionOne = () => {
   
   const funct = async () =>{
@@ -61,19 +62,34 @@ const PaymentSectionOne = () => {
                 <h1 className="z-index mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
                   Private Account Funding
                 </h1>
-                <p className="mb-12 text-base !leading-relaxed text-body-color dark:text-body-color-dark sm:text-lg md:text-xl">
+                <div className="mb-12 text-base !leading-relaxed text-body-color dark:text-body-color-dark sm:text-lg md:text-xl">
                   Transfer funds in BTC by scanning the QR code on your secure 
                   crypto wallet or sending to the wallet address below. Upload
                   the proof of payment below and submit for verification (takes
                   0 - 24hrs)
                   <br/>
+                  click the address below to copy
+         
+                  <br/>
+                  <div className="flex items-center justify-center">
+  <div className="relative h-10 w-full max-w-10">
+    <Image
+      className="object-cover object-center w-full h-full"
+      sizes="(max-width: 767px) 50vw, 20vw"
+      fill
+      alt="image"
+      src="/images/images/downwardpointingarrow.svg"
+    />
+  </div>
+</div>
+
                   <button className="cursor-pointer" onClick={() => copyToClipboard()}>
                     {first}
                   </button>
                   {copied && (
                     <div className="copied-message">Copied to clipboard!</div>
                   )}
-                </p>
+                </div>
                 <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
                  
                   <div className="w-full px-4 lg:w-1/2">
