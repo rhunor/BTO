@@ -31,7 +31,7 @@ const PaymentSectionTwo = async () => {
               >
               
                <div className="container flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-  <div className="relative h-96 md:w-96 w-full">
+  <div className="relative h-96 max-w-96 w-full">
     <Image
       className="object-cover object-center h-full w-full"
       sizes="100vw"
