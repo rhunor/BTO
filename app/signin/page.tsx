@@ -4,11 +4,15 @@ import Link from "next/link";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
+import { getServerSession } from "next-auth";
 import  createError  from "next-auth";
+import { redirect } from "next/navigation";
+import { authOptions } from "@/lib/auth";
+
 
 const FormSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email"),
@@ -19,6 +23,18 @@ const FormSchema = z.object({
 });
 
 const SigninPage = () => {
+  // useEffect(() => {
+  //   const checkSession = async () => {
+  //     const session = await getServerSession(authOptions);
+
+  //     if (session) {
+  //       redirect("/Dashboard");
+  //     }
+  //   };
+
+  //   checkSession();
+  // }, []);
+
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
