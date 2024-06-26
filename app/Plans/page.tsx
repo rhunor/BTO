@@ -85,7 +85,7 @@ const Pricing = () => {
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
           <PricingBox
             packageName="Standard Plan"
-            price={isMonthly ? "500 " : "2,000"}
+            price={isMonthly ? "250 " : "2,000"}
             duration={isMonthly ? " week" : "Month"}
             subtitle="Return on investment 10% daily for 5 Days total 50% for 5 days"
           >
