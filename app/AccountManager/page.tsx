@@ -35,7 +35,7 @@ const Hero = async () => {
 At the heart of this structure lies the recognition that every trading account is distinct, characterized by its own set of objectives, risk tolerance, investment preferences, and market dynamics. By assigning a dedicated account manager to each account, trading firms acknowledge the need for tailored strategies and individualized support to effectively meet the diverse needs and goals of their clients.
                 </p>
                 <div className="mt-8 space-x-4 flex items-center justify-center">
-                  <Link href="https://t.me/gabrielromanofinance" passHref>
+                  <Link href="http://t.me/gabrielromanoo" passHref>
                     {/* <a target="_blank" rel="noopener noreferrer"> */}
                       <Image
                         src="/images/images/ACMG2.JPG"
@@ -46,7 +46,7 @@ At the heart of this structure lies the recognition that every trading account i
                       />
                     {/* </a> */}
                   </Link>
-                  <Link href="https://t.me/gabrielromanofinance">
+                  <Link href="http://t.me/gabrielromanoo">
                    Click here to contact account manager
                   </Link>
                 </div>
