@@ -86,7 +86,7 @@ const Footer = () => {
                     </svg>
                   </a> */}
                   <a
-                    href="http://t.me/binarycryptooptionsadmin"
+                    href="http://t.me/binarycryptooptionssupport"
                     aria-label="social-link"
                     className="dark:text-body-color-dark text-body-color duration-300 hover:text-primary dark:hover:text-primary"
                   >
