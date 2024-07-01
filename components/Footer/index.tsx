@@ -39,10 +39,32 @@ const Footer = () => {
                     height={30}
                   />
                 </Link> */}
-                <p className="dark:text-body-color-dark mb-9 text-base leading-relaxed text-body-color">
+                <h2 className="mb-10 text-xl font-bold text-black dark:text-white">
+                  Find Us
+                </h2>
+                      <div className="flex items-center">
+                <iframe
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2348.6220590260627!2d-90.21919513273438!3d32.296063481133885!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86282b7f90741b21%3A0x713cde441f038a0!2sJackson%2C%20MS%2C%USA!5e0!3m2!1sen!2sng!4v1719825540980!5m2!1sen!2sng"
+  width="250"
+  height="100"
+  style={{ border: "1", display: "block"}}
+  
+  loading="lazy"
+  referrerPolicy="no-referrer-when-downgrade"
+/>
+</div>
+
+                <p className="dark:text-body-color-dark text-base leading-relaxed text-body-color">
                   Start Investing Today Change your life
                 </p>
+                <p className="dark:text-body-color-dark mb-9 text-base leading-relaxed text-body-color">
+                  Helpline - +1(622)4822576
+                </p>
+               
                 <div className="flex items-center">
+          
+
+
                   {/* <a
                     href="/"
                     aria-label="social-link"
