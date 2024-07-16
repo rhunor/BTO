@@ -13,12 +13,22 @@ import 'swiper/swiper-bundle.css';
 import { Card, Metric, Text, Title, BarList, Flex, Grid } from '@tremor/react';
 import Chart from './Chart';
 import ButtonWithPopup from "@/components/ButtonWithPopup";
+import { supabase } from '@/lib/initSupabase';
 
 
-
+const getData = async()=>{
+  const res = await supabase.from('UserValue').select("*").contains('id', 'userId');
+  console.log(res);
+  
+  // if(!res.ok){
+  //   throw new Error("failed");
+  // }
+  // return res.json();
+}
 
 const Hero = async () => {
   const session = await getServerSession(authOptions);
+  const apiData = await getData();
 
 
   if (!session) {
@@ -91,7 +101,9 @@ const Hero = async () => {
 
   return (
     <>
-   
+   <div>
+    {JSON.stringify(apiData)}
+   </div>
     
       <section
         id="home"
