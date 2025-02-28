@@ -1,6 +1,4 @@
-import Head from "next/head";
-import Link from "next/link";
-import { Swiper, SwiperSlide } from "swiper/react";
+
 import 'swiper/swiper-bundle.css';
 import { Metadata } from "next";
 

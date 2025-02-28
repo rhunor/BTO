@@ -1,25 +1,12 @@
-import Head from "next/head";
-import Link from "next/link";
-import { Swiper, SwiperSlide } from "swiper/react";
-import 'swiper/swiper-bundle.css';
+"use client";
 import Image from "next/image";
-import { getServerSession } from "next-auth";
 
-import { redirect } from "next/navigation";
-import { authOptions } from "@/lib/auth";
-
-
-const PaymentSectionTwo = async () => {
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    redirect("/api/auth/signin?callbackUrl=/Member");
-  }
-
+// Convert to client component for consistency with PaymentSectionOne
+const PaymentSectionTwo = () => {
   return (
     <>
       <section
-        id="home"
+        id="qrcode"
         className="relative z-10 overflow-hidden bg-white pb-8 pt-[20px] dark:bg-gray-dark md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[70px] 2xl:pt-[50px]"
       >
         <div className="container mx-auto">
@@ -29,20 +16,17 @@ const PaymentSectionTwo = async () => {
                 className="wow fadeInUp mx-auto max-w-[800px] text-center"
                 data-wow-delay=".2s"
               >
-              
-               <div className="container flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-  <div className="relative h-96 max-w-96 w-full">
-    <Image
-      className="object-cover object-center h-full w-full"
-      sizes="100vw"
-      fill
-      alt="image"
-      src="/images/images/BTCbarcode.jpg"
-    />
-  </div>
-  
-</div>
-
+                <div className="container flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+                  <div className="relative h-96 max-w-96 w-full">
+                    <Image
+                      className="object-cover object-center h-full w-full"
+                      sizes="100vw"
+                      fill
+                      alt="image"
+                      src="/images/images/BTCbarcode.jpg"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

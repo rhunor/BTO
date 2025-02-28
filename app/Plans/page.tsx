@@ -4,13 +4,7 @@ import { useState } from "react";
 import SectionTitle from "../Common/SectionTitle";
 import OfferList from "./OfferList";
 import PricingBox from "./PricingBox";
-// import { Metadata } from "next";
 
-// export const metadata: Metadata = {
-//   title: "Contact Page | Binary Trading Options",
-//   description: "This is Contact Page for Binary Trading Options",
-//   // other metadata
-// };
 
 
 const Pricing = () => {

@@ -2,7 +2,7 @@ import { Feature } from "@/types/feature";
 
 const featuresData: Feature[] = [
   {
-    id: 1,
+    id: "1", // Changed to string for consistency, but number (1) would also work
     icon: (
       <svg width="40" height="41" viewBox="0 0 40 41" className="fill-current">
         <path
@@ -13,11 +13,10 @@ const featuresData: Feature[] = [
       </svg>
     ),
     title: "STRONG SECURITY",
-    paragraph:
-      "Protection against MFA attacks, full data encryption",
+    paragraph: "Protection against MFA attacks, full data encryption",
   },
   {
-    id: 1,
+    id: "2", // Unique ID
     icon: (
       <svg width="40" height="40" viewBox="0 0 40 40" className="fill-current">
         <path
@@ -28,11 +27,10 @@ const featuresData: Feature[] = [
       </svg>
     ),
     title: "WORLD COVERAGE",
-    paragraph:
-      "Providing services in over 30 countries around all the globe",
+    paragraph: "Providing services in over 30 countries around all the globe",
   },
   {
-    id: 1,
+    id: "3", // Unique ID
     icon: (
       <svg width="40" height="40" viewBox="0 0 40 40" className="fill-current">
         <path
@@ -43,11 +41,10 @@ const featuresData: Feature[] = [
       </svg>
     ),
     title: "PAYMENT OPTIONS",
-    paragraph:
-      "Popular methods: Bitcoin, Ethereum, Skril",
+    paragraph: "Popular methods: Bitcoin, Ethereum, Skrill",
   },
   {
-    id: 1,
+    id: "4", // Unique ID
     icon: (
       <svg width="40" height="42" viewBox="0 0 40 42" className="fill-current">
         <path
@@ -58,11 +55,10 @@ const featuresData: Feature[] = [
       </svg>
     ),
     title: "MOBILE FRIENDLY",
-    paragraph:
-      "Our User Dashboard is Made to match all Mobile resultions",
+    paragraph: "Our User Dashboard is made to match all mobile resolutions",
   },
   {
-    id: 1,
+    id: "5", // Unique ID
     icon: (
       <svg width="40" height="40" viewBox="0 0 40 40" className="fill-current">
         <path
@@ -73,11 +69,10 @@ const featuresData: Feature[] = [
       </svg>
     ),
     title: "COST EFFICIENCY",
-    paragraph:
-      "Reasonable trading fees for takers and all market makers",
+    paragraph: "Reasonable trading fees for takers and all market makers",
   },
   {
-    id: 1,
+    id: "6", // Unique ID
     icon: (
       <svg width="40" height="45" viewBox="0 0 40 45" className="fill-current">
         <path
@@ -88,8 +83,8 @@ const featuresData: Feature[] = [
       </svg>
     ),
     title: "HIGH LIQUIDITY",
-    paragraph:
-      "Fast access to high liquidity orderbook for top currency pairs",
+    paragraph: "Fast access to high liquidity orderbook for top currency pairs",
   },
 ];
+
 export default featuresData;

@@ -1,35 +1,29 @@
 "use client"
-import Head from "next/head";
-import Link from "next/link";
-import { Swiper, SwiperSlide } from "swiper/react";
-import 'swiper/swiper-bundle.css';
+
 import Image from "next/image";
-import { getServerSession } from "next-auth";
-
-import { redirect } from "next/navigation";
-import { authOptions } from "@/lib/auth";
 import { useState, useRef, useEffect } from 'react';
-
-
-
+import { useRouter } from "next/navigation";
 
 const PaymentSectionOne = () => {
-  
-  const funct = async () =>{
-    const session = await getServerSession(authOptions);
-
-  if (!session) {
-    redirect("/api/auth/signin?callbackUrl=/Member");
-  }
-  }
-
-  // useEffect(()=>{
-  //   funct()
-  // }, [])
-  
+  const router = useRouter();
   const [copied, setCopied] = useState(false);
- const [first, setFirst] = useState("bc1qcw3l8nl9s29lv7cv8ykxvk9w8xkwltfy6t3zk6")
+  const [first, setFirst] = useState("bc1qcw3l8nl9s29lv7cv8ykxvk9w8xkwltfy6t3zk6");
   const walletRef = useRef(null);
+
+  // Check authentication client-side
+  useEffect(() => {
+    // Fetch session status from an API endpoint
+    const checkSession = async () => {
+      const res = await fetch('/api/auth/session');
+      const data = await res.json();
+      
+      if (!data.authenticated) {
+        router.push("/api/auth/signin?callbackUrl=/Member");
+      }
+    };
+    
+    checkSession();
+  }, [router]);
 
   const copyToClipboard = async () => {
     if (first) {
@@ -45,14 +39,11 @@ const PaymentSectionOne = () => {
 
   return (
     <>
-      
       <section
         id="home"
         className="relative z-10 overflow-hidden bg-white pb-16 pt-[120px] dark:bg-gray-dark md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px]"
       >
-      
         <div className="container">
-        
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
               <div
@@ -72,16 +63,16 @@ const PaymentSectionOne = () => {
          
                   <br/>
                   <div className="flex items-center justify-center">
-  <div className="relative h-10 w-full max-w-10">
-    <Image
-      className="object-cover object-center w-full h-full"
-      sizes="(max-width: 767px) 50vw, 20vw"
-      fill
-      alt="image"
-      src="/images/images/downwardpointingarrow.svg"
-    />
-  </div>
-</div>
+                    <div className="relative h-10 w-full max-w-10">
+                      <Image
+                        className="object-cover object-center w-full h-full"
+                        sizes="(max-width: 767px) 50vw, 20vw"
+                        fill
+                        alt="image"
+                        src="/images/images/downwardpointingarrow.svg"
+                      />
+                    </div>
+                  </div>
 
                   <button className="cursor-pointer" onClick={() => copyToClipboard()}>
                     {first}
@@ -91,10 +82,7 @@ const PaymentSectionOne = () => {
                   )}
                 </div>
                 <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                 
-                  <div className="w-full px-4 lg:w-1/2">
-                  
-                  </div>
+                  <div className="w-full px-4 lg:w-1/2"></div>
                 </div>
               </div>
             </div>

@@ -37,7 +37,7 @@ export default function RootLayout({
       <body className={`bg-[#FCFCFC] dark:bg-black ${inter.className}`}>
         <SessionProvider refetchInterval={5 * 60}>
           <Providers>
-            <Header session />
+            <Header  />
             {children}
             <Footer />
             <ScrollToTop />

@@ -1,19 +1,17 @@
 
-// import Head from "next/head";
-import Link from "next/link";
-// import { Swiper, SwiperSlide } from "swiper/react";
 
-// import Image from "next/image";
+import Link from "next/link";
+
 import { getServerSession } from "next-auth";
-// import DashboardCard from "@/components/DashboardCard";
+
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
-import SwiperCore, { Swiper, SwiperSlide } from 'swiper/react';
+
 import 'swiper/swiper-bundle.css';
-import { Card, Metric, Text, Title, BarList, Flex, Grid } from '@tremor/react';
-import Chart from './Chart';
+import { Card, Title, BarList,  Grid } from '@tremor/react';
+
 import ButtonWithPopup from "@/components/ButtonWithPopup";
-// import { supabase } from '@/lib/initSupabase';
+
 
 
 const getData = async()=>{

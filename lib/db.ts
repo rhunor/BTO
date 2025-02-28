@@ -1,17 +1,21 @@
+// lib/db.ts
 import { PrismaClient } from '@prisma/client'
 
-const prismaClientSingleton = () => {
-  return new PrismaClient()
+// This prevents this code from being imported on the client side
+export const dynamic = 'force-dynamic'
+
+// Mark this file as server-only
+export const runtime = 'nodejs'
+
+// Creating a singleton instance of PrismaClient
+const globalForPrisma = global as unknown as {
+  prisma: PrismaClient | undefined
 }
 
-declare global {
-  var prisma: undefined | ReturnType<typeof prismaClientSingleton>
-}
+export const db = 
+  globalForPrisma.prisma ??
+  new PrismaClient({
+    log: ['error'],
+  })
 
-const prisma = globalThis.prisma ?? prismaClientSingleton()
-
-// export default prisma
-
-if (process.env.NODE_ENV !== 'production') globalThis.prisma = prisma
-
-export const db = prisma;
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = db

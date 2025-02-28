@@ -1,29 +1,31 @@
+// app/Payment/page.tsx
 import PaymentSectionOne from "@/components/payment/PaymentSectionOne";
 import PaymentSectionTwo from "@/components/payment/PaymentSectionTwo";
-
-// import Breadcrumb from "@/components/Common/Breadcrumb";
-
 import { Metadata } from "next";
-
-
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "Deposit  | Binary crypto options",
+  title: "Deposit | Binary crypto options",
   description: "This is About Page for Binary Trading Options",
-  // other metadata
 };
 
-const AboutPage = () => {
+// Server component that handles authentication check
+const PaymentPage = async () => {
+  // Check authentication server-side
+  const session = await getServerSession(authOptions);
+  
+  if (!session) {
+    redirect("/api/auth/signin?callbackUrl=/Member");
+  }
+
   return (
     <>
-      {/* <Breadcrumb
-        pageName="About"
-        description="Binary Trading Options is a distinctive investment company offering investors access to high-growth investment opportunities in Bitcoin markets and other services. Our company benefits from an extensive network of global clients, supporting over 30 countries worldwide. Here at Binary Trading Options PLC."
-      /> */}
       <PaymentSectionOne />
       <PaymentSectionTwo />
     </>
   );
 };
 
-export default AboutPage;
+export default PaymentPage;
