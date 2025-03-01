@@ -1,20 +1,16 @@
 "use client";
 
-import { useTheme } from "next-themes";
-
 const NewsLatterBox = () => {
-  const { theme } = useTheme();
-
   return (
     <div
       className="wow fadeInUp shadow-three dark:bg-gray-dark relative z-10 rounded-sm bg-white p-8 sm:p-11 lg:p-8 xl:p-11"
       data-wow-delay=".2s"
     >
       <h3 className="mb-4 text-2xl font-bold leading-tight text-black dark:text-white">
-        Subscribe to receive future updates
+        Subscribe to Receive Future Updates
       </h3>
       <p className="mb-11 border-b border-body-color border-opacity-25 pb-11 text-base leading-relaxed text-body-color dark:border-white dark:border-opacity-25">
-        If you want to stay up to date with all our latest updates subscribe to our news letter
+        Stay up to date with all our latest updates by subscribing to our newsletter.
       </p>
       <div>
         <input
@@ -34,20 +30,11 @@ const NewsLatterBox = () => {
           value="Subscribe"
           className="shadow-submit dark:shadow-submit-dark mb-5 flex w-full cursor-pointer items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium text-white duration-300 hover:bg-primary/90"
         />
-        {/* <p className="dark:text-body-color-dark text-center text-base leading-relaxed text-body-color">
-          No spam guaranteed, So please don’t send any spam mail.
-        </p> */}
       </div>
 
       <div>
         <span className="absolute left-2 top-7">
-          <svg
-            width="57"
-            height="65"
-            viewBox="0 0 57 65"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+          <svg width="57" height="65" viewBox="0 0 57 65" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               opacity="0.5"
               d="M0.407629 15.9573L39.1541 64.0714L56.4489 0.160793L0.407629 15.9573Z"
@@ -62,28 +49,15 @@ const NewsLatterBox = () => {
                 y2="15.3509"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop
-                  stopColor={theme === "light" ? "#4A6CF7" : "#fff"}
-                  stopOpacity="0.62"
-                />
-                <stop
-                  offset="1"
-                  stopColor={theme === "light" ? "#4A6CF7" : "#fff"}
-                  stopOpacity="0"
-                />
+                <stop stopColor="#4A6CF7" stopOpacity="0.62" />
+                <stop offset="1" stopColor="#4A6CF7" stopOpacity="0" />
               </linearGradient>
             </defs>
           </svg>
         </span>
 
         <span className="absolute bottom-24 left-1.5">
-          <svg
-            width="39"
-            height="32"
-            viewBox="0 0 39 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+          <svg width="39" height="32" viewBox="0 0 39 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               opacity="0.5"
               d="M14.7137 31.4215L38.6431 4.24115L6.96581e-07 0.624124L14.7137 31.4215Z"
@@ -98,28 +72,15 @@ const NewsLatterBox = () => {
                 y2="10.2511"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop
-                  stopColor={theme === "light" ? "#4A6CF7" : "#fff"}
-                  stopOpacity="0.62"
-                />
-                <stop
-                  offset="1"
-                  stopColor={theme === "light" ? "#4A6CF7" : "#fff"}
-                  stopOpacity="0"
-                />
+                <stop stopColor="#4A6CF7" stopOpacity="0.62" />
+                <stop offset="1" stopColor="#4A6CF7" stopOpacity="0" />
               </linearGradient>
             </defs>
           </svg>
         </span>
 
         <span className="absolute right-2 top-[140px]">
-          <svg
-            width="38"
-            height="38"
-            viewBox="0 0 38 38"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+          <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               opacity="0.5"
               d="M10.6763 35.3091C23.3976 41.6367 38.1681 31.7045 37.107 17.536C36.1205 4.3628 21.9407 -3.46901 10.2651 2.71063C-2.92254 9.69061 -2.68321 28.664 10.6763 35.3091Z"
@@ -134,28 +95,15 @@ const NewsLatterBox = () => {
                 y2="26.7564"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop
-                  stopColor={theme === "light" ? "#4A6CF7" : "#fff"}
-                  stopOpacity="0.62"
-                />
-                <stop
-                  offset="1"
-                  stopColor={theme === "light" ? "#4A6CF7" : "#fff"}
-                  stopOpacity="0"
-                />
+                <stop stopColor="#4A6CF7" stopOpacity="0.62" />
+                <stop offset="1" stopColor="#4A6CF7" stopOpacity="0" />
               </linearGradient>
             </defs>
           </svg>
         </span>
 
         <span className="absolute right-0 top-0">
-          <svg
-            width="162"
-            height="91"
-            viewBox="0 0 162 91"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+          <svg width="162" height="91" viewBox="0 0 162 91" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g opacity="0.3">
               <path
                 opacity="0.45"
@@ -187,15 +135,8 @@ const NewsLatterBox = () => {
                 y2="237.617"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop
-                  offset="0.328125"
-                  stopColor={theme === "light" ? "#4A6CF7" : "#fff"}
-                />
-                <stop
-                  offset="1"
-                  stopColor={theme === "light" ? "#4A6CF7" : "#fff"}
-                  stopOpacity="0"
-                />
+                <stop offset="0.328125" stopColor="#4A6CF7" />
+                <stop offset="1" stopColor="#4A6CF7" stopOpacity="0" />
               </linearGradient>
               <linearGradient
                 id="paint1_linear_1028_603"
@@ -205,15 +146,8 @@ const NewsLatterBox = () => {
                 y2="212.617"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop
-                  offset="0.328125"
-                  stopColor={theme === "light" ? "#4A6CF7" : "#fff"}
-                />
-                <stop
-                  offset="1"
-                  stopColor={theme === "light" ? "#4A6CF7" : "#fff"}
-                  stopOpacity="0"
-                />
+                <stop offset="0.328125" stopColor="#4A6CF7" />
+                <stop offset="1" stopColor="#4A6CF7" stopOpacity="0" />
               </linearGradient>
               <linearGradient
                 id="paint2_linear_1028_603"
@@ -223,15 +157,8 @@ const NewsLatterBox = () => {
                 y2="221.617"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop
-                  offset="0.328125"
-                  stopColor={theme === "light" ? "#4A6CF7" : "#fff"}
-                />
-                <stop
-                  offset="1"
-                  stopColor={theme === "light" ? "#4A6CF7" : "#fff"}
-                  stopOpacity="0"
-                />
+                <stop offset="0.328125" stopColor="#4A6CF7" />
+                <stop offset="1" stopColor="#4A6CF7" stopOpacity="0" />
               </linearGradient>
               <linearGradient
                 id="paint3_linear_1028_603"
@@ -241,15 +168,8 @@ const NewsLatterBox = () => {
                 y2="188.617"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop
-                  offset="0.328125"
-                  stopColor={theme === "light" ? "#4A6CF7" : "#fff"}
-                />
-                <stop
-                  offset="1"
-                  stopColor={theme === "light" ? "#4A6CF7" : "#fff"}
-                  stopOpacity="0"
-                />
+                <stop offset="0.328125" stopColor="#4A6CF7" />
+                <stop offset="1" stopColor="#4A6CF7" stopOpacity="0" />
               </linearGradient>
             </defs>
           </svg>

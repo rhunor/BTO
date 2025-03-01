@@ -1,18 +1,10 @@
-"use client"
+"use client";
 import NewsLatterBox from "./NewsLatterBox";
 import { useRef, useState, ChangeEvent, FormEvent } from "react";
 import emailjs from "@emailjs/browser";
 
 const Contact = () => {
   const formRef = useRef<HTMLFormElement>(null);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { value, name } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
 
   const [formData, setFormData] = useState({
     name: "",
@@ -22,9 +14,16 @@ const Contact = () => {
 
   const [loading, setLoading] = useState(false);
 
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { value, name } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
   const handleAlert = (text: string, type: "success" | "danger" | "info") => {
-    // You can replace this with your preferred alert mechanism (e.g., toast notifications)
-    console.log(`${type.toUpperCase()}: ${text}`);
+    console.log(`${type.toUpperCase()}: ${text}`); // Replace with your alert mechanism if needed
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -40,8 +39,7 @@ const Contact = () => {
           from_name: formData.name,
           to_name: "BinaryTradingOptions",
           from_email: formData.email,
-          to_email: "elaineedriveres@gmail.com", 
-
+          to_email: "elaineedriveres@gmail.com",
           message: formData.message,
         },
         process.env.VITE_APP_EMAILJS_PUBLIC_KEY || ""
@@ -61,14 +59,13 @@ const Contact = () => {
     } catch (error) {
       setLoading(false);
       console.error(error);
-
       handleAlert("I didn't receive your message 😢", "danger");
     }
   };
 
   return (
     <section id="contact" className="overflow-hidden py-16 md:py-20 lg:py-28">
-      <div className="container">
+      <div className="container mx-auto px-4">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4 lg:w-7/12 xl:w-8/12">
             <div className="shadow-three dark:bg-gray-dark mb-12 rounded-sm bg-white px-8 py-11 sm:p-[55px] lg:mb-5 lg:px-8 xl:p-[55px]">
@@ -131,15 +128,16 @@ const Contact = () => {
                         onChange={handleChange}
                         placeholder="Enter your Message"
                         className="border-stroke dark:text-body-color-dark dark:shadow-two w-full resize-none rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
-                      ></textarea>
+                      />
                     </div>
                   </div>
                   <div className="w-full px-4">
                     <button
                       type="submit"
-                      className="shadow-submit dark:shadow-submit-dark rounded-sm bg-primary px-9 py-4 text-base font-medium text-white duration-300 hover:bg-primary/90"
+                      disabled={loading}
+                      className="shadow-submit dark:shadow-submit-dark rounded-sm bg-primary px-9 py-4 text-base font-medium text-white duration-300 hover:bg-primary/90 disabled:opacity-50"
                     >
-                      Submit Ticket
+                      {loading ? "Submitting..." : "Submit Ticket"}
                     </button>
                   </div>
                 </div>
@@ -147,8 +145,7 @@ const Contact = () => {
             </div>
           </div>
           <div className="w-full px-4 lg:w-5/12 xl:w-4/12">
-            {/* Assuming you have a NewsLatterBox component */}
-            <NewsLatterBox/>
+            <NewsLatterBox />
           </div>
         </div>
       </div>
