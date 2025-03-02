@@ -2,9 +2,64 @@
 
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { EyeInvisibleOutlined,EyeOutlined } from "@ant-design/icons";
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
+
+// Define types for form data and errors
+interface FormData {
+  firstName: string;
+  lastName: string;
+  country: string;
+  countryCode: string;
+  phoneNumber: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+interface FormErrors {
+  firstName?: string;
+  lastName?: string;
+  country?: string;
+  phoneNumber?: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
+  terms?: string;
+}
+
+// Country data with codes
+const countries = [
+  { name: "United States", code: "USA", dialCode: "+1" },
+  { name: "United Kingdom", code: "UK", dialCode: "+44" },
+  { name: "Japan", code: "Japan", dialCode: "+81" },
+  { name: "China", code: "China", dialCode: "+86" },
+  { name: "India", code: "India", dialCode: "+91" },
+  { name: "Germany", code: "Germany", dialCode: "+49" },
+  { name: "France", code: "France", dialCode: "+33" },
+  { name: "Italy", code: "Italy", dialCode: "+39" },
+  { name: "Russia", code: "Russia", dialCode: "+7" },
+  { name: "Brazil", code: "Brazil", dialCode: "+55" },
+  { name: "South Korea", code: "South Korea", dialCode: "+82" },
+  { name: "Spain", code: "Spain", dialCode: "+34" },
+  { name: "Pakistan", code: "Pakistan", dialCode: "+92" },
+  { name: "Indonesia", code: "Indonesia", dialCode: "+62" },
+  { name: "Canada", code: "Canada", dialCode: "+1" },
+  { name: "Australia", code: "Australia", dialCode: "+61" },
+  { name: "Mexico", code: "Mexico", dialCode: "+52" },
+  { name: "Singapore", code: "Singapore", dialCode: "+65" },
+  { name: "Turkey", code: "Turkey", dialCode: "+90" },
+  { name: "Egypt", code: "Egypt", dialCode: "+20" },
+  { name: "South Africa", code: "South Africa", dialCode: "+27" },
+  { name: "Sweden", code: "Sweden", dialCode: "+46" },
+  { name: "Netherlands", code: "Netherlands", dialCode: "+31" },
+  { name: "Kazakhstan", code: "Kazakhstan", dialCode: "+7" },
+  { name: "Vietnam", code: "Vietnam", dialCode: "+84" },
+  { name: "Philippines", code: "Philippines", dialCode: "+63" },
+  { name: "Afghanistan", code: "Afghanistan", dialCode: "+93" },
+  { name: "Belgium", code: "Belgium", dialCode: "+32" },
+];
 
 const SignupPage = () => {
   const router = useRouter();
@@ -12,52 +67,19 @@ const SignupPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const handleChange = (e) => {
-    const value = e.target.value;
-    const name = e.target.name;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleSubmit = async (e) => {
-    setIsLoading(true);
-    e.preventDefault();
-    setErrorMessage("");
-    const res = await fetch("/api/user", {
-      method: "POST",
-      body: JSON.stringify( formData ),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    setIsLoading(false);
-
-    if (!res.ok) {
-      // console.error("registration failed");
-      const response = await res.json();
-      setErrorMessage(response.message);
-    } else {
-      // router.refresh();
-      router.push("/signin");
-    }
-  };
-  const [formData, setFormData] = useState<{
-    firstName: string;
-    lastName: string;
-    country: string;
-    countryCode: string;
-    phoneNumber: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-  }>({
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  // Define the type for form errors
+  const [formErrors, setFormErrors] = useState<{
+    firstName?: string;
+    lastName?: string;
+    country?: string;
+    phoneNumber?: string;
+    email?: string;
+    password?: string;
+    confirmPassword?: string;
+    terms?: string;
+  }>({}); 
+  const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     country: "",
@@ -68,7 +90,116 @@ const SignupPage = () => {
     confirmPassword: "",
   });
 
- 
+  // When country changes, update the country code
+  useEffect(() => {
+    if (formData.country) {
+      const selectedCountry = countries.find(c => c.code === formData.country);
+      if (selectedCountry) {
+        setFormData(prev => ({
+          ...prev,
+          countryCode: selectedCountry.dialCode
+        }));
+      }
+    }
+  }, [formData.country]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    const checked = (e.target as HTMLInputElement).checked;
+    
+    if (type === 'checkbox' && name === 'agreeToTerms') {
+      setAgreedToTerms(checked);
+    } else {
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
+    
+    // Clear error for this field when user starts typing
+    if (formErrors[name as keyof FormErrors]) {
+      setFormErrors(prev => {
+        const newErrors = {...prev};
+        delete newErrors[name as keyof FormErrors];
+        return newErrors;
+      });
+    }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const validateForm = () => {
+    const errors: FormErrors = {};
+    
+    // Check required fields
+    if (!formData.firstName.trim()) errors.firstName = "First name is required";
+    if (!formData.lastName.trim()) errors.lastName = "Last name is required";
+    if (!formData.country) errors.country = "Please select your country";
+    if (!formData.phoneNumber) errors.phoneNumber = "Phone number is required";
+    
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email) {
+      errors.email = "Email is required";
+    } else if (!emailRegex.test(formData.email)) {
+      errors.email = "Please enter a valid email address";
+    }
+    
+    // Password validation
+    if (!formData.password) {
+      errors.password = "Password is required";
+    } else if (formData.password.length < 8) {
+      errors.password = "Password must be at least 8 characters long";
+    }
+    
+    // Confirm password validation
+    if (formData.password !== formData.confirmPassword) {
+      errors.confirmPassword = "Passwords do not match";
+    }
+    
+    // Terms agreement
+    if (!agreedToTerms) {
+      errors.terms = "You must agree to the Terms and Conditions";
+    }
+    
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setErrorMessage("");
+    
+    // Validate form
+    if (!validateForm()) {
+      return;
+    }
+    
+    setIsLoading(true);
+    
+    try {
+      const res = await fetch("/api/user", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      
+      if (!res.ok) {
+        const response = await res.json();
+        setErrorMessage(response.message);
+      } else {
+        router.push("/signin");
+      }
+    } catch (error) {
+      setErrorMessage("An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
@@ -76,15 +207,16 @@ const SignupPage = () => {
         <div className="container">
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
-              <div className="mx-auto max-w-[500px] rounded bg-white px-6 py-10 shadow-three dark:bg-dark sm:p-[60px]">
+              <div className="mx-auto max-w-[550px] rounded-lg bg-white px-6 py-10 shadow-lg dark:bg-dark sm:p-[60px]">
                 <h3 className="mb-3 text-center text-2xl font-bold text-black dark:text-white sm:text-3xl">
-                  Create your account
+                  Create Your Account
                 </h3>
-                <p className="mb-11 text-center text-base font-medium text-body-color">
-                  It’s totally free and super easy
+                <p className="mb-8 text-center text-base font-medium text-body-color">
+                  Start your investment journey today
                 </p>
+                
                 <button
-                  className="mb-6 flex w-full items-center justify-center rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none"
+                  className="mb-6 flex w-full items-center justify-center rounded-md border border-stroke bg-[#f8f8f8] px-6 py-3 text-base font-medium text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none"
                   onClick={() => signIn("google")}
                 >
                   <span className="mr-3">
@@ -123,340 +255,231 @@ const SignupPage = () => {
                   Sign up with Google
                 </button>
 
-                {/* <button className="border-stroke dark:text-body-color-dark dark:shadow-two mb-6 flex w-full items-center justify-center rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none">
-                  <span className="mr-3">
-                    <svg
-                      fill="currentColor"
-                      width="22"
-                      height="22"
-                      viewBox="0 0 64 64"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M32 1.7998C15 1.7998 1 15.5998 1 32.7998C1 46.3998 9.9 57.9998 22.3 62.1998C23.9 62.4998 24.4 61.4998 24.4 60.7998C24.4 60.0998 24.4 58.0998 24.3 55.3998C15.7 57.3998 13.9 51.1998 13.9 51.1998C12.5 47.6998 10.4 46.6998 10.4 46.6998C7.6 44.6998 10.5 44.6998 10.5 44.6998C13.6 44.7998 15.3 47.8998 15.3 47.8998C18 52.6998 22.6 51.2998 24.3 50.3998C24.6 48.3998 25.4 46.9998 26.3 46.1998C19.5 45.4998 12.2 42.7998 12.2 30.9998C12.2 27.5998 13.5 24.8998 15.4 22.7998C15.1 22.0998 14 18.8998 15.7 14.5998C15.7 14.5998 18.4 13.7998 24.3 17.7998C26.8 17.0998 29.4 16.6998 32.1 16.6998C34.8 16.6998 37.5 16.9998 39.9 17.7998C45.8 13.8998 48.4 14.5998 48.4 14.5998C50.1 18.7998 49.1 22.0998 48.7 22.7998C50.7 24.8998 51.9 27.6998 51.9 30.9998C51.9 42.7998 44.6 45.4998 37.8 46.1998C38.9 47.1998 39.9 49.1998 39.9 51.9998C39.9 56.1998 39.8 59.4998 39.8 60.4998C39.8 61.2998 40.4 62.1998 41.9 61.8998C54.1 57.7998 63 46.2998 63 32.5998C62.9 15.5998 49 1.7998 32 1.7998Z" />
-                    </svg>
-                  </span>
-                  Sign in with Github
-                </button> */}
                 <div className="mb-8 flex items-center justify-center">
-                  <span className="hidden h-[1px] w-full max-w-[60px] bg-body-color/50 sm:block"></span>
+                  <span className="hidden h-[1px] w-full max-w-[70px] bg-body-color/50 sm:block"></span>
                   <p className="w-full px-5 text-center text-base font-medium text-body-color">
-                    Or, register with your email
+                    Or register with your email
                   </p>
-                  <span className="hidden h-[1px] w-full max-w-[60px] bg-body-color/50 sm:block"></span>
+                  <span className="hidden h-[1px] w-full max-w-[70px] bg-body-color/50 sm:block"></span>
                 </div>
-                <form onSubmit={handleSubmit} method="post">
-                {isLoading && (
-  <div className="flex items-center justify-center">
-    <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary"></div>
-  </div>
-)}
-                  <div className="mb-8">
-                    <label
-                      htmlFor="name"
-                      className="mb-3 block text-sm text-dark dark:text-white"
-                    >
-                      {" "}
-                      First Name{" "}
-                    </label>
-                    <input
-                      type="text"
-                      id="firstName"
-                      name="firstName"
-                      required={true}
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      placeholder="Enter your first name"
-                      className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
-                    />
+                
+                {errorMessage && (
+                  <div className="mb-6 rounded-md bg-red-50 p-4 text-sm text-red-500 dark:bg-red-900/20 dark:text-red-200">
+                    <p>{errorMessage}</p>
                   </div>
-                  <div className="mb-8">
-                    <label
-                      htmlFor="name"
-                      className="mb-3 block text-sm text-dark dark:text-white"
-                    >
-                      {" "}
-                      Last Name{" "}
-                    </label>
-                    <input
-                      type="text"
-                      id="lastName"
-                      name="lastName"
-                      required={true}
-                      value={formData.lastName}
-                      onChange={handleChange}
-                      placeholder="Enter your last name"
-                      className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
-                    />
+                )}
+                
+                <form onSubmit={handleSubmit} method="post" className="space-y-5">
+                  {isLoading && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                      <div className="flex flex-col items-center justify-center space-y-3 rounded-lg bg-white p-8 shadow-lg dark:bg-gray-800">
+                        <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+                        <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Creating your account...</p>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Name fields - two columns */}
+                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                    <div>
+                      <label htmlFor="firstName" className="mb-2 block text-sm font-medium text-dark dark:text-white">
+                        First Name
+                      </label>
+                      <input
+                        type="text"
+                        id="firstName"
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleChange}
+                        placeholder="Enter your first name"
+                        className={`w-full rounded-md border ${formErrors.firstName ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-stroke bg-[#f8f8f8] dark:border-transparent dark:bg-[#2C303B]'} px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none`}
+                      />
+                      {formErrors.firstName && (
+                        <p className="mt-1 text-xs text-red-500">{formErrors.firstName}</p>
+                      )}
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="lastName" className="mb-2 block text-sm font-medium text-dark dark:text-white">
+                        Last Name
+                      </label>
+                      <input
+                        type="text"
+                        id="lastName"
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        placeholder="Enter your last name"
+                        className={`w-full rounded-md border ${formErrors.lastName ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-stroke bg-[#f8f8f8] dark:border-transparent dark:bg-[#2C303B]'} px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none`}
+                      />
+                      {formErrors.lastName && (
+                        <p className="mt-1 text-xs text-red-500">{formErrors.lastName}</p>
+                      )}
+                    </div>
                   </div>
-                 
-                  <div className="mb-8">
-                    <label
-                      htmlFor="country"
-                      className="mb-3 block text-sm text-dark dark:text-white"
-                    >
+                  
+                  <div>
+                    <label htmlFor="country" className="mb-2 block text-sm font-medium text-dark dark:text-white">
                       Country
                     </label>
                     <select
                       id="country"
                       name="country"
-                      required={true}
                       value={formData.country}
                       onChange={handleChange}
-                      className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
+                      className={`w-full rounded-md border ${formErrors.country ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-stroke bg-[#f8f8f8] dark:border-transparent dark:bg-[#2C303B]'} px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none`}
                     >
-                      {/* Populate this with options for countries */}
                       <option value="">Select your country</option>
-
-                      <option value="USA">United States</option>
-                      <option value="UK">United Kingdom</option>
-                      <option value="Japan">Japan</option>
-                      <option value="China">China</option>
-                      <option value="India">India</option>
-                      <option value="Germany">Germany</option>
-                      <option value="France">France</option>
-                      <option value="Italy">Italy</option>
-                      <option value="Russia">Russia</option>
-                      <option value="Brazil">Brazil</option>
-                      <option value="South Korea">South Korea</option>
-                      <option value="Spain">Spain</option>
-                      <option value="Japan">Japan</option>
-                      <option value="Pakistan">Pakistan</option>
-                      <option value="Indonesia">Indonesia</option>
-                      <option value="India">India</option>
-                      <option value="Canada">Canada</option>
-                      <option value="Australia">Australia</option>
-                      <option value="Mexico">Mexico</option>
-                      <option value="Singapore">Singapore</option>
-                      <option value="Turkey">Turkey</option>
-                      <option value="Egypt">Egypt</option>
-                      <option value="South Africa">South Africa</option>
-                      <option value="Sweden">Sweden</option>
-                      <option value="Netherlands">Netherlands</option>
-                      <option value="Kazakhstan">Kazakhstan</option>
-                      <option value="Vietnam">Vietnam</option>
-                      <option value="Philippines">Philippines</option>
-                      <option value="Afghanistan">Afghanistan</option>
-                      <option value="Belgium">Belgium</option>
-                      {/* ... more options ... */}
+                      {countries.map((country, index) => (
+                        <option key={index} value={country.code}>
+                          {country.name}
+                        </option>
+                      ))}
                     </select>
+                    {formErrors.country && (
+                      <p className="mt-1 text-xs text-red-500">{formErrors.country}</p>
+                    )}
                   </div>
-                  <div className="mb-8">
-                    <label
-                      htmlFor="phone-number"
-                      className="mb-3 block text-sm text-dark dark:text-white"
-                    >
+                  
+                  <div>
+                    <label htmlFor="phone-number" className="mb-2 block text-sm font-medium text-dark dark:text-white">
                       Phone Number
                     </label>
                     <div className="flex items-center">
                       <select
                         id="country-code"
                         name="countryCode"
-                        required={true}
                         value={formData.countryCode}
                         onChange={handleChange}
-                        className="mr-4 w-20 rounded-sm border border-stroke bg-[#f8f8f8] px-4 py-2 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
+                        className="mr-2 w-24 rounded-md border border-stroke bg-[#f8f8f8] px-3 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                       >
-                        {/* Populate this with country codes */}
-                        <option value="+1">+1 (USA)</option>
-                        <option value="+44">+44 (UK)</option>
-                        <option value="+81">+81 (Japan)</option>
-                        <option value="+86">+86 (China)</option>
-                        <option value="+91">+91 (India)</option>
-                        <option value="+49">+49 (Germany)</option>
-                        <option value="+33">+33 (France)</option>
-                        <option value="+39">+39 (Italy)</option>
-                        <option value="+7">+7 (Russia)</option>
-                        <option value="+55">+55 (Brazil)</option>
-                        <option value="+82">+82 (South Korea)</option>
-                        <option value="+34">+34 (Spain)</option>
-                        <option value="+81">+81 (Japan)</option>
-                        <option value="+92">+92 (Pakistan)</option>
-                        <option value="+62">+62 (Indonesia)</option>
-                        <option value="+91">+91 (India)</option>
-                        <option value="+1">+1 (Canada)</option>
-                        <option value="+61">+61 (Australia)</option>
-                        <option value="+52">+52 (Mexico)</option>
-                        <option value="+65">+65 (Singapore)</option>
-                        <option value="+90">+90 (Turkey)</option>
-                        <option value="+20">+20 (Egypt)</option>
-                        <option value="+27">+27 (South Africa)</option>
-                        <option value="+46">+46 (Sweden)</option>
-                        <option value="+31">+31 (Netherlands)</option>
-                        <option value="+7">+7 (Kazakhstan)</option>
-                        <option value="+84">+84 (Vietnam)</option>
-                        <option value="+63">+63 (Philippines)</option>
-                        <option value="+92">+92 (Afghanistan)</option>
-                        <option value="+33">+33 (Belgium)</option>
-                        {/* ... more options ... */}
+                        {countries.map((country, index) => (
+                          <option key={index} value={country.dialCode}>
+                            {country.dialCode}
+                          </option>
+                        ))}
                       </select>
                       <input
-                        type="number"
+                        type="tel"
                         id="phone-number"
                         name="phoneNumber"
-                        required={true}
                         value={formData.phoneNumber}
                         onChange={handleChange}
                         placeholder="Enter phone number"
-                        className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
+                        className={`w-full rounded-md border ${formErrors.phoneNumber ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-stroke bg-[#f8f8f8] dark:border-transparent dark:bg-[#2C303B]'} px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none`}
                       />
                     </div>
+                    {formErrors.phoneNumber && (
+                      <p className="mt-1 text-xs text-red-500">{formErrors.phoneNumber}</p>
+                    )}
                   </div>
-                  <div className="mb-8">
-                    <label
-                      htmlFor="email"
-                      className="mb-3 block text-sm text-dark dark:text-white"
-                    >
-                      {" "}
-                      Email Address{" "}
+                  
+                  <div>
+                    <label htmlFor="email" className="mb-2 block text-sm font-medium text-dark dark:text-white">
+                      Email Address
                     </label>
                     <input
                       type="email"
                       id="email"
                       name="email"
-                      required={true}
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="Enter your Email"
-                      className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
+                      placeholder="Enter your email"
+                      className={`w-full rounded-md border ${formErrors.email ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-stroke bg-[#f8f8f8] dark:border-transparent dark:bg-[#2C303B]'} px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none`}
                     />
+                    {formErrors.email && (
+                      <p className="mt-1 text-xs text-red-500">{formErrors.email}</p>
+                    )}
                   </div>
-                  <div className="mb-8">
-                    <label
-                      htmlFor="password"
-                      className="mb-3 block text-sm text-dark dark:text-white"
-                    >
-                      {" "}
-                      Your Password{" "}
+                  
+                  <div>
+                    <label htmlFor="password" className="mb-2 block text-sm font-medium text-dark dark:text-white">
+                      Password
                     </label>
                     <div className="relative">
-                    <input
-                      type={showPassword ? 'text' : 'password'}
-                      id="password"
-                      name="password"
-                      required={true}
-                      value={formData.password}
-                      onChange={handleChange}
-                      placeholder="Enter your Password"
-                      className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
-                    />
+                      <input
+                        type={showPassword ? 'text' : 'password'}
+                        id="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        placeholder="Enter your password"
+                        className={`w-full rounded-md border ${formErrors.password ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-stroke bg-[#f8f8f8] dark:border-transparent dark:bg-[#2C303B]'} px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none`}
+                      />
                       <button
-          type="button"
-          className="absolute top-1/2 right-4 transform -translate-y-1/2"
-          onClick={togglePasswordVisibility}
-        >
-         {showPassword ? <EyeOutlined/> : <EyeInvisibleOutlined/>}
-        </button>
-        </div>
+                        type="button"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                        onClick={togglePasswordVisibility}
+                      >
+                        {showPassword ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+                      </button>
+                    </div>
+                    {formErrors.password && (
+                      <p className="mt-1 text-xs text-red-500">{formErrors.password}</p>
+                    )}
+                    <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                      Password must be at least 8 characters long
+                    </p>
                   </div>
-                  <div className="mb-8">
-                    <label
-                      htmlFor="password"
-                      className="mb-3 block text-sm text-dark dark:text-white"
-                    >
-                      {" "}
-                      Your Password (confirm){" "}
+                  
+                  <div>
+                    <label htmlFor="confirmPassword" className="mb-2 block text-sm font-medium text-dark dark:text-white">
+                      Confirm Password
                     </label>
                     <div className="relative">
-                    <input
-                      type={showPassword ? 'text' : 'password'}
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      required={true}
-                      value={formData.confirmPassword}
-                      onChange={handleChange}
-                      placeholder="Re-enter your Password"
-                      className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
-                    />
+                      <input
+                        type={showPassword ? 'text' : 'password'}
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
+                        placeholder="Re-enter your password"
+                        className={`w-full rounded-md border ${formErrors.confirmPassword ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-stroke bg-[#f8f8f8] dark:border-transparent dark:bg-[#2C303B]'} px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none`}
+                      />
                       <button
-          type="button"
-          className="absolute top-1/2 right-4 transform -translate-y-1/2"
-          onClick={togglePasswordVisibility}
-        >
-          {showPassword ? <EyeOutlined/> : <EyeInvisibleOutlined/>}
-        </button>
-        </div>
+                        type="button"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                        onClick={togglePasswordVisibility}
+                      >
+                        {showPassword ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+                      </button>
+                    </div>
+                    {formErrors.confirmPassword && (
+                      <p className="mt-1 text-xs text-red-500">{formErrors.confirmPassword}</p>
+                    )}
                   </div>
-                  <div className="mb-8 flex">
-                    <label
-                      htmlFor="checkboxLabel"
-                      className="flex cursor-pointer select-none text-sm font-medium text-body-color"
-                    >
-                      <div className="relative">
-                        <input
-                          type="checkbox"
-                          id="checkboxLabel"
-                          className="sr-only"
-                        />
-                        <div className="box mr-4 mt-1 flex h-5 w-5 items-center justify-center rounded border border-body-color border-opacity-20 dark:border-white dark:border-opacity-10">
-                          <span className="opacity-0">
-                            <svg
-                              width="11"
-                              height="8"
-                              viewBox="0 0 11 8"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M10.0915 0.951972L10.0867 0.946075L10.0813 0.940568C9.90076 0.753564 9.61034 0.753146 9.42927 0.939309L4.16201 6.22962L1.58507 3.63469C1.40401 3.44841 1.11351 3.44879 0.932892 3.63584C0.755703 3.81933 0.755703 4.10875 0.932892 4.29224L0.932878 4.29225L0.934851 4.29424L3.58046 6.95832C3.73676 7.11955 3.94983 7.2 4.1473 7.2C4.36196 7.2 4.55963 7.11773 4.71406 6.9584L10.0468 1.60234C10.2436 1.4199 10.2421 1.1339 10.0915 0.951972ZM4.2327 6.30081L4.2317 6.2998C4.23206 6.30015 4.23237 6.30049 4.23269 6.30082L4.2327 6.30081Z"
-                                fill="#3056D3"
-                                stroke="#3056D3"
-                                strokeWidth="0.4"
-                              />
-                            </svg>
-                          </span>
-                        </div>
-                      </div>
-                      <span>
-                        By creating account means you agree to the
-                        <a
-                          href="/Terms"
-                          className="text-primary hover:underline"
-                        >
-                          {" "}
-                          Terms and Conditions{" "}
-                        </a>
-                        {/* , and our
-                        <a href="#0" className="text-primary hover:underline">
-                          {" "}
-                          Privacy Policy{" "}
-                        </a> */}
-                      </span>
+                  
+                  <div className="flex items-start">
+                    <div className="flex h-5 items-center">
+                      <input
+                        id="agreeToTerms"
+                        name="agreeToTerms"
+                        type="checkbox"
+                        checked={agreedToTerms}
+                        onChange={(e) => setAgreedToTerms(e.target.checked)}
+                        className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-primary focus:ring-2 focus:ring-primary dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary"
+                      />
+                    </div>
+                    <label htmlFor="agreeToTerms" className="ml-2 text-sm font-medium text-body-color dark:text-body-color-dark">
+                      By creating an account, I agree to the{" "}
+                      <Link href="/Terms" className="text-primary hover:underline">
+                        Terms and Conditions
+                      </Link>
                     </label>
                   </div>
-                  {/* Display errors */}
-                  {/* {Object.keys(errors).length > 0 && (
-            <div className="mb-4 p-3 bg-red-200 text-red-700 rounded-md">
-              <ul>
-                {Object.values(errors).map((error, index) => (
-                  <li key={index}>{error}</li>
-                ))}
-              </ul>
-            </div>
-          )} */}
-                  <div className="mb-6">
-                    <button
-                      type="submit"
-                      value="Create User"
-                      // disabled={Object.keys(errors).length > 0}
-                      className="flex w-full items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium text-white shadow-submit duration-300 hover:bg-primary/90 dark:shadow-submit-dark"
-                    >
-                      Sign up
-                    </button>
-                  </div>
+                  {formErrors.terms && (
+                    <p className="text-xs text-red-500">{formErrors.terms}</p>
+                  )}
+                  
+                  <button
+                    type="submit"
+                    className="flex w-full items-center justify-center rounded-md bg-primary px-9 py-4 text-base font-medium text-white shadow-submit transition-all duration-300 hover:bg-primary/90 dark:shadow-submit-dark"
+                  >
+                    Create Account
+                  </button>
                 </form>
-                <p className="text-red-500">{errorMessage}</p> 
-                {/* {showErrorDialog && (
-        <div className="error-dialog">
-          <h2>Please correct the following errors:</h2>
-          <ul>
-            {Object.entries(errors).map(([field, error]) => (
-              <li key={field}>{error}</li>
-            ))}
-          </ul>
-          <button onClick={handleErrorDialogClose}>Close</button>
-        </div>
-      )} */}
-                <p className="text-center text-base font-medium text-body-color">
+                
+                <p className="mt-6 text-center text-base font-medium text-body-color dark:text-body-color-dark">
                   Already using Binary Crypto Options?{" "}
                   <Link href="/signin" className="text-primary hover:underline">
                     Sign in
@@ -466,6 +489,7 @@ const SignupPage = () => {
             </div>
           </div>
         </div>
+        
         <div className="absolute left-0 top-0 z-[-1]">
           <svg
             width="1440"

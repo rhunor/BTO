@@ -9,91 +9,99 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
-
-
+// Form schema with zod validation
 const FormSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email"),
   password: z
     .string()
     .min(1, "Password is required")
-    .min(8, "Password must have than 8 characters"),
+    .min(8, "Password must have at least 8 characters"),
 });
 
+// Type for our form data based on the zod schema
+type FormData = z.infer<typeof FormSchema>;
+
 const SigninPage = () => {
-  // useEffect(() => {
-  //   const checkSession = async () => {
-  //     const session = await getServerSession(authOptions);
-
-  //     if (session) {
-  //       redirect("/Dashboard");
-  //     }
-  //   };
-
-  //   checkSession();
-  // }, []);
-
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+  const [keepSignedIn, setKeepSignedIn] = useState(false);
 
   const router = useRouter();
-  const form = useForm<z.infer<typeof FormSchema>>({
+  
+  // Initialize react-hook-form with zod resolver
+  const form = useForm<FormData>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
-  const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-    setIsLoading(true);
-    const signInData = await signIn("credentials", {
-      email: values.email,
-      password: values.password,
-      redirect: false,
-    });
-    setIsLoading(false);
-    if (signInData?.error) {
-      console.log(signInData)
-      if (signInData.error === "Email not found") {
-        form.setError("email", {
-          type: "manual",
-          message: "Error: Incorrect email address",
-        });
-      } else if (signInData.error === "CredentialsSignin") {
-        form.setError("password", {
-          type: "manual",
-          message: "Error: Incorrect password",
-        });
-      } else {
-        form.setError("root.general", {
-          type: "manual",
-          message: "Error: An unexpected error occurred",
-        });
-      }
-    } else {
-      router.refresh();
-      router.push("/Dashboard");
-    }
-    console.log(signInData.error);
-    
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
+
+  const onSubmit = async (values: FormData) => {
+    setIsLoading(true);
+    
+    try {
+      const signInData = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
+      });
+
+      if (signInData?.error) {
+        console.log(signInData);
+        if (signInData.error === "Email not found") {
+          form.setError("email", {
+            type: "manual",
+            message: "Error: Incorrect email address",
+          });
+        } else if (signInData.error === "CredentialsSignin") {
+          form.setError("password", {
+            type: "manual",
+            message: "Error: Incorrect password",
+          });
+        } else {
+          form.setError("root.general", {
+            type: "manual",
+            message: "Error: An unexpected error occurred",
+          });
+        }
+      } else {
+        router.refresh();
+        router.push("/Dashboard");
+      }
+    } catch (error) {
+      console.error("Sign in error:", error);
+      form.setError("root.general", {
+        type: "manual",
+        message: "An unexpected error occurred",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <>
       <section className="relative z-10 overflow-hidden pb-16 pt-36 md:pb-20 lg:pb-28 lg:pt-[180px]">
         <div className="container">
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
-              <div className="mx-auto max-w-[500px] rounded bg-white px-6 py-10 shadow-three dark:bg-dark sm:p-[60px]">
+              <div className="mx-auto max-w-[500px] rounded-lg bg-white px-6 py-10 shadow-lg dark:bg-dark sm:p-[60px]">
                 <h3 className="mb-3 text-center text-2xl font-bold text-black dark:text-white sm:text-3xl">
-                  Sign in to your account
+                  Sign In to Your Account
                 </h3>
-                <p className="mb-11 text-center text-base font-medium text-body-color">
-                  Login to your account and preview your ongoing trades.
+                <p className="mb-8 text-center text-base font-medium text-body-color">
+                  Login to your account and preview your ongoing trades
                 </p>
-                <button className="mb-6 flex w-full items-center justify-center rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none">
+                
+                <button 
+                  onClick={() => signIn("google", { callbackUrl: "/Dashboard" })}
+                  className="mb-6 flex w-full items-center justify-center rounded-md border border-stroke bg-[#f8f8f8] px-6 py-3 text-base font-medium text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none"
+                >
                   <span className="mr-3">
                     <svg
                       width="20"
@@ -138,120 +146,114 @@ const SigninPage = () => {
                   <span className="hidden h-[1px] w-full max-w-[70px] bg-body-color/50 sm:block"></span>
                 </div>
    
-                <form onSubmit={form.handleSubmit(onSubmit)}>
-                {isLoading && (
-  <div className="flex items-center justify-center">
-    <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary"></div>
-  </div>
-)}
-                  <div className="mb-8">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+                  {isLoading && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                      <div className="flex flex-col items-center justify-center space-y-3 rounded-lg bg-white p-8 shadow-lg dark:bg-gray-800">
+                        <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+                        <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Signing in...</p>
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div>
                     <label
                       htmlFor="email"
-                      className="mb-3 block text-sm text-dark dark:text-white"
+                      className="mb-2 block text-sm font-medium text-dark dark:text-white"
                     >
-                      Your Email
+                      Email Address
                     </label>
                     <input
                       type="email"
-                      name="email"
-                      required={true}
-                      // value={formData.email}
+                      id="email"
+                      className={`w-full rounded-md border ${
+                        form.formState.errors.email ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-stroke bg-[#f8f8f8] dark:border-transparent dark:bg-[#2C303B]'
+                      } px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none`}
+                      placeholder="Enter your email"
                       {...form.register("email")}
-                      placeholder="Enter your Email"
-                      className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                     />
+                    {form.formState.errors.email && (
+                      <p className="mt-1 text-xs text-red-500">
+                        {form.formState.errors.email.message}
+                      </p>
+                    )}
                   </div>
-                  <div className="mb-8">
+                  
+                  <div>
                     <label
                       htmlFor="password"
-                      className="mb-3 block text-sm text-dark dark:text-white"
+                      className="mb-2 block text-sm font-medium text-dark dark:text-white"
                     >
-                      Your Password
+                      Password
                     </label>
                     <div className="relative">
                       <input
                         type={showPassword ? "text" : "password"}
-                        name="password"
-                        required={true}
-                        // value={formData.password}
+                        id="password"
+                        className={`w-full rounded-md border ${
+                          form.formState.errors.password ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-stroke bg-[#f8f8f8] dark:border-transparent dark:bg-[#2C303B]'
+                        } px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none`}
+                        placeholder="Enter your password"
                         {...form.register("password")}
-                        placeholder="Enter your Password"
-                        className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                       />
                       <button
                         type="button"
-                        className="absolute right-4 top-1/2 -translate-y-1/2 transform"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                         onClick={togglePasswordVisibility}
                       >
-                        {showPassword ? (
-                          <EyeOutlined />
-                        ) : (
-                          <EyeInvisibleOutlined />
-                        )}
+                        {showPassword ? <EyeOutlined /> : <EyeInvisibleOutlined />}
                       </button>
                     </div>
+                    {form.formState.errors.password && (
+                      <p className="mt-1 text-xs text-red-500">
+                        {form.formState.errors.password.message}
+                      </p>
+                    )}
                   </div>
-                  <div className="mb-8 flex flex-col justify-between sm:flex-row sm:items-center">
-                    <div className="mb-4 sm:mb-0">
+                  
+                  <div className="flex flex-col justify-between space-y-4 sm:flex-row sm:items-center sm:space-y-0">
+                    <div className="flex items-center">
+                      <input
+                        type="checkbox"
+                        id="rememberMe"
+                        checked={keepSignedIn}
+                        onChange={() => setKeepSignedIn(!keepSignedIn)}
+                        className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-primary focus:ring-2 focus:ring-primary dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary"
+                      />
                       <label
-                        htmlFor="checkboxLabel"
-                        className="flex cursor-pointer select-none items-center text-sm font-medium text-body-color"
+                        htmlFor="rememberMe"
+                        className="ml-2 text-sm font-medium text-body-color dark:text-body-color-dark"
                       >
-                        <div className="relative">
-                          <input
-                            type="checkbox"
-                            id="checkboxLabel"
-                            className="sr-only"
-                          />
-                          <div className="box mr-4 flex h-5 w-5 items-center justify-center rounded border border-body-color border-opacity-20 dark:border-white dark:border-opacity-10">
-                            <span className="opacity-0">
-                              <svg
-                                width="11"
-                                height="8"
-                                viewBox="0 0 11 8"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M10.0915 0.951972L10.0867 0.946075L10.0813 0.940568C9.90076 0.753564 9.61034 0.753146 9.42927 0.939309L4.16201 6.22962L1.58507 3.63469C1.40401 3.44841 1.11351 3.44879 0.932892 3.63584C0.755703 3.81933 0.755703 4.10875 0.932892 4.29224L0.932878 4.29225L0.934851 4.29424L3.58046 6.95832C3.73676 7.11955 3.94983 7.2 4.1473 7.2C4.36196 7.2 4.55963 7.11773 4.71406 6.9584L10.0468 1.60234C10.2436 1.4199 10.2421 1.1339 10.0915 0.951972ZM4.2327 6.30081L4.2317 6.2998C4.23206 6.30015 4.23237 6.30049 4.23269 6.30082L4.2327 6.30081Z"
-                                  fill="#3056D3"
-                                  stroke="#3056D3"
-                                  strokeWidth="0.4"
-                                />
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
                         Keep me signed in
                       </label>
                     </div>
+                    
                     <div>
-                      <a
-                        href="#0"
+                      <Link
+                        href="/forgot-password"
                         className="text-sm font-medium text-primary hover:underline"
                       >
                         Forgot Password?
-                      </a>
+                      </Link>
                     </div>
                   </div>
-                  <div className="mb-6">
-                    <button
-                      type="submit"
-                      className="flex w-full items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium text-white shadow-submit duration-300 hover:bg-primary/90 dark:shadow-submit-dark"
-                    >
-                      Sign in
-                    </button>
-                  </div>
-                  {Object.entries(form.formState.errors).map(
-                    ([field, error]) => (
-                      <p key={field} className="mt-1 text-xs text-red-500">
-                        {error.message}
-                      </p>
-                    ),
+                  
+                  {form.formState.errors.root?.general && (
+                    <div className="rounded-md bg-red-50 p-3 text-sm text-red-500 dark:bg-red-900/20 dark:text-red-200">
+                      {form.formState.errors.root.general.message}
+                    </div>
                   )}
+                  
+                  <button
+                    type="submit"
+                    className="flex w-full items-center justify-center rounded-md bg-primary px-9 py-4 text-base font-medium text-white shadow-submit transition-all duration-300 hover:bg-primary/90 hover:shadow-lg dark:shadow-submit-dark"
+                  >
+                    Sign in
+                  </button>
                 </form>
-                <p className="text-center text-base font-medium text-body-color">
-                  Don’t you have an account?{" "}
+                
+                <p className="mt-6 text-center text-base font-medium text-body-color dark:text-body-color-dark">
+                  Don&apos;t have an account yet?{" "}
                   <Link href="/signup" className="text-primary hover:underline">
                     Sign up
                   </Link>
@@ -260,6 +262,7 @@ const SigninPage = () => {
             </div>
           </div>
         </div>
+        
         <div className="absolute left-0 top-0 z-[-1]">
           <svg
             width="1440"

@@ -87,7 +87,7 @@ const AboutSectionTwo = () => {
                   <h3 className="text-xl font-bold text-black dark:text-white">Client-Focused Approach</h3>
                 </div>
                 <p className="text-base font-medium leading-relaxed text-body-color dark:text-body-color-dark">
-                  We emphasize understanding our clients' requirements and providing tailored solutions that meet their investment criteria. Our team of specialized traders uses their expertise to benefit you and maximize your returns.
+                  We emphasize understanding our clients&apos; requirements and providing tailored solutions that meet their investment criteria. Our team of specialized traders uses their expertise to benefit you and maximize your returns.
                 </p>
               </div>
               
