@@ -6,25 +6,25 @@ const testimonialData: Testimonial[] = [
   {
     id: 1,
     name: "Musharof Chy",
-    designation: "",
+    designation: "Investor",
     content:
-      "Heard quite a number of people testifying on how they make money weekly from this page. I didn’t believe at first but wow, oh wow!",
+      "Heard quite a number of people testifying on how they make money weekly from this page. I didn't believe at first but wow, oh wow! The returns have been incredible.",
     image: "/images/testimonials/auth-01.png",
     star: 5,
   },
   {
     id: 2,
     name: "Devid Weilium",
-    designation: "",
+    designation: "Trader",
     content:
-      "Can’t explain how I feel when I receive my profit from your company. I’m getting the result in flying colour. What can I say, you’ve done great things in my life.",
+      "Can't explain how I feel when I receive my profit from your company. I'm getting the result in flying colour. What can I say, you've done great things in my life.",
     image: "/images/testimonials/auth-02.png",
     star: 5,
   },
   {
     id: 3,
     name: "Lethium Frenci",
-    designation: "",
+    designation: "Entrepreneur",
     content:
       "My heart is full of joy all because of your trade option. I just made a successful withdrawal, no more pending withdrawal, always successful.",
     image: "/images/testimonials/auth-03.png",
@@ -34,20 +34,44 @@ const testimonialData: Testimonial[] = [
 
 const Testimonials = () => {
   return (
-    <section className="dark:bg-bg-color-dark bg-gray-light relative z-10 py-16 md:py-20 lg:py-28">
+    <section className="relative z-10 py-16 md:py-20 lg:py-28 overflow-hidden bg-gray-light dark:bg-bg-color-dark">
+      {/* Background gradient effects */}
+      <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-white/30 to-transparent dark:from-gray-900/30 -z-10"></div>
+      <div className="absolute -left-40 top-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl -z-10"></div>
+      <div className="absolute -right-40 bottom-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl -z-10"></div>
+      
       <div className="container">
         <SectionTitle
-          title="What Our Users Says"
-          paragraph=" With our team of specially trained financial management advisors, Binary Trading Options is sure to give you the best investment opportunities and strategies to tailor your personal goals and budget"
+          title="What Our Clients Say"
+          paragraph="With our team of specially trained financial management advisors, Binary Trading Options delivers the best investment opportunities and strategies tailored to your personal goals and budget"
           center
         />
 
-        <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3 mt-8">
           {testimonialData.map((testimonial) => (
-            <SingleTestimonial key={testimonial.id} testimonial={testimonial} />
+            <div 
+              key={testimonial.id} 
+              className="transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+            >
+              <SingleTestimonial testimonial={testimonial} />
+            </div>
           ))}
         </div>
+        
+        {/* Call to action */}
+        <div className="mt-16 text-center">
+          <div className="inline-block p-1 rounded-lg bg-gradient-to-r from-primary to-blue-600">
+            <a 
+              href="#contact" 
+              className="inline-block bg-white dark:bg-gray-900 hover:bg-transparent hover:text-white dark:hover:bg-transparent px-8 py-4 rounded-md text-base font-semibold text-primary transition-all duration-300"
+            >
+              Join Our Satisfied Clients Today
+            </a>
+          </div>
+        </div>
       </div>
+      
+      {/* Decorative SVGs */}
       <div className="absolute right-0 top-5 z-[-1]">
         <svg
           width="238"

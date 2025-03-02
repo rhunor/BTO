@@ -1,36 +1,119 @@
 "use client";
+import { useState } from "react";
 
 const NewsLatterBox = () => {
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // Basic validation
+    if (!name.trim()) {
+      setError("Please enter your name");
+      return;
+    }
+    
+    if (!email.trim()) {
+      setError("Please enter your email address");
+      return;
+    }
+    
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      setError("Please enter a valid email address");
+      return;
+    }
+    
+    setError("");
+    setLoading(true);
+    
+    // Simulate API call
+    setTimeout(() => {
+      setLoading(false);
+      setSubscribed(true);
+      
+      // Reset form after 5 seconds for demo purposes
+      setTimeout(() => {
+        setSubscribed(false);
+        setEmail("");
+        setName("");
+      }, 5000);
+    }, 1500);
+  };
+
   return (
     <div
-      className="wow fadeInUp shadow-three dark:bg-gray-dark relative z-10 rounded-sm bg-white p-8 sm:p-11 lg:p-8 xl:p-11"
+      className="wow fadeInUp shadow-three dark:bg-gray-dark relative z-10 rounded-lg bg-white p-8 sm:p-11 lg:p-8 xl:p-11 hover:shadow-lg transition-all duration-300"
       data-wow-delay=".2s"
     >
       <h3 className="mb-4 text-2xl font-bold leading-tight text-black dark:text-white">
-        Subscribe to Receive Future Updates
+        Subscribe to Our Newsletter
       </h3>
-      <p className="mb-11 border-b border-body-color border-opacity-25 pb-11 text-base leading-relaxed text-body-color dark:border-white dark:border-opacity-25">
-        Stay up to date with all our latest updates by subscribing to our newsletter.
+      <p className="mb-11 border-b border-body-color border-opacity-25 pb-11 text-base leading-relaxed text-body-color dark:border-white dark:border-opacity-25 dark:text-body-color-dark">
+        Stay updated with market trends, investment opportunities, and exclusive tips from our financial experts.
       </p>
-      <div>
-        <input
-          type="text"
-          name="name"
-          placeholder="Enter your name"
-          className="border-stroke dark:text-body-color-dark dark:shadow-two mb-4 w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter your email"
-          className="border-stroke dark:text-body-color-dark dark:shadow-two mb-4 w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
-        />
-        <input
-          type="submit"
-          value="Subscribe"
-          className="shadow-submit dark:shadow-submit-dark mb-5 flex w-full cursor-pointer items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium text-white duration-300 hover:bg-primary/90"
-        />
-      </div>
+      
+      {subscribed ? (
+        <div className="text-center p-6 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-100 dark:border-green-900/30">
+          <svg className="w-12 h-12 text-green-500 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <h4 className="text-xl font-bold text-black dark:text-white mb-2">Successfully Subscribed!</h4>
+          <p className="text-gray-600 dark:text-gray-300">Thank you for subscribing to our newsletter.</p>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit}>
+          {error && (
+            <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-900/30 text-red-600 dark:text-red-300 text-sm rounded-md">
+              {error}
+            </div>
+          )}
+          
+          <input
+            type="text"
+            name="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Enter your name"
+            className="border-stroke dark:text-body-color-dark dark:shadow-two mb-4 w-full rounded-md border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none transition-all duration-300"
+          />
+          <input
+            type="email"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
+            className="border-stroke dark:text-body-color-dark dark:shadow-two mb-4 w-full rounded-md border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none transition-all duration-300"
+          />
+          <button
+            type="submit"
+            disabled={loading}
+            className="shadow-submit dark:shadow-submit-dark mb-5 flex w-full cursor-pointer items-center justify-center rounded-md bg-primary px-9 py-4 text-base font-medium text-white duration-300 hover:bg-primary/90 disabled:opacity-70 disabled:cursor-not-allowed relative overflow-hidden"
+          >
+            {loading ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Processing...
+              </>
+            ) : (
+              "Subscribe Now"
+            )}
+          </button>
+          
+          <p className="text-center text-xs text-body-color dark:text-body-color-dark">
+            By subscribing, you agree to our 
+            <a href="#" className="text-primary hover:underline mx-1">Privacy Policy</a>
+            and 
+            <a href="#" className="text-primary hover:underline mx-1">Terms of Service</a>
+          </p>
+        </form>
+      )}
 
       <div>
         <span className="absolute left-2 top-7">

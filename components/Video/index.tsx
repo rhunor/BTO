@@ -3,18 +3,17 @@
 import Image from "next/image";
 import { useState } from "react";
 import SectionTitle from "../Common/SectionTitle";
-
 import ModalVideo from "react-modal-video";
 
 const Video = () => {
   const [isOpen, setOpen] = useState(false);
 
   return (
-    <section className="relative z-10 py-16 md:py-20 lg:py-28">
+    <section className="relative z-10 py-16 md:py-20 lg:py-28 overflow-hidden">
       <div className="container">
         <SectionTitle
-          title="We are ready to help"
-          paragraph="Heres a brief Video explaining bitcoin mining"
+          title="Understand How Bitcoin Mining Works"
+          paragraph="Watch our educational video to learn the fundamentals of bitcoin mining and how our platform leverages this technology for your investments"
           center
           mb="80px"
         />
@@ -22,20 +21,26 @@ const Video = () => {
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
             <div
-              className="wow fadeInUp mx-auto max-w-[770px] overflow-hidden rounded-md"
+              className="wow fadeInUp mx-auto max-w-[800px] overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl"
               data-wow-delay=".15s"
             >
-              <div className="relative aspect-[77/40] items-center justify-center">
-                <Image src="/images/video/video.jpg" alt="video image" fill />
+              <div className="relative aspect-video items-center justify-center group">
+                <Image 
+                  src="/images/video/video.jpg" 
+                  alt="Bitcoin mining video thumbnail" 
+                  fill 
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-all duration-300"></div>
                 <div className="absolute right-0 top-0 flex h-full w-full items-center justify-center">
                   <button
-                    aria-label="video play button"
+                    aria-label="Play video about bitcoin mining"
                     onClick={() => setOpen(true)}
-                    className="flex h-[70px] w-[70px] items-center justify-center rounded-full bg-white bg-opacity-75 text-primary transition hover:bg-opacity-100"
+                    className="flex h-[80px] w-[80px] items-center justify-center rounded-full bg-primary bg-opacity-90 text-white transition-all duration-300 hover:bg-opacity-100 hover:scale-110"
                   >
                     <svg
-                      width="16"
-                      height="18"
+                      width="20"
+                      height="22"
                       viewBox="0 0 16 18"
                       className="fill-current"
                     >
@@ -43,6 +48,46 @@ const Video = () => {
                     </svg>
                   </button>
                 </div>
+                
+                {/* Video info overlay */}
+                <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
+                  <h3 className="text-white text-xl font-semibold">Bitcoin Mining Explained</h3>
+                  <p className="text-gray-200 text-sm mt-2">Learn how mining works and powers our investment strategies</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Additional information cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+                <div className="text-primary mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">24/7 Mining Operations</h3>
+                <p className="text-gray-600 dark:text-gray-300">Our mining facilities operate around the clock to maximize returns on your investments.</p>
+              </div>
+              
+              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+                <div className="text-primary mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  </svg>
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Secure Infrastructure</h3>
+                <p className="text-gray-600 dark:text-gray-300">Advanced security protocols protect both our mining equipment and your digital assets.</p>
+              </div>
+              
+              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+                <div className="text-primary mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                  </svg>
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Performance Monitoring</h3>
+                <p className="text-gray-600 dark:text-gray-300">Real-time analytics and reporting keep you informed about your investment performance.</p>
               </div>
             </div>
           </div>

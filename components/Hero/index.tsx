@@ -27,50 +27,73 @@ const Hero = () => {
   return (
     <>
       <Head>
-        <title>Your Hero Title</title>
-        <meta name="description" content="Description of your hero section" />
+        <title>Binary Crypto Options - Best Trading Platform</title>
+        <meta name="description" content="Binary Crypto Options - The best trading platform for Bitcoin and cryptocurrency investments" />
       </Head>
-      <section id="home" className="relative z-10 overflow-hidden bg-white pb-16 pt-[20px] dark:bg-gray-dark md:pb-[120px] md:pt-[30px]">
-        <div className="relative flex h-[calc(100vh-70px)] w-full flex-col justify-center items-center">
-          <div className="absolute w-full h-full">
+      <section id="home" className="relative z-10 overflow-hidden bg-white dark:bg-gray-dark">
+        <div className="relative w-full h-[90vh] md:h-[85vh] lg:h-[90vh]">
+          <div className="absolute inset-0 w-full h-full">
             <Image
-              className="w-full h-full object-cover object-center"
+              className="w-full h-full object-cover object-center transition-opacity duration-500"
               sizes="100vw"
               fill
-              alt={`Image for page ${page}`}
+              priority
+              alt={`Bitcoin trading background ${page}`}
               src={`/images/images/${page}.JPG`}
               onError={(e) => console.error("Error loading image:", e)}
             />
-            <div className="absolute bottom-8 left-10 py-3 px-6 bg-[#0000007c] rounded-lg">
-              <h1 className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white">
-                Best Trading Options in The World
+            {/* Overlay gradient for better text readability */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent"></div>
+            
+            <div className="absolute bottom-8 left-0 right-0 md:left-10 px-6 py-8 max-w-[90%] md:max-w-[600px] lg:max-w-[650px] bg-black/40 backdrop-blur-sm rounded-lg transform transition-all duration-300">
+              <h1 className="mb-3 text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-white">
+                Premium Trading Options Worldwide
               </h1>
-              <p className="text-2xl mt-4 text-purple-200 pb-8">
-                Binary Crypto Options is a distinctive investment company offering investors access to high-growth investment opportunities in Bitcoin markets and other services.
+              <p className="text-lg md:text-xl mt-4 text-gray-100 pb-6 md:pb-8">
+                Binary Crypto Options offers investors access to high-growth investment opportunities in Bitcoin markets with professional management and proven strategies.
               </p>
-              <Link href="/signup" className="rounded-sm bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80">
-                Get Started
+              <Link href="/signup" className="inline-block rounded-md bg-primary px-6 py-3 md:px-8 md:py-4 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:bg-primary/90 hover:shadow-lg transform hover:-translate-y-1">
+                Start Trading Now
               </Link>
             </div>
-            {/* Left Arrow */}
-            <div className="z-10 absolute bottom-1/2 left-4 text-2xl">
-              <span
+            
+            {/* Navigation Arrows with improved styling */}
+            <div className="absolute top-1/2 left-4 transform -translate-y-1/2 z-10">
+              <button
                 onClick={handlePrevPage}
-                className="inline-block transition-transform hover:-translate-x-1 cursor-pointer hover:text-blue-500"
+                className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-sm hover:bg-primary transition-all duration-300"
                 aria-label="Previous Image"
               >
-                &lt;-
-              </span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M15 18l-6-6 6-6"/>
+                </svg>
+              </button>
             </div>
-            {/* Right Arrow */}
-            <div className="z-10 absolute bottom-1/2 right-4 text-2xl">
-              <span
+            
+            <div className="absolute top-1/2 right-4 transform -translate-y-1/2 z-10">
+              <button
                 onClick={handleNextPage}
-                className="inline-block transition-transform hover:translate-x-1 cursor-pointer hover:text-blue-500"
+                className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-sm hover:bg-primary transition-all duration-300"
                 aria-label="Next Image"
               >
-                -&gt;
-              </span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 18l6-6-6-6"/>
+                </svg>
+              </button>
+            </div>
+            
+            {/* Slide indicators/dots */}
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10 flex space-x-2">
+              {[1, 2, 3, 4, 5, 6, 7].map((num) => (
+                <button
+                  key={num}
+                  onClick={() => setPage(num)}
+                  className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all duration-300 ${
+                    page === num ? 'bg-primary scale-125' : 'bg-white/50'
+                  }`}
+                  aria-label={`Go to slide ${num}`}
+                />
+              ))}
             </div>
           </div>
 

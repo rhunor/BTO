@@ -9,7 +9,7 @@ const checkIcon = (
 
 const AboutSectionOne = () => {
   const List = ({ text }) => (
-    <p className="mb-5 flex items-center text-lg font-medium text-body-color">
+    <p className="mb-5 flex items-center text-lg font-medium text-body-color dark:text-body-color-dark">
       <span className="mr-4 flex h-[30px] w-[30px] items-center justify-center rounded-md bg-primary bg-opacity-10 text-primary">
         {checkIcon}
       </span>
@@ -24,8 +24,8 @@ const AboutSectionOne = () => {
           <div className="-mx-4 flex flex-wrap items-center">
             <div className="w-full px-4 lg:w-1/2">
               <SectionTitle
-                title="Wide Variety"
-                paragraph=" Binary Crypto Options is a Trading platform which trades using a wide variety of instruments; among them are CFDs on Forex, Crypto, Stocks, Commodities, Indices and ETFs."
+                title="Diverse Trading Options"
+                paragraph="Binary Crypto Options provides a comprehensive trading platform with a wide variety of instruments including CFDs on Forex, Cryptocurrency, Stocks, Commodities, Indices, and ETFs, all designed to maximize your investment potential."
                 mb="44px"
               />
 
@@ -35,37 +35,53 @@ const AboutSectionOne = () => {
               >
                 <div className="mx-[-12px] flex flex-wrap">
                   <div className="w-full px-3 sm:w-1/2 lg:w-full xl:w-1/2">
-                    <List text="Security" />
-                    <List text="Money Back guarantee" />
-                    <List text="Use for lifetime" />
+                    <List text="Advanced Security Protocols" />
+                    <List text="100% Money Back Guarantee" />
+                    <List text="Lifetime Account Access" />
                   </div>
 
                   <div className="w-full px-3 sm:w-1/2 lg:w-full xl:w-1/2">
-                    <List text="changing lives" />
-                    <List text="Rich documentation" />
-                   
+                    <List text="Life-Changing Investment Returns" />
+                    <List text="Comprehensive Documentation" />
+                    <List text="24/7 Expert Support" />
                   </div>
+                </div>
+                
+                <div className="mt-8">
+                  <a
+                    href="#contact"
+                    className="inline-flex items-center justify-center rounded-md bg-primary py-3 px-7 text-center text-base font-medium text-white hover:bg-opacity-90 transition-all duration-300"
+                  >
+                    Start Investing Today
+                  </a>
                 </div>
               </div>
             </div>
 
             <div className="w-full px-4 lg:w-1/2">
               <div
-                className="wow fadeInUp relative mx-auto aspect-[25/24] max-w-[500px] lg:mr-0"
+                className="wow fadeInUp relative mx-auto aspect-[25/24] max-w-[500px] lg:mr-0 overflow-hidden rounded-2xl shadow-lg"
                 data-wow-delay=".2s"
               >
-                <Image
-                  src="/images/images/1.JPG"
-                  alt="about-image"
-                  fill
-                  className="drop-shadow-three mx-auto max-w-full dark:hidden dark:drop-shadow-none lg:mr-0"
-                />
-                <Image
-                  src="/images/images/2.JPG"
-                  alt="about-image"
-                  fill
-                  className="drop-shadow-three mx-auto hidden max-w-full dark:block dark:drop-shadow-none lg:mr-0"
-                />
+                <div className="relative h-full w-full">
+                  <Image
+                    src="/images/images/1.JPG"
+                    alt="Cryptocurrency trading platform"
+                    fill
+                    className="object-cover transition-transform duration-500 hover:scale-110 dark:hidden"
+                  />
+                  <Image
+                    src="/images/images/2.JPG"
+                    alt="Cryptocurrency trading platform"
+                    fill
+                    className="object-cover transition-transform duration-500 hover:scale-110 hidden dark:block"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <h3 className="text-xl font-bold text-white">Industry-Leading Trading Platform</h3>
+                    <p className="text-gray-200 mt-2">Experience the best tools and instruments in the market</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

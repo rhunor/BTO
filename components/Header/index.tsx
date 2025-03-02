@@ -35,7 +35,7 @@ const Header = () => {
   }, []);
 
   // Submenu handler
-  const handleSubmenu = (index: number) => {
+  const handleSubmenu = (index) => {
     setOpenIndex(openIndex === index ? -1 : index);
   };
 
@@ -55,7 +55,7 @@ const Header = () => {
   };
 
   // Common navbar items
-  const renderNavItems = (items: typeof menuData) => (
+  const renderNavItems = (items) => (
     <ul className="block lg:flex lg:space-x-12">
       {items.map((menuItem) => (
         <li key={menuItem.id} className="group relative">
@@ -64,7 +64,7 @@ const Header = () => {
               href={menuItem.path}
               className={`flex py-2 text-base lg:mr-0 lg:inline-flex lg:px-0 lg:py-6 ${
                 pathname === menuItem.path
-                  ? "text-primary dark:text-white"
+                  ? "text-primary dark:text-white font-medium"
                   : "text-dark hover:text-primary dark:text-white/70 dark:hover:text-white"
               }`}
             >
@@ -112,10 +112,10 @@ const Header = () => {
 
   return (
     <header
-      className={`header left-0 top-0 z-40 flex w-full items-center ${
+      className={`header left-0 top-0 z-40 flex w-full items-center bg-white dark:bg-gray-dark ${
         sticky
-          ? "fixed z-[9999] bg-white bg-opacity-80 shadow-sticky backdrop-blur-sm transition dark:bg-gray-dark dark:shadow-sticky-dark"
-          : "absolute bg-transparent"
+          ? "fixed z-[9999] shadow-sticky backdrop-blur-sm transition dark:shadow-sticky-dark"
+          : "relative"
       }`}
     >
       <div className="container mx-auto px-4">
@@ -125,7 +125,7 @@ const Header = () => {
               href="/"
               className={`header-logo block w-full ${sticky ? "py-5 lg:py-2" : "py-8"}`}
             >
-              <p className="logo_text">Binary Crypto Options</p>
+              <p className="logo_text text-xl font-bold text-black dark:text-white">Binary Crypto Options</p>
             </Link>
           </div>
           <div className="flex w-full items-center justify-between px-4">
@@ -159,18 +159,77 @@ const Header = () => {
                 }`}
               >
                 {status === "loading" ? (
-                  <p className="text-dark dark:text-white">Loading...</p>
+                  <div className="flex items-center py-2">
+                    <div className="h-5 w-5 animate-spin rounded-full border-2 border-primary border-t-transparent"></div>
+                    <p className="ml-2 text-dark dark:text-white">Loading...</p>
+                  </div>
                 ) : isAuthenticated ? (
                   renderNavItems(menuData)
                 ) : (
                   renderNavItems(menuVata)
                 )}
+                
+                {/* Mobile auth buttons */}
+                <div className="mt-4 flex flex-col space-y-3 lg:hidden">
+                  {isAuthenticated && (
+                    <div className="flex items-center mb-3">
+                      <Image
+                        src="/images/images/avatar.jpg"
+                        width={37}
+                        height={37}
+                        className="rounded-full mr-3"
+                        alt="profile"
+                      />
+                      <span className="text-sm font-medium text-dark dark:text-white">
+                        {session?.user?.name || 'User'}
+                      </span>
+                    </div>
+                  )}
+                  
+                  {isAuthenticated ? (
+                    <>
+                      <Link 
+                        href="/Dashboard"
+                        className="block w-full rounded-sm bg-gray-100 dark:bg-gray-800 py-3 px-4 text-center"
+                      >
+                        Dashboard
+                      </Link>
+                      <button
+                        onClick={handleSignOut}
+                        className="block w-full rounded-sm bg-primary py-3 text-center text-base font-medium text-white hover:bg-opacity-90"
+                      >
+                        Sign Out
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        href="/signin"
+                        className="block w-full rounded-sm border border-body-color/20 py-3 text-center text-base font-medium text-dark hover:border-primary hover:bg-primary/5 dark:border-white/20 dark:text-white"
+                      >
+                        Sign In
+                      </Link>
+                      <Link
+                        href="/signup"
+                        className="block w-full rounded-sm bg-primary py-3 text-center text-base font-medium text-white hover:bg-opacity-90"
+                      >
+                        Sign Up
+                      </Link>
+                    </>
+                  )}
+                  <div className="flex justify-center">
+                    <ThemeToggler />
+                  </div>
+                </div>
               </nav>
             </div>
 
             <div className="hidden items-center sm:flex">
               {status === "loading" ? (
-                <span className="text-dark dark:text-white">Loading...</span>
+                <div className="flex items-center mr-4">
+                  <div className="h-5 w-5 animate-spin rounded-full border-2 border-primary border-t-transparent"></div>
+                  <span className="ml-2 text-dark dark:text-white">Loading...</span>
+                </div>
               ) : isAuthenticated ? (
                 <div className="flex items-center justify-end pr-16 lg:pr-0">
                   <Link href="/Dashboard" className="px-4">
@@ -178,7 +237,7 @@ const Header = () => {
                       src="/images/images/avatar.jpg"
                       width={37}
                       height={37}
-                      className="rounded-full"
+                      className="rounded-full border-2 border-transparent hover:border-primary transition-all"
                       alt="profile"
                     />
                   </Link>
@@ -193,7 +252,7 @@ const Header = () => {
                 <div className="flex items-center justify-end pr-16 lg:pr-0">
                   <Link
                     href="/signin"
-                    className="px-7 py-3 text-base font-medium text-dark hover:opacity-70 dark:text-white"
+                    className="px-7 py-3 text-base font-medium text-dark hover:text-primary dark:text-white"
                   >
                     Sign In
                   </Link>
