@@ -2,34 +2,11 @@
 
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
-// Define types for form data and errors
-interface FormData {
-  firstName: string;
-  lastName: string;
-  country: string;
-  countryCode: string;
-  phoneNumber: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-
-interface FormErrors {
-  firstName?: string;
-  lastName?: string;
-  country?: string;
-  phoneNumber?: string;
-  email?: string;
-  password?: string;
-  confirmPassword?: string;
-  terms?: string;
-}
-
-// Country data with codes
+// Country data with codes - for UI enhancement only
 const countries = [
   { name: "United States", code: "USA", dialCode: "+1" },
   { name: "United Kingdom", code: "UK", dialCode: "+44" },
@@ -68,17 +45,8 @@ const SignupPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
-  // Define the type for form errors
-  const [formErrors, setFormErrors] = useState<{
-    firstName?: string;
-    lastName?: string;
-    country?: string;
-    phoneNumber?: string;
-    email?: string;
-    password?: string;
-    confirmPassword?: string;
-    terms?: string;
-  }>({}); 
+
+  // IMPORTANT: Keeping the original formData structure to maintain backend compatibility
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -90,94 +58,59 @@ const SignupPage = () => {
     confirmPassword: "",
   });
 
-  // When country changes, update the country code
-  useEffect(() => {
-    if (formData.country) {
-      const selectedCountry = countries.find(c => c.code === formData.country);
-      if (selectedCountry) {
-        setFormData(prev => ({
-          ...prev,
-          countryCode: selectedCountry.dialCode
-        }));
-      }
-    }
-  }, [formData.country]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value, type } = e.target;
-    const checked = (e.target as HTMLInputElement).checked;
-    
-    if (type === 'checkbox' && name === 'agreeToTerms') {
-      setAgreedToTerms(checked);
-    } else {
-      setFormData((prevState) => ({
-        ...prevState,
-        [name]: value,
+  // When country changes, update the country code - UI enhancement only
+  const updateCountryCode = (selectedCountry) => {
+    const country = countries.find(c => c.code === selectedCountry);
+    if (country) {
+      setFormData(prev => ({
+        ...prev,
+        countryCode: country.dialCode
       }));
     }
+  };
+
+  // IMPORTANT: Using the original handleChange function to maintain backend compatibility
+  const handleChange = (e) => {
+    const value = e.target.value;
+    const name = e.target.name;
     
-    // Clear error for this field when user starts typing
-    if (formErrors[name as keyof FormErrors]) {
-      setFormErrors(prev => {
-        const newErrors = {...prev};
-        delete newErrors[name as keyof FormErrors];
-        return newErrors;
-      });
+    // Special handling for country to update country code
+    if (name === "country" && value) {
+      updateCountryCode(value);
     }
+    
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const validateForm = () => {
-    const errors: FormErrors = {};
-    
-    // Check required fields
-    if (!formData.firstName.trim()) errors.firstName = "First name is required";
-    if (!formData.lastName.trim()) errors.lastName = "Last name is required";
-    if (!formData.country) errors.country = "Please select your country";
-    if (!formData.phoneNumber) errors.phoneNumber = "Phone number is required";
-    
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email) {
-      errors.email = "Email is required";
-    } else if (!emailRegex.test(formData.email)) {
-      errors.email = "Please enter a valid email address";
-    }
-    
-    // Password validation
-    if (!formData.password) {
-      errors.password = "Password is required";
-    } else if (formData.password.length < 8) {
-      errors.password = "Password must be at least 8 characters long";
-    }
-    
-    // Confirm password validation
-    if (formData.password !== formData.confirmPassword) {
-      errors.confirmPassword = "Passwords do not match";
-    }
-    
-    // Terms agreement
-    if (!agreedToTerms) {
-      errors.terms = "You must agree to the Terms and Conditions";
-    }
-    
-    setFormErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  // IMPORTANT: Using the original handleSubmit function to maintain backend compatibility
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage("");
     
-    // Validate form
-    if (!validateForm()) {
+    // Basic validation
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.password) {
+      setErrorMessage("Please fill in all required fields");
+      return;
+    }
+    
+    if (formData.password !== formData.confirmPassword) {
+      setErrorMessage("Passwords do not match");
+      return;
+    }
+    
+    if (!agreedToTerms) {
+      setErrorMessage("You must agree to the Terms and Conditions");
       return;
     }
     
     setIsLoading(true);
+    setErrorMessage("");
     
     try {
       const res = await fetch("/api/user", {
@@ -195,6 +128,7 @@ const SignupPage = () => {
         router.push("/signin");
       }
     } catch (error) {
+      console.error("Registration error:", error);
       setErrorMessage("An error occurred. Please try again.");
     } finally {
       setIsLoading(false);
@@ -289,14 +223,12 @@ const SignupPage = () => {
                         type="text"
                         id="firstName"
                         name="firstName"
+                        required={true}
                         value={formData.firstName}
                         onChange={handleChange}
                         placeholder="Enter your first name"
-                        className={`w-full rounded-md border ${formErrors.firstName ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-stroke bg-[#f8f8f8] dark:border-transparent dark:bg-[#2C303B]'} px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none`}
+                        className="w-full rounded-md border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                       />
-                      {formErrors.firstName && (
-                        <p className="mt-1 text-xs text-red-500">{formErrors.firstName}</p>
-                      )}
                     </div>
                     
                     <div>
@@ -307,14 +239,12 @@ const SignupPage = () => {
                         type="text"
                         id="lastName"
                         name="lastName"
+                        required={true}
                         value={formData.lastName}
                         onChange={handleChange}
                         placeholder="Enter your last name"
-                        className={`w-full rounded-md border ${formErrors.lastName ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-stroke bg-[#f8f8f8] dark:border-transparent dark:bg-[#2C303B]'} px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none`}
+                        className="w-full rounded-md border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                       />
-                      {formErrors.lastName && (
-                        <p className="mt-1 text-xs text-red-500">{formErrors.lastName}</p>
-                      )}
                     </div>
                   </div>
                   
@@ -325,9 +255,10 @@ const SignupPage = () => {
                     <select
                       id="country"
                       name="country"
+                      required={true}
                       value={formData.country}
                       onChange={handleChange}
-                      className={`w-full rounded-md border ${formErrors.country ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-stroke bg-[#f8f8f8] dark:border-transparent dark:bg-[#2C303B]'} px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none`}
+                      className="w-full rounded-md border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                     >
                       <option value="">Select your country</option>
                       {countries.map((country, index) => (
@@ -336,19 +267,17 @@ const SignupPage = () => {
                         </option>
                       ))}
                     </select>
-                    {formErrors.country && (
-                      <p className="mt-1 text-xs text-red-500">{formErrors.country}</p>
-                    )}
                   </div>
                   
                   <div>
-                    <label htmlFor="phone-number" className="mb-2 block text-sm font-medium text-dark dark:text-white">
+                    <label htmlFor="phoneNumber" className="mb-2 block text-sm font-medium text-dark dark:text-white">
                       Phone Number
                     </label>
                     <div className="flex items-center">
                       <select
-                        id="country-code"
+                        id="countryCode"
                         name="countryCode"
+                        required={true}
                         value={formData.countryCode}
                         onChange={handleChange}
                         className="mr-2 w-24 rounded-md border border-stroke bg-[#f8f8f8] px-3 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
@@ -361,17 +290,15 @@ const SignupPage = () => {
                       </select>
                       <input
                         type="tel"
-                        id="phone-number"
+                        id="phoneNumber"
                         name="phoneNumber"
+                        required={true}
                         value={formData.phoneNumber}
                         onChange={handleChange}
                         placeholder="Enter phone number"
-                        className={`w-full rounded-md border ${formErrors.phoneNumber ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-stroke bg-[#f8f8f8] dark:border-transparent dark:bg-[#2C303B]'} px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none`}
+                        className="w-full rounded-md border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                       />
                     </div>
-                    {formErrors.phoneNumber && (
-                      <p className="mt-1 text-xs text-red-500">{formErrors.phoneNumber}</p>
-                    )}
                   </div>
                   
                   <div>
@@ -382,14 +309,12 @@ const SignupPage = () => {
                       type="email"
                       id="email"
                       name="email"
+                      required={true}
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="Enter your email"
-                      className={`w-full rounded-md border ${formErrors.email ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-stroke bg-[#f8f8f8] dark:border-transparent dark:bg-[#2C303B]'} px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none`}
+                      className="w-full rounded-md border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                     />
-                    {formErrors.email && (
-                      <p className="mt-1 text-xs text-red-500">{formErrors.email}</p>
-                    )}
                   </div>
                   
                   <div>
@@ -401,10 +326,11 @@ const SignupPage = () => {
                         type={showPassword ? 'text' : 'password'}
                         id="password"
                         name="password"
+                        required={true}
                         value={formData.password}
                         onChange={handleChange}
                         placeholder="Enter your password"
-                        className={`w-full rounded-md border ${formErrors.password ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-stroke bg-[#f8f8f8] dark:border-transparent dark:bg-[#2C303B]'} px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none`}
+                        className="w-full rounded-md border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                       />
                       <button
                         type="button"
@@ -414,9 +340,6 @@ const SignupPage = () => {
                         {showPassword ? <EyeOutlined /> : <EyeInvisibleOutlined />}
                       </button>
                     </div>
-                    {formErrors.password && (
-                      <p className="mt-1 text-xs text-red-500">{formErrors.password}</p>
-                    )}
                     <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
                       Password must be at least 8 characters long
                     </p>
@@ -431,10 +354,11 @@ const SignupPage = () => {
                         type={showPassword ? 'text' : 'password'}
                         id="confirmPassword"
                         name="confirmPassword"
+                        required={true}
                         value={formData.confirmPassword}
                         onChange={handleChange}
                         placeholder="Re-enter your password"
-                        className={`w-full rounded-md border ${formErrors.confirmPassword ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-stroke bg-[#f8f8f8] dark:border-transparent dark:bg-[#2C303B]'} px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none`}
+                        className="w-full rounded-md border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                       />
                       <button
                         type="button"
@@ -444,16 +368,12 @@ const SignupPage = () => {
                         {showPassword ? <EyeOutlined /> : <EyeInvisibleOutlined />}
                       </button>
                     </div>
-                    {formErrors.confirmPassword && (
-                      <p className="mt-1 text-xs text-red-500">{formErrors.confirmPassword}</p>
-                    )}
                   </div>
                   
                   <div className="flex items-start">
                     <div className="flex h-5 items-center">
                       <input
                         id="agreeToTerms"
-                        name="agreeToTerms"
                         type="checkbox"
                         checked={agreedToTerms}
                         onChange={(e) => setAgreedToTerms(e.target.checked)}
@@ -467,9 +387,6 @@ const SignupPage = () => {
                       </Link>
                     </label>
                   </div>
-                  {formErrors.terms && (
-                    <p className="text-xs text-red-500">{formErrors.terms}</p>
-                  )}
                   
                   <button
                     type="submit"

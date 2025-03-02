@@ -9,27 +9,23 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
-// Form schema with zod validation
+// IMPORTANT: Keep the original form schema
 const FormSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email"),
   password: z
     .string()
     .min(1, "Password is required")
-    .min(8, "Password must have at least 8 characters"),
+    .min(8, "Password must have than 8 characters"),
 });
-
-// Type for our form data based on the zod schema
-type FormData = z.infer<typeof FormSchema>;
 
 const SigninPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [keepSignedIn, setKeepSignedIn] = useState(false);
 
   const router = useRouter();
   
-  // Initialize react-hook-form with zod resolver
-  const form = useForm<FormData>({
+  // IMPORTANT: Keep the original form setup
+  const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       email: "",
@@ -41,47 +37,39 @@ const SigninPage = () => {
     setShowPassword(!showPassword);
   };
 
-  const onSubmit = async (values: FormData) => {
+  // IMPORTANT: Keep the original onSubmit function
+  const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     setIsLoading(true);
+    const signInData = await signIn("credentials", {
+      email: values.email,
+      password: values.password,
+      redirect: false,
+    });
+    setIsLoading(false);
     
-    try {
-      const signInData = await signIn("credentials", {
-        email: values.email,
-        password: values.password,
-        redirect: false,
-      });
-
-      if (signInData?.error) {
-        console.log(signInData);
-        if (signInData.error === "Email not found") {
-          form.setError("email", {
-            type: "manual",
-            message: "Error: Incorrect email address",
-          });
-        } else if (signInData.error === "CredentialsSignin") {
-          form.setError("password", {
-            type: "manual",
-            message: "Error: Incorrect password",
-          });
-        } else {
-          form.setError("root.general", {
-            type: "manual",
-            message: "Error: An unexpected error occurred",
-          });
-        }
+    if (signInData?.error) {
+      console.log(signInData);
+      if (signInData.error === "Email not found") {
+        form.setError("email", {
+          type: "manual",
+          message: "Error: Incorrect email address",
+        });
+      } else if (signInData.error === "CredentialsSignin") {
+        form.setError("password", {
+          type: "manual",
+          message: "Error: Incorrect password",
+        });
       } else {
-        router.refresh();
-        router.push("/Dashboard");
+        form.setError("root.general", {
+          type: "manual",
+          message: "Error: An unexpected error occurred",
+        });
       }
-    } catch (error) {
-      console.error("Sign in error:", error);
-      form.setError("root.general", {
-        type: "manual",
-        message: "An unexpected error occurred",
-      });
-    } finally {
-      setIsLoading(false);
+    } else {
+      router.refresh();
+      router.push("/Dashboard");
     }
+    console.log(signInData?.error);
   };
 
   return (
@@ -98,9 +86,9 @@ const SigninPage = () => {
                   Login to your account and preview your ongoing trades
                 </p>
                 
-                <button 
-                  onClick={() => signIn("google", { callbackUrl: "/Dashboard" })}
+                <button
                   className="mb-6 flex w-full items-center justify-center rounded-md border border-stroke bg-[#f8f8f8] px-6 py-3 text-base font-medium text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none"
+                  onClick={() => signIn("google")}
                 >
                   <span className="mr-3">
                     <svg
@@ -166,11 +154,13 @@ const SigninPage = () => {
                     <input
                       type="email"
                       id="email"
+                      name="email"
+                      required={true}
+                      {...form.register("email")}
+                      placeholder="Enter your email"
                       className={`w-full rounded-md border ${
                         form.formState.errors.email ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-stroke bg-[#f8f8f8] dark:border-transparent dark:bg-[#2C303B]'
                       } px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none`}
-                      placeholder="Enter your email"
-                      {...form.register("email")}
                     />
                     {form.formState.errors.email && (
                       <p className="mt-1 text-xs text-red-500">
@@ -190,11 +180,13 @@ const SigninPage = () => {
                       <input
                         type={showPassword ? "text" : "password"}
                         id="password"
+                        name="password"
+                        required={true}
+                        {...form.register("password")}
+                        placeholder="Enter your password"
                         className={`w-full rounded-md border ${
                           form.formState.errors.password ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-stroke bg-[#f8f8f8] dark:border-transparent dark:bg-[#2C303B]'
                         } px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none`}
-                        placeholder="Enter your password"
-                        {...form.register("password")}
                       />
                       <button
                         type="button"
@@ -215,13 +207,11 @@ const SigninPage = () => {
                     <div className="flex items-center">
                       <input
                         type="checkbox"
-                        id="rememberMe"
-                        checked={keepSignedIn}
-                        onChange={() => setKeepSignedIn(!keepSignedIn)}
+                        id="keepSignedIn"
                         className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-primary focus:ring-2 focus:ring-primary dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary"
                       />
                       <label
-                        htmlFor="rememberMe"
+                        htmlFor="keepSignedIn"
                         className="ml-2 text-sm font-medium text-body-color dark:text-body-color-dark"
                       >
                         Keep me signed in
@@ -230,7 +220,7 @@ const SigninPage = () => {
                     
                     <div>
                       <Link
-                        href="/forgot-password"
+                        href="#"
                         className="text-sm font-medium text-primary hover:underline"
                       >
                         Forgot Password?

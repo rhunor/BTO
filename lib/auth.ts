@@ -58,16 +58,36 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        // Only add user data to token during initial sign-in
+        // Initial sign-in: populate token
         token.id = Number(user.id);
         token.email = user.email;
       }
+
+      // Validate token against database on every request
+      const dbUser = await db.user.findUnique({
+        where: { id: Number(token.id) },
+      });
+
+      if (!dbUser) {
+        // Invalidate token if user no longer exists
+        return null;
+      }
+
+      // Ensure token data matches database
+      token.email = dbUser.email;
       return token;
     },
     async session({ session, token }) {
-      if (token) {
-        session.user.id = String(token.id);
-        session.user.email = token.email as string;
+      if (token && token.id && token.email) {
+        // Update session with validated token data
+        session.user = {
+          ...session.user,
+          id: String(token.id),
+          email: token.email,
+        };
+      } else {
+        // Clear session if token is invalid
+        session.user = null;
       }
       return session;
     },

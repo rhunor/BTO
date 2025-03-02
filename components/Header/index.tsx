@@ -10,7 +10,7 @@ import menuData from "./menuData";
 import menuVata from "./menuVata";
 
 const Header = () => {
-  const { data: session, status } = useSession();
+  const { data: session, status, update } = useSession();
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [sticky, setSticky] = useState(false);
   const [openIndex, setOpenIndex] = useState(-1);
@@ -35,16 +35,22 @@ const Header = () => {
   }, []);
 
   // Submenu handler
-  const handleSubmenu = (index) => {
+  const handleSubmenu = (index: number) => {
     setOpenIndex(openIndex === index ? -1 : index);
   };
 
-  // Debug session changes
+  // Debug session changes and force update on pathname change
   useEffect(() => {
     console.log("Session Status:", status);
     console.log("Session Data:", session);
     console.log("Is Authenticated:", isAuthenticated);
-  }, [status, session, isAuthenticated]);
+    console.log("Current Pathname:", pathname);
+
+    // Force session update when pathname changes (e.g., after login redirect)
+    if (pathname === "/") {
+      update(); // Trigger session refresh
+    }
+  }, [status, session, isAuthenticated, pathname, update]);
 
   // Handle sign out
   const handleSignOut = () => {
@@ -55,7 +61,7 @@ const Header = () => {
   };
 
   // Common navbar items
-  const renderNavItems = (items) => (
+  const renderNavItems = (items: typeof menuData) => (
     <ul className="block lg:flex lg:space-x-12">
       {items.map((menuItem) => (
         <li key={menuItem.id} className="group relative">
@@ -125,7 +131,9 @@ const Header = () => {
               href="/"
               className={`header-logo block w-full ${sticky ? "py-5 lg:py-2" : "py-8"}`}
             >
-              <p className="logo_text text-xl font-bold text-black dark:text-white">Binary Crypto Options</p>
+              <p className="logo_text text-xl font-bold text-black dark:text-white">
+                Binary Crypto Options
+              </p>
             </Link>
           </div>
           <div className="flex w-full items-center justify-between px-4">
@@ -168,7 +176,7 @@ const Header = () => {
                 ) : (
                   renderNavItems(menuVata)
                 )}
-                
+
                 {/* Mobile auth buttons */}
                 <div className="mt-4 flex flex-col space-y-3 lg:hidden">
                   {isAuthenticated && (
@@ -181,14 +189,13 @@ const Header = () => {
                         alt="profile"
                       />
                       <span className="text-sm font-medium text-dark dark:text-white">
-                        {session?.user?.name || 'User'}
+                        {session?.user?.name || session?.user?.email || "User"}
                       </span>
                     </div>
                   )}
-                  
                   {isAuthenticated ? (
                     <>
-                      <Link 
+                      <Link
                         href="/Dashboard"
                         className="block w-full rounded-sm bg-gray-100 dark:bg-gray-800 py-3 px-4 text-center"
                       >
