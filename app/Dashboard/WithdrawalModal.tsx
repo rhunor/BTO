@@ -482,7 +482,7 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
                       Your information has been received
                     </p>
                     <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-6">
-                      Your withdrawal request for ${formData.amount} via {selectedMethod === 'bitcoin' ? 'Bitcoin' : selectedMethod === 'ach' ? 'ACH Transfer' : 'Wire Transfer'} is being processed. You'll receive a confirmation when the funds have been sent.
+                      Your withdrawal request for ${formData.amount} via {selectedMethod === 'bitcoin' ? 'Bitcoin' : selectedMethod === 'ach' ? 'ACH Transfer' : 'Wire Transfer'} is being processed. You&apos;ll receive a confirmation when the funds have been sent.
                     </p>
                     <button
                       type="button"

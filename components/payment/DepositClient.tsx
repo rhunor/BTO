@@ -165,8 +165,8 @@ const DepositClient = ({ accountDetails }: DepositClientProps) => {
                           `w-full rounded-lg py-3 px-4 text-sm font-medium leading-5 text-gray-700 dark:text-gray-300
                            ${
                              selected
-                               ? 'bg-white dark:bg-gray-700 shadow text-primary dark:text-white'
-                               : 'hover:bg-white/[0.12] hover:text-primary dark:hover:text-white'
+                               ? "bg-white dark:bg-gray-700 shadow text-primary dark:text-white"
+                               : "hover:bg-white/[0.12] hover:text-primary dark:hover:text-white"
                            }
                            transition-all duration-200 focus:outline-none`
                         }
