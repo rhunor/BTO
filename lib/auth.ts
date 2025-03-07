@@ -1,10 +1,16 @@
-// lib/auth.ts
 export const dynamic = "force-dynamic";
 
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { db } from "./db";
+
+declare module "next-auth" {
+  interface User {
+    firstName?: string;
+    lastName?: string;
+  }
+}
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
@@ -37,16 +43,19 @@ export const authOptions: NextAuthOptions = {
             return null;
           }
 
-          // Plain-text password comparison (unchanged as per your request)
+          // Plain-text password comparison
           const passwordMatch = credentials.password === existingUser.password;
 
           if (!passwordMatch) {
             return null;
           }
 
+          // Return a user object that conforms to the User interface
           return {
-            id: `${existingUser.id}`,
+            id: String(existingUser.id),
             email: existingUser.email,
+            firstName: existingUser.firstName,
+            lastName: existingUser.lastName,
           };
         } catch (error) {
           console.error("Database error during authentication:", error);
@@ -58,36 +67,22 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        // Initial sign-in: populate token
-        token.id = Number(user.id);
+        // Only set these values during sign-in
+        token.id = user.id;
         token.email = user.email;
+        token.firstName = user.firstName;
+        token.lastName = user.lastName;
       }
-
-      // Validate token against database on every request
-      const dbUser = await db.user.findUnique({
-        where: { id: Number(token.id) },
-      });
-
-      if (!dbUser) {
-        // Invalidate token if user no longer exists
-        return null;
-      }
-
-      // Ensure token data matches database
-      token.email = dbUser.email;
       return token;
     },
     async session({ session, token }) {
-      if (token && token.id && token.email) {
-        // Update session with validated token data
+      if (token) {
         session.user = {
-          ...session.user,
-          id: String(token.id),
-          email: token.email,
+          id: token.id,
+          email: token.email as string,
+          firstName: token.firstName as string | undefined,
+          lastName: token.lastName as string | undefined,
         };
-      } else {
-        // Clear session if token is invalid
-        session.user = null;
       }
       return session;
     },

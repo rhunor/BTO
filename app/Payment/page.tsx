@@ -1,14 +1,13 @@
 // app/Payment/page.tsx
-import PaymentSectionOne from "@/components/payment/PaymentSectionOne";
-import PaymentSectionTwo from "@/components/payment/PaymentSectionTwo";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import DepositClient from "@/components/payment/DepositClient";
 
 export const metadata: Metadata = {
-  title: "Deposit | Binary crypto options",
-  description: "This is About Page for Binary Trading Options",
+  title: "Deposit Funds | Binary Crypto Options",
+  description: "Deposit funds into your Binary Crypto Options account",
 };
 
 // Server component that handles authentication check
@@ -17,15 +16,34 @@ const PaymentPage = async () => {
   const session = await getServerSession(authOptions);
   
   if (!session) {
-    redirect("/api/auth/signin?callbackUrl=/Member");
+    redirect("/api/auth/signin?callbackUrl=/Payment");
   }
 
-  return (
-    <>
-      <PaymentSectionOne />
-      <PaymentSectionTwo />
-    </>
-  );
+  // Bank account details (in production, these would come from a secure source)
+  const accountDetails = {
+    bitcoin: {
+      address: "bc1qcw3l8nl9s29lv7cv8ykxvk9w8xkwltfy6t3zk6"
+    },
+    ach: {
+      bankName: "JPMorgan Chase Bank",
+      accountName: "Binary Crypto Options LLC",
+      routingNumber: "021409169",
+      accountNumber: "289313207821",
+      accountType: "Checking"
+    },
+    wire: {
+      bankName: "JPMorgan Chase Bank, N.A. - New York",
+      recepientName: "Robinhood Securities LLC",
+      routingNumber: "021000021",
+      accountNumber: "10000043261500",
+      swiftCode: "CHASUS33",
+      bankAddress: "4 New York Plaza Floor 15, New York, NY 10004",
+      bankCountry: "United States",
+      recepientAddress: "500 COLONIAL CENTER PARKWAY, SUITE 100, LAKEMARY, FL 32746",
+    }
+  };
+
+  return <DepositClient accountDetails={accountDetails} />;
 };
 
 export default PaymentPage;

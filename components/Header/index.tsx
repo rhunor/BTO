@@ -10,7 +10,7 @@ import menuData from "./menuData";
 import menuVata from "./menuVata";
 
 const Header = () => {
-  const { data: session, status, update } = useSession();
+  const { data: session, status } = useSession();
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [sticky, setSticky] = useState(false);
   const [openIndex, setOpenIndex] = useState(-1);
@@ -39,18 +39,12 @@ const Header = () => {
     setOpenIndex(openIndex === index ? -1 : index);
   };
 
-  // Debug session changes and force update on pathname change
+  // Simplified logging for development only
   useEffect(() => {
-    console.log("Session Status:", status);
-    console.log("Session Data:", session);
-    console.log("Is Authenticated:", isAuthenticated);
-    console.log("Current Pathname:", pathname);
-
-    // Force session update when pathname changes (e.g., after login redirect)
-    if (pathname === "/") {
-      update(); // Trigger session refresh
+    if (process.env.NODE_ENV === "development") {
+      console.log("Auth Status:", status);
     }
-  }, [status, session, isAuthenticated, pathname, update]);
+  }, [status]);
 
   // Handle sign out
   const handleSignOut = () => {
@@ -58,6 +52,17 @@ const Header = () => {
       redirect: true,
       callbackUrl: `${window.location.origin}/signin`,
     });
+  };
+
+  // Format user display name from first and last name
+  const getDisplayName = () => {
+    if (!session?.user) return "User";
+    
+    const firstName = session.user.firstName || '';
+    const lastName = session.user.lastName || '';
+    const fullName = `${firstName} ${lastName}`.trim();
+    
+    return fullName || session.user.email || "User";
   };
 
   // Common navbar items
@@ -189,7 +194,7 @@ const Header = () => {
                         alt="profile"
                       />
                       <span className="text-sm font-medium text-dark dark:text-white">
-                        {session?.user?.name || session?.user?.email || "User"}
+                        {getDisplayName()}
                       </span>
                     </div>
                   )}
