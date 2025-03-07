@@ -208,7 +208,7 @@ const DepositClient = ({ accountDetails }: DepositClientProps) => {
                           <InstructionsDropdown title="How to Deposit Bitcoin">
                             <ol className="list-decimal list-inside space-y-3 text-gray-700 dark:text-gray-300 text-sm">
                               <li>Open your Bitcoin wallet app on your mobile device or computer.</li>
-                              <li>Choose the "Send" or "Pay" option in your wallet.</li>
+                              <li>Choose the &quot;Send&quot; or &quot;Pay&quot; option in your wallet.</li>
                               <li>Scan the QR code above or paste the Bitcoin address.</li>
                               <li>Enter the amount of Bitcoin you want to send.</li>
                               <li>Review the transaction details, including the network fee.</li>
@@ -266,7 +266,7 @@ const DepositClient = ({ accountDetails }: DepositClientProps) => {
                         
                         <InstructionsDropdown title="How to Deposit via ACH Transfer">
                           <ol className="list-decimal list-inside space-y-3 text-gray-700 dark:text-gray-300 text-sm">
-                            <li>Log into your bank's website or mobile app.</li>
+                            <li>Log into your bank&apos;s website or mobile app.</li>
                             <li>Navigate to the funds transfer, bill pay, or payments section.</li>
                             <li>Select the option to add a new recipient or account.</li>
                             <li>Enter the account details provided above.</li>
