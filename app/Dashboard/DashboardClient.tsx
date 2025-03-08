@@ -406,10 +406,7 @@ const DashboardClient = ({ userData, cryptoData }: DashboardClientProps) => {
                   : 'Not available'}
               </Text>
             </div>
-            <div>
-              <Text className="text-gray-500 dark:text-gray-400">Account ID</Text>
-              <Text className="font-medium">{userData.id || 'Not available'}</Text>
-            </div>
+            
             <div>
               <Text className="text-gray-500 dark:text-gray-400">Status</Text>
               <Text className="font-medium">Active</Text>
