@@ -18,6 +18,70 @@ model User {
   email           String   @unique
   password        String
   confirmPassword String
+  role            String   @default("user")  
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+  
+  // User's crypto data
+  cryptoData      CryptoData?
+}
+
+model CryptoData {
+  id                Int      @id @default(autoincrement())
+  userId           Int      @unique
+  user             User     @relation(fields: [userId], references: [id])
+  
+  // Main metrics
+  walletBalance     Float    @default(0)
+  totalProfit       Float    @default(0)
+  totalLoss         Float    @default(0)
+  percentageEarned  Float    @default(0)
+  recurringRevenue  Float    @default(0)
+  lastUpdated       DateTime @default(now())
+  notifications     Int      @default(0)
+  
+  // Coin specific data
+  coinData          CoinData[]
+  
+  // Chart data entries for historical performance
+  chartData         ChartData[]
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model CoinData {
+  id               Int       @id @default(autoincrement())
+  cryptoDataId     Int
+  cryptoData       CryptoData @relation(fields: [cryptoDataId], references: [id], onDelete: Cascade)
+  
+  name             String    // Coin name (e.g., BTC, ETH, SOL)
+  profitValue      Float     @default(0)
+  lossValue        Float     @default(0)
+  revenueValue     Float     @default(0)
+  
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  
+  @@unique([cryptoDataId, name])  // Each coin should be unique per user's crypto data
+}
+
+model ChartData {
+  id               Int       @id @default(autoincrement())
+  cryptoDataId     Int
+  cryptoData       CryptoData @relation(fields: [cryptoDataId], references: [id], onDelete: Cascade)
+  
+  date             DateTime
+  
+  // Values for each coin (null means no data for that coin on that date)
+  sol              Float?   
+  btc              Float?
+  eth              Float?
+  shib             Float?
+  usdt             Float?
+  
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  
+  @@unique([cryptoDataId, date])  // Each date should be unique per user's crypto data
 }
