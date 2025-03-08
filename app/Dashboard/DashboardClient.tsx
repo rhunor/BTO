@@ -70,6 +70,17 @@ interface CryptoData {
   chartData: Array<{ date: string; [key: string]: string | number }>;
   donutData: CoinData[];
   notifications: number;
+  // Add new change fields
+  walletBalanceChange: string;
+  walletBalanceChangeType: string;
+  totalProfitChange: string;
+  totalProfitChangeType: string;
+  totalLossChange: string;
+  totalLossChangeType: string;
+  percentageEarnedChange: string;
+  percentageEarnedChangeType: string;
+  recurringRevenueChange: string;
+  recurringRevenueChangeType: string;
 }
 
 interface DashboardClientProps {
@@ -114,40 +125,40 @@ const DashboardClient = ({ userData, cryptoData }: DashboardClientProps) => {
     {
       name: 'Wallet Balance',
       value: `$${cryptoData.walletBalance.toLocaleString()}`,
-      change: '+12.3%',
-      changeType: 'positive',
+      change: cryptoData.walletBalanceChange,
+      changeType: cryptoData.walletBalanceChangeType,
       icon: <WalletIcon className="h-6 w-6 text-blue-500" />,
       color: 'blue'
     },
     {
       name: 'Total Profit',
       value: `$${cryptoData.totalProfit.toLocaleString()}`,
-      change: '+8.2%',
-      changeType: 'positive',
+      change: cryptoData.totalProfitChange,
+      changeType: cryptoData.totalProfitChangeType,
       icon: <ArrowTrendingUpIcon className="h-6 w-6 text-emerald-500" />,
       color: 'emerald'
     },
     {
       name: 'Total Loss',
       value: `$${cryptoData.totalLoss.toLocaleString()}`,
-      change: '-3.4%',
-      changeType: 'negative',
+      change: cryptoData.totalLossChange,
+      changeType: cryptoData.totalLossChangeType,
       icon: <ArrowTrendingDownIcon className="h-6 w-6 text-red-500" />,
       color: 'red'
     },
     {
       name: 'Percentage Earned by Trade',
       value: `${cryptoData.percentageEarned}%`,
-      change: '+5.1%',
-      changeType: 'positive',
+      change: cryptoData.percentageEarnedChange,
+      changeType: cryptoData.percentageEarnedChangeType,
       icon: <ChartPieIcon className="h-6 w-6 text-indigo-500" />,
       color: 'indigo'
     },
     {
       name: 'Recurring Revenue',
       value: `$${cryptoData.recurringRevenue.toLocaleString()}`,
-      change: '+2.5%',
-      changeType: 'positive',
+      change: cryptoData.recurringRevenueChange,
+      changeType: cryptoData.recurringRevenueChangeType,
       icon: <ChartBarIcon className="h-6 w-6 text-amber-500" />,
       color: 'amber'
     },

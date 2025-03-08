@@ -54,6 +54,19 @@ export async function GET(
         percentageEarned: 0,
         recurringRevenue: 0,
         notifications: 0,
+        
+        // Add default change metrics
+        walletBalanceChange: 0,
+        walletBalanceChangeType: "positive",
+        totalProfitChange: 0,
+        totalProfitChangeType: "positive",
+        totalLossChange: 0,
+        totalLossChangeType: "negative",
+        percentageEarnedChange: 0,
+        percentageEarnedChangeType: "positive",
+        recurringRevenueChange: 0,
+        recurringRevenueChangeType: "positive",
+        
         coinData: [
           { name: 'SOL', profitValue: 0, lossValue: 0, revenueValue: 0 },
           { name: 'BTC', profitValue: 0, lossValue: 0, revenueValue: 0 },

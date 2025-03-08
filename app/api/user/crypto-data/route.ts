@@ -54,6 +54,18 @@ async function createDefaultCryptoData(userId: number) {
       recurringRevenue: 0,
       notifications: 0,
       
+      // Default change values
+      walletBalanceChange: 0,
+      walletBalanceChangeType: "positive",
+      totalProfitChange: 0,
+      totalProfitChangeType: "positive",
+      totalLossChange: 0,
+      totalLossChangeType: "negative",
+      percentageEarnedChange: 0,
+      percentageEarnedChangeType: "positive",
+      recurringRevenueChange: 0,
+      recurringRevenueChangeType: "positive",
+      
       // Add default coin data
       coinData: {
         createMany: {
@@ -167,6 +179,12 @@ function formatCryptoData(userData: any) {
       ? `${diffInHours} hours ago` 
       : `${Math.floor(diffInHours / 24)} days ago`;
   
+  // Format change values for summary cards
+  const formatChange = (value: number) => {
+    return value ? `${value > 0 ? '+' : ''}${value.toFixed(1)}%` : '0%';
+  };
+  
+  // Return the formatted data with change values
   return {
     walletBalance: userData.walletBalance,
     totalProfit: userData.totalProfit,
@@ -179,6 +197,18 @@ function formatCryptoData(userData: any) {
     revenueByCoin,
     chartData,
     donutData,
-    notifications: userData.notifications
+    notifications: userData.notifications,
+    
+    // Add change values and types
+    walletBalanceChange: formatChange(userData.walletBalanceChange),
+    walletBalanceChangeType: userData.walletBalanceChangeType || 'positive',
+    totalProfitChange: formatChange(userData.totalProfitChange),
+    totalProfitChangeType: userData.totalProfitChangeType || 'positive',
+    totalLossChange: formatChange(userData.totalLossChange),
+    totalLossChangeType: userData.totalLossChangeType || 'negative',
+    percentageEarnedChange: formatChange(userData.percentageEarnedChange),
+    percentageEarnedChangeType: userData.percentageEarnedChangeType || 'positive',
+    recurringRevenueChange: formatChange(userData.recurringRevenueChange),
+    recurringRevenueChangeType: userData.recurringRevenueChangeType || 'positive'
   };
 }

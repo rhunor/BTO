@@ -22,8 +22,6 @@ import {
   SelectItem,
 } from '@tremor/react';
 
-
-
 export default function AdminPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -37,6 +35,17 @@ export default function AdminPage() {
     percentageEarned: 0,
     recurringRevenue: 0,
     notifications: 0,
+    // Add change values
+    walletBalanceChange: 0,
+    walletBalanceChangeType: 'positive',
+    totalProfitChange: 0,
+    totalProfitChangeType: 'positive',
+    totalLossChange: 0,
+    totalLossChangeType: 'negative',
+    percentageEarnedChange: 0,
+    percentageEarnedChangeType: 'positive',
+    recurringRevenueChange: 0,
+    recurringRevenueChangeType: 'positive',
     coinData: []
   });
   const [isLoading, setIsLoading] = useState(false);
@@ -129,6 +138,14 @@ export default function AdminPage() {
     setCryptoData(prev => ({
       ...prev,
       [name]: parseFloat(value) || 0
+    }));
+  };
+  
+  // Handle form input changes for string values
+  const handleStringInputChange = (name, value) => {
+    setCryptoData(prev => ({
+      ...prev,
+      [name]: value
     }));
   };
   
@@ -248,6 +265,7 @@ export default function AdminPage() {
             <TabGroup className="mt-6">
               <TabList>
                 <Tab>Main Metrics</Tab>
+                <Tab>Change Values</Tab>
                 <Tab>Coin Data</Tab>
                 <Tab>Chart Data</Tab>
               </TabList>
@@ -340,6 +358,158 @@ export default function AdminPage() {
                           className="mt-2"
                         />
                       </div>
+                    </Grid>
+                  </div>
+                </TabPanel>
+                
+                {/* Change Values Tab */}
+                <TabPanel>
+                  <div className="mt-6 space-y-6">
+                    <Grid numItemsSm={1} numItemsLg={2} className="gap-6">
+                      {/* Wallet Balance Change */}
+                      <Card className="p-4">
+                        <Title>Wallet Balance</Title>
+                        <Grid numItemsSm={1} numItemsLg={2} className="gap-6 mt-4">
+                          <div>
+                            <Text>Change Percentage</Text>
+                            <TextInput
+                              value={String(cryptoData.walletBalanceChange || 0)}
+                              onChange={(e) => handleInputChange("walletBalanceChange", e.target.value)}
+                              placeholder="Enter change percentage"
+                              type="number"
+                              step="0.1"
+                              className="mt-2"
+                            />
+                          </div>
+                          <div>
+                            <Text>Change Type</Text>
+                            <Select
+                              value={cryptoData.walletBalanceChangeType}
+                              onValueChange={(value) => handleStringInputChange("walletBalanceChangeType", value)}
+                              className="mt-2"
+                            >
+                              <SelectItem value="positive">Positive</SelectItem>
+                              <SelectItem value="negative">Negative</SelectItem>
+                            </Select>
+                          </div>
+                        </Grid>
+                      </Card>
+                      
+                      {/* Total Profit Change */}
+                      <Card className="p-4">
+                        <Title>Total Profit</Title>
+                        <Grid numItemsSm={1} numItemsLg={2} className="gap-6 mt-4">
+                          <div>
+                            <Text>Change Percentage</Text>
+                            <TextInput
+                              value={String(cryptoData.totalProfitChange || 0)}
+                              onChange={(e) => handleInputChange("totalProfitChange", e.target.value)}
+                              placeholder="Enter change percentage"
+                              type="number"
+                              step="0.1"
+                              className="mt-2"
+                            />
+                          </div>
+                          <div>
+                            <Text>Change Type</Text>
+                            <Select
+                              value={cryptoData.totalProfitChangeType}
+                              onValueChange={(value) => handleStringInputChange("totalProfitChangeType", value)}
+                              className="mt-2"
+                            >
+                              <SelectItem value="positive">Positive</SelectItem>
+                              <SelectItem value="negative">Negative</SelectItem>
+                            </Select>
+                          </div>
+                        </Grid>
+                      </Card>
+                      
+                      {/* Total Loss Change */}
+                      <Card className="p-4">
+                        <Title>Total Loss</Title>
+                        <Grid numItemsSm={1} numItemsLg={2} className="gap-6 mt-4">
+                          <div>
+                            <Text>Change Percentage</Text>
+                            <TextInput
+                              value={String(cryptoData.totalLossChange || 0)}
+                              onChange={(e) => handleInputChange("totalLossChange", e.target.value)}
+                              placeholder="Enter change percentage"
+                              type="number"
+                              step="0.1"
+                              className="mt-2"
+                            />
+                          </div>
+                          <div>
+                            <Text>Change Type</Text>
+                            <Select
+                              value={cryptoData.totalLossChangeType}
+                              onValueChange={(value) => handleStringInputChange("totalLossChangeType", value)}
+                              className="mt-2"
+                            >
+                              <SelectItem value="positive">Positive</SelectItem>
+                              <SelectItem value="negative">Negative</SelectItem>
+                            </Select>
+                          </div>
+                        </Grid>
+                      </Card>
+                      
+                      {/* Percentage Earned Change */}
+                      <Card className="p-4">
+                        <Title>Percentage Earned</Title>
+                        <Grid numItemsSm={1} numItemsLg={2} className="gap-6 mt-4">
+                          <div>
+                            <Text>Change Percentage</Text>
+                            <TextInput
+                              value={String(cryptoData.percentageEarnedChange || 0)}
+                              onChange={(e) => handleInputChange("percentageEarnedChange", e.target.value)}
+                              placeholder="Enter change percentage"
+                              type="number"
+                              step="0.1"
+                              className="mt-2"
+                            />
+                          </div>
+                          <div>
+                            <Text>Change Type</Text>
+                            <Select
+                              value={cryptoData.percentageEarnedChangeType}
+                              onValueChange={(value) => handleStringInputChange("percentageEarnedChangeType", value)}
+                              className="mt-2"
+                            >
+                              <SelectItem value="positive">Positive</SelectItem>
+                              <SelectItem value="negative">Negative</SelectItem>
+                            </Select>
+                          </div>
+                        </Grid>
+                      </Card>
+                      
+                      {/* Recurring Revenue Change */}
+                      <Card className="p-4">
+                        <Title>Recurring Revenue</Title>
+                        <Grid numItemsSm={1} numItemsLg={2} className="gap-6 mt-4">
+                          <div>
+                            <Text>Change Percentage</Text>
+                            <TextInput
+                              value={String(cryptoData.recurringRevenueChange || 0)}
+                              onChange={(e) => handleInputChange("recurringRevenueChange", e.target.value)}
+                              placeholder="Enter change percentage"
+                              type="number"
+                              step="0.1"
+                              className="mt-2"
+                            />
+                          </div>
+                          <div>
+                            <Text>Change Type</Text>
+                            <Select
+                              value={cryptoData.recurringRevenueChangeType}
+                              onValueChange={(value) => handleStringInputChange("recurringRevenueChangeType", value)}
+                              className="mt-2"
+                            >
+                              <SelectItem value="positive">Positive</SelectItem>
+                              <SelectItem value="negative">Negative</SelectItem>
+                            </Select>
+                          </div>
+                        </Grid>
+                      </Card>
                     </Grid>
                   </div>
                 </TabPanel>

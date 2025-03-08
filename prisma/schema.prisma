@@ -40,6 +40,18 @@ model CryptoData {
   lastUpdated       DateTime @default(now())
   notifications     Int      @default(0)
   
+  // New metric changes
+  walletBalanceChange      Float    @default(0)
+  walletBalanceChangeType  String   @default("positive")
+  totalProfitChange        Float    @default(0)
+  totalProfitChangeType    String   @default("positive")
+  totalLossChange          Float    @default(0)
+  totalLossChangeType      String   @default("negative")
+  percentageEarnedChange   Float    @default(0)
+  percentageEarnedChangeType String  @default("positive")
+  recurringRevenueChange   Float    @default(0)
+  recurringRevenueChangeType String  @default("positive")
+  
   // Coin specific data
   coinData          CoinData[]
   

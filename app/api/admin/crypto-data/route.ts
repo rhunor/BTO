@@ -64,6 +64,19 @@ async function updateExistingCryptoData(userId: number, cryptoData: any) {
       percentageEarned: cryptoData.percentageEarned || 0,
       recurringRevenue: cryptoData.recurringRevenue || 0,
       notifications: cryptoData.notifications || 0,
+      
+      // Add change fields
+      walletBalanceChange: cryptoData.walletBalanceChange !== undefined ? cryptoData.walletBalanceChange : 0,
+      walletBalanceChangeType: cryptoData.walletBalanceChangeType || 'positive',
+      totalProfitChange: cryptoData.totalProfitChange !== undefined ? cryptoData.totalProfitChange : 0,
+      totalProfitChangeType: cryptoData.totalProfitChangeType || 'positive',
+      totalLossChange: cryptoData.totalLossChange !== undefined ? cryptoData.totalLossChange : 0,
+      totalLossChangeType: cryptoData.totalLossChangeType || 'negative',
+      percentageEarnedChange: cryptoData.percentageEarnedChange !== undefined ? cryptoData.percentageEarnedChange : 0,
+      percentageEarnedChangeType: cryptoData.percentageEarnedChangeType || 'positive',
+      recurringRevenueChange: cryptoData.recurringRevenueChange !== undefined ? cryptoData.recurringRevenueChange : 0,
+      recurringRevenueChangeType: cryptoData.recurringRevenueChangeType || 'positive',
+      
       lastUpdated: new Date()
     }
   });
@@ -159,7 +172,19 @@ async function createNewCryptoData(userId: number, cryptoData: any) {
       totalLoss: cryptoData.totalLoss || 0,
       percentageEarned: cryptoData.percentageEarned || 0,
       recurringRevenue: cryptoData.recurringRevenue || 0,
-      notifications: cryptoData.notifications || 0
+      notifications: cryptoData.notifications || 0,
+      
+      // Add change fields
+      walletBalanceChange: cryptoData.walletBalanceChange !== undefined ? cryptoData.walletBalanceChange : 0,
+      walletBalanceChangeType: cryptoData.walletBalanceChangeType || 'positive',
+      totalProfitChange: cryptoData.totalProfitChange !== undefined ? cryptoData.totalProfitChange : 0,
+      totalProfitChangeType: cryptoData.totalProfitChangeType || 'positive',
+      totalLossChange: cryptoData.totalLossChange !== undefined ? cryptoData.totalLossChange : 0,
+      totalLossChangeType: cryptoData.totalLossChangeType || 'negative',
+      percentageEarnedChange: cryptoData.percentageEarnedChange !== undefined ? cryptoData.percentageEarnedChange : 0,
+      percentageEarnedChangeType: cryptoData.percentageEarnedChangeType || 'positive',
+      recurringRevenueChange: cryptoData.recurringRevenueChange !== undefined ? cryptoData.recurringRevenueChange : 0,
+      recurringRevenueChangeType: cryptoData.recurringRevenueChangeType || 'positive'
     }
   });
   
