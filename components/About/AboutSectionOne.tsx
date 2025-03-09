@@ -25,7 +25,7 @@ const AboutSectionOne = () => {
             <div className="w-full px-4 lg:w-1/2">
               <SectionTitle
                 title="Diverse Trading Options"
-                paragraph="Binary Crypto Options provides a comprehensive trading platform with a wide variety of instruments including CFDs on Forex, Cryptocurrency, Stocks, Commodities, Indices, and ETFs, all designed to maximize your investment potential."
+                paragraph="Binary Trading Options provides a comprehensive trading platform with a wide variety of instruments including CFDs on Forex, Cryptocurrency, Stocks, Commodities, Indices, and ETFs, all designed to maximize your investment potential."
                 mb="44px"
               />
 

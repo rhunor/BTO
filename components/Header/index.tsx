@@ -137,7 +137,7 @@ const Header = () => {
               className={`header-logo block w-full ${sticky ? "py-5 lg:py-2" : "py-8"}`}
             >
               <p className="logo_text text-xl font-bold text-black dark:text-white">
-                Binary Crypto Options
+                Binary Trading Options
               </p>
             </Link>
           </div>

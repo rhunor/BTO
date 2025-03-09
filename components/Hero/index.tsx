@@ -27,8 +27,8 @@ const Hero = () => {
   return (
     <>
       <Head>
-        <title>Binary Crypto Options - Best Trading Platform</title>
-        <meta name="description" content="Binary Crypto Options - The best trading platform for Bitcoin and cryptocurrency investments" />
+        <title>Binary Trading Options - Best Trading Platform</title>
+        <meta name="description" content="Binary Trading Options - The best trading platform for Bitcoin and cryptocurrency investments" />
       </Head>
       <section id="home" className="relative z-10 overflow-hidden bg-white dark:bg-gray-dark">
         <div className="relative w-full h-[90vh] md:h-[85vh] lg:h-[90vh]">
@@ -50,7 +50,7 @@ const Hero = () => {
                 Premium Trading Options Worldwide
               </h1>
               <p className="text-lg md:text-xl mt-4 text-gray-100 pb-6 md:pb-8">
-                Binary Crypto Options offers investors access to high-growth investment opportunities in Bitcoin markets with professional management and proven strategies.
+                Binary Trading Options offers investors access to high-growth investment opportunities in Bitcoin markets with professional management and proven strategies.
               </p>
               <Link href="/signup" className="inline-block rounded-md bg-primary px-6 py-3 md:px-8 md:py-4 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:bg-primary/90 hover:shadow-lg transform hover:-translate-y-1">
                 Start Trading Now
