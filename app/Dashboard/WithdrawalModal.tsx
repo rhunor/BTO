@@ -135,7 +135,7 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <div className="flex min-h-full items-center justify-center p-2 sm:p-4 text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -145,10 +145,10 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white dark:bg-gray-800 p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-xs sm:max-w-md transform overflow-hidden rounded-2xl bg-white dark:bg-gray-800 p-4 sm:p-6 text-left align-middle shadow-xl transition-all">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900 dark:text-white flex justify-between items-center"
+                  className="text-base sm:text-lg font-medium leading-6 text-gray-900 dark:text-white flex justify-between items-center"
                 >
                   {step === 1 && "Withdraw Funds"}
                   {step === 2 && "Processing Withdrawal"}
@@ -169,20 +169,20 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
                 {step === 1 && (
                   <>
                     <div className="mt-2">
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                         Choose your withdrawal method and enter the amount you want to withdraw.
                       </p>
-                      <div className="mt-4 bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg">
-                        <p className="text-sm text-blue-700 dark:text-blue-300 font-medium">
+                      <div className="mt-3 bg-blue-50 dark:bg-blue-900/20 p-2 sm:p-3 rounded-lg">
+                        <p className="text-xs sm:text-sm text-blue-700 dark:text-blue-300 font-medium">
                           Available Balance: ${availableBalance.toLocaleString()}
                         </p>
                       </div>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="mt-4">
+                    <form onSubmit={handleSubmit} className="mt-3 sm:mt-4">
                       {/* Amount Field */}
-                      <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      <div className="mb-3 sm:mb-4">
+                        <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                           Withdrawal Amount
                         </label>
                         <div className="relative">
@@ -194,7 +194,7 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
                             name="amount"
                             value={formData.amount}
                             onChange={handleChange}
-                            className={`block w-full pl-7 pr-12 py-2 border ${errors.amount ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-primary focus:border-primary`}
+                            className={`block w-full pl-7 pr-12 py-2 text-sm border ${errors.amount ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-primary focus:border-primary`}
                             placeholder="0.00"
                             aria-describedby="amount-error"
                           />
@@ -209,19 +209,19 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
                           </div>
                         </div>
                         {errors.amount && (
-                          <p className="mt-1 text-sm text-red-500" id="amount-error">
+                          <p className="mt-1 text-xs text-red-500" id="amount-error">
                             {errors.amount}
                           </p>
                         )}
                       </div>
 
                       {/* Withdrawal Method Selection */}
-                      <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      <div className="mb-3 sm:mb-4">
+                        <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 sm:mb-2">
                           Withdrawal Method
                         </label>
                         <RadioGroup value={selectedMethod} onChange={setSelectedMethod}>
-                          <div className="grid grid-cols-3 gap-3">
+                          <div className="grid grid-cols-3 gap-2 sm:gap-3">
                             <RadioGroup.Option
                               value="bitcoin"
                               className={({ checked }) =>
@@ -229,13 +229,13 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
                                   checked
                                     ? 'bg-primary-50 border-primary dark:bg-primary-900/20 dark:border-primary-500'
                                     : 'bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600'
-                                } border p-2 focus:outline-none`
+                                } border p-1 sm:p-2 focus:outline-none`
                               }
                             >
                               {({ checked }) => (
                                 <div className="flex w-full items-center justify-center">
                                   <div className="flex items-center">
-                                    <div className="text-sm">
+                                    <div className="text-xs sm:text-sm">
                                       <RadioGroup.Label
                                         as="span"
                                         className={`font-medium ${
@@ -243,7 +243,7 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
                                         }`}
                                       >
                                         <span className="flex flex-col items-center">
-                                          <BiBitcoin className="h-6 w-6 mb-1" />
+                                          <BiBitcoin className="h-4 w-4 sm:h-6 sm:w-6 mb-1" />
                                           <span>Bitcoin</span>
                                         </span>
                                       </RadioGroup.Label>
@@ -259,13 +259,13 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
                                   checked
                                     ? 'bg-primary-50 border-primary dark:bg-primary-900/20 dark:border-primary-500'
                                     : 'bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600'
-                                } border p-2 focus:outline-none`
+                                } border p-1 sm:p-2 focus:outline-none`
                               }
                             >
                               {({ checked }) => (
                                 <div className="flex w-full items-center justify-center">
                                   <div className="flex items-center">
-                                    <div className="text-sm">
+                                    <div className="text-xs sm:text-sm">
                                       <RadioGroup.Label
                                         as="span"
                                         className={`font-medium ${
@@ -273,7 +273,7 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
                                         }`}
                                       >
                                         <span className="flex flex-col items-center">
-                                          <BsBank className="h-5 w-5 mb-1" />
+                                          <BsBank className="h-4 w-4 sm:h-5 sm:w-5 mb-1" />
                                           <span>ACH</span>
                                         </span>
                                       </RadioGroup.Label>
@@ -289,13 +289,13 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
                                   checked
                                     ? 'bg-primary-50 border-primary dark:bg-primary-900/20 dark:border-primary-500'
                                     : 'bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600'
-                                } border p-2 focus:outline-none`
+                                } border p-1 sm:p-2 focus:outline-none`
                               }
                             >
                               {({ checked }) => (
                                 <div className="flex w-full items-center justify-center">
                                   <div className="flex items-center">
-                                    <div className="text-sm">
+                                    <div className="text-xs sm:text-sm">
                                       <RadioGroup.Label
                                         as="span"
                                         className={`font-medium ${
@@ -303,7 +303,7 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
                                         }`}
                                       >
                                         <span className="flex flex-col items-center">
-                                          <BsArrowRight className="h-5 w-5 mb-1" />
+                                          <BsArrowRight className="h-4 w-4 sm:h-5 sm:w-5 mb-1" />
                                           <span>Wire</span>
                                         </span>
                                       </RadioGroup.Label>
@@ -318,8 +318,8 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
 
                       {/* Bitcoin Address Field (if Bitcoin selected) */}
                       {selectedMethod === 'bitcoin' && (
-                        <div className="mb-4">
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        <div className="mb-3 sm:mb-4">
+                          <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                             Bitcoin Address
                           </label>
                           <input
@@ -327,12 +327,12 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
                             name="bitcoinAddress"
                             value={formData.bitcoinAddress || ''}
                             onChange={handleChange}
-                            className={`block w-full py-2 px-3 border ${errors.bitcoinAddress ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-primary focus:border-primary`}
+                            className={`block w-full py-2 px-3 text-sm border ${errors.bitcoinAddress ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-primary focus:border-primary`}
                             placeholder="Enter your Bitcoin address"
                             aria-describedby="bitcoin-address-error"
                           />
                           {errors.bitcoinAddress && (
-                            <p className="mt-1 text-sm text-red-500" id="bitcoin-address-error">
+                            <p className="mt-1 text-xs text-red-500" id="bitcoin-address-error">
                               {errors.bitcoinAddress}
                             </p>
                           )}
@@ -342,8 +342,8 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
                       {/* Bank Fields (if ACH or Wire selected) */}
                       {(selectedMethod === 'ach' || selectedMethod === 'wire') && (
                         <>
-                          <div className="mb-4">
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                          <div className="mb-3 sm:mb-4">
+                            <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                               Bank Name
                             </label>
                             <input
@@ -351,19 +351,19 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
                               name="bankName"
                               value={formData.bankName || ''}
                               onChange={handleChange}
-                              className={`block w-full py-2 px-3 border ${errors.bankName ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-primary focus:border-primary`}
+                              className={`block w-full py-2 px-3 text-sm border ${errors.bankName ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-primary focus:border-primary`}
                               placeholder="Enter bank name"
                               aria-describedby="bank-name-error"
                             />
                             {errors.bankName && (
-                              <p className="mt-1 text-sm text-red-500" id="bank-name-error">
+                              <p className="mt-1 text-xs text-red-500" id="bank-name-error">
                                 {errors.bankName}
                               </p>
                             )}
                           </div>
 
-                          <div className="mb-4">
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                          <div className="mb-3 sm:mb-4">
+                            <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                               Account Name
                             </label>
                             <input
@@ -371,19 +371,19 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
                               name="accountName"
                               value={formData.accountName || ''}
                               onChange={handleChange}
-                              className={`block w-full py-2 px-3 border ${errors.accountName ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-primary focus:border-primary`}
+                              className={`block w-full py-2 px-3 text-sm border ${errors.accountName ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-primary focus:border-primary`}
                               placeholder="Enter account name"
                               aria-describedby="account-name-error"
                             />
                             {errors.accountName && (
-                              <p className="mt-1 text-sm text-red-500" id="account-name-error">
+                              <p className="mt-1 text-xs text-red-500" id="account-name-error">
                                 {errors.accountName}
                               </p>
                             )}
                           </div>
 
-                          <div className="mb-4">
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                          <div className="mb-3 sm:mb-4">
+                            <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                               Account Number
                             </label>
                             <input
@@ -391,19 +391,19 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
                               name="accountNumber"
                               value={formData.accountNumber || ''}
                               onChange={handleChange}
-                              className={`block w-full py-2 px-3 border ${errors.accountNumber ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-primary focus:border-primary`}
+                              className={`block w-full py-2 px-3 text-sm border ${errors.accountNumber ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-primary focus:border-primary`}
                               placeholder="Enter account number"
                               aria-describedby="account-number-error"
                             />
                             {errors.accountNumber && (
-                              <p className="mt-1 text-sm text-red-500" id="account-number-error">
+                              <p className="mt-1 text-xs text-red-500" id="account-number-error">
                                 {errors.accountNumber}
                               </p>
                             )}
                           </div>
 
-                          <div className="mb-4">
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                          <div className="mb-3 sm:mb-4">
+                            <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                               Routing Number
                             </label>
                             <input
@@ -411,12 +411,12 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
                               name="routingNumber"
                               value={formData.routingNumber || ''}
                               onChange={handleChange}
-                              className={`block w-full py-2 px-3 border ${errors.routingNumber ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-primary focus:border-primary`}
+                              className={`block w-full py-2 px-3 text-sm border ${errors.routingNumber ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-primary focus:border-primary`}
                               placeholder="Enter routing number"
                               aria-describedby="routing-number-error"
                             />
                             {errors.routingNumber && (
-                              <p className="mt-1 text-sm text-red-500" id="routing-number-error">
+                              <p className="mt-1 text-xs text-red-500" id="routing-number-error">
                                 {errors.routingNumber}
                               </p>
                             )}
@@ -424,8 +424,8 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
 
                           {/* SWIFT Code (Wire only) */}
                           {selectedMethod === 'wire' && (
-                            <div className="mb-4">
-                              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <div className="mb-3 sm:mb-4">
+                              <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                 SWIFT Code
                               </label>
                               <input
@@ -433,12 +433,12 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
                                 name="swiftCode"
                                 value={formData.swiftCode || ''}
                                 onChange={handleChange}
-                                className={`block w-full py-2 px-3 border ${errors.swiftCode ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-primary focus:border-primary`}
+                                className={`block w-full py-2 px-3 text-sm border ${errors.swiftCode ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-primary focus:border-primary`}
                                 placeholder="Enter SWIFT code"
                                 aria-describedby="swift-code-error"
                               />
                               {errors.swiftCode && (
-                                <p className="mt-1 text-sm text-red-500" id="swift-code-error">
+                                <p className="mt-1 text-xs text-red-500" id="swift-code-error">
                                   {errors.swiftCode}
                                 </p>
                               )}
@@ -447,7 +447,7 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
                         </>
                       )}
 
-                      <div className="mt-6">
+                      <div className="mt-5 sm:mt-6">
                         <button
                           type="submit"
                           className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
@@ -461,9 +461,9 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
 
                 {/* Step 2: Processing Animation */}
                 {step === 2 && (
-                  <div className="mt-6 flex flex-col items-center justify-center py-8">
-                    <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-primary mb-6"></div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <div className="mt-4 sm:mt-6 flex flex-col items-center justify-center py-6 sm:py-8">
+                    <div className="animate-spin rounded-full h-12 w-12 sm:h-16 sm:w-16 border-t-4 border-b-4 border-primary mb-4 sm:mb-6"></div>
+                    <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                       Processing your withdrawal request...
                     </p>
                     <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">
@@ -474,14 +474,14 @@ export default function WithdrawalModal({ isOpen, onClose, availableBalance }: W
 
                 {/* Step 3: Confirmation */}
                 {step === 3 && (
-                  <div className="mt-6 flex flex-col items-center justify-center py-6">
-                    <div className="h-16 w-16 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-6">
-                      <BsCheckCircleFill className="h-8 w-8 text-green-500 dark:text-green-400" />
+                  <div className="mt-4 sm:mt-6 flex flex-col items-center justify-center py-4 sm:py-6">
+                    <div className="h-12 w-12 sm:h-16 sm:w-16 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-4 sm:mb-6">
+                      <BsCheckCircleFill className="h-6 w-6 sm:h-8 sm:w-8 text-green-500 dark:text-green-400" />
                     </div>
-                    <p className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                    <p className="text-base sm:text-lg font-medium text-gray-900 dark:text-white mb-2">
                       Your information has been received
                     </p>
-                    <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-6">
+                    <p className="text-center text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-4 sm:mb-6">
                       Your withdrawal request for ${formData.amount} via {selectedMethod === 'bitcoin' ? 'Bitcoin' : selectedMethod === 'ach' ? 'ACH Transfer' : 'Wire Transfer'} is being processed. You&apos;ll receive a confirmation when the funds have been sent.
                     </p>
                     <button
