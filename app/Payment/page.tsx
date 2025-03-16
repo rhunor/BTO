@@ -28,14 +28,14 @@ const PaymentPage = async () => {
       bankName: "JPMorgan Chase Bank",
       accountName: "Binary Crypto Options LLC",
       routingNumber: "021409169",
-      accountNumber: "289313207821",
+      accountNumber: "289991897484",
       accountType: "Checking"
     },
     wire: {
       bankName: "JPMorgan Chase Bank, N.A. - New York",
       recepientName: "Robinhood Securities LLC",
       routingNumber: "021000021",
-      accountNumber: "10000043261500",
+      accountNumber: "10000043774399",
       swiftCode: "CHASUS33",
       bankAddress: "4 New York Plaza Floor 15, New York, NY 10004",
       bankCountry: "United States",
