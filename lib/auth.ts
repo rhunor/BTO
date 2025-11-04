@@ -1,6 +1,5 @@
 export const dynamic = "force-dynamic";
 
-import { PrismaAdapter } from "@auth/prisma-adapter";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { db } from "./db";
@@ -24,7 +23,6 @@ declare module "next-auth" {
 }
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(db),
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",

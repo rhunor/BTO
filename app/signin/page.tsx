@@ -4,9 +4,10 @@ import Link from "next/link";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 // IMPORTANT: Keep the original form schema
@@ -23,6 +24,20 @@ const SigninPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
+  const { data: session, status } = useSession();
+
+  // Only redirect when the auth status transitions from unauthenticated/loading -> authenticated.
+  // This avoids redirect loops when the client still has a cached session after signOut and
+  // the server has already ended the session.
+  const prevStatusRef = useRef(status);
+  useEffect(() => {
+    const prev = prevStatusRef.current;
+    if (prev !== "authenticated" && status === "authenticated") {
+      // route to dashboard when newly authenticated
+      router.replace("/Dashboard");
+    }
+    prevStatusRef.current = status;
+  }, [status, router]);
   
   // IMPORTANT: Keep the original form setup
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -66,8 +81,15 @@ const SigninPage = () => {
         });
       }
     } else {
-      router.refresh();
-      router.push("/Dashboard");
+      // If NextAuth returned a redirect URL use it (works better across App Router boundaries).
+      if ((signInData as any)?.url) {
+        // Force a full navigation to ensure all server/session state is updated
+        window.location.href = (signInData as any).url;
+        return;
+      }
+
+      // Fallback to client navigation
+      await router.replace("/Dashboard");
     }
     console.log(signInData?.error);
   };

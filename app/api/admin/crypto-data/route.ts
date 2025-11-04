@@ -15,8 +15,10 @@ export async function PUT(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     
-    const body = await req.json();
-    const { userId, cryptoData } = body;
+  const body = await req.json();
+  let { userId, cryptoData } = body;
+  // Normalize userId to string (MongoDB ObjectId string)
+  userId = String(userId);
     
     if (!userId || !cryptoData) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -53,7 +55,7 @@ export async function PUT(req: Request) {
   }
 }
 
-async function updateExistingCryptoData(userId: number, cryptoData: any) {
+async function updateExistingCryptoData(userId: string, cryptoData: any) {
   // Update the main crypto data
   const updated = await db.cryptoData.update({
     where: { userId },
@@ -162,7 +164,7 @@ async function updateExistingCryptoData(userId: number, cryptoData: any) {
   });
 }
 
-async function createNewCryptoData(userId: number, cryptoData: any) {
+async function createNewCryptoData(userId: string, cryptoData: any) {
   // Create base crypto data
   const created = await db.cryptoData.create({
     data: {

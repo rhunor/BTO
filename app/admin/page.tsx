@@ -202,7 +202,7 @@ export default function AdminPage() {
                 placeholder="Select a user"
                 disabled={isLoading || users.length === 0}
                 onValueChange={(value) => {
-                  const userId = parseInt(value);
+                  const userId = value; // user IDs are strings (MongoDB ObjectId)
                   fetchUserCryptoData(userId);
                 }}
               >

@@ -18,12 +18,8 @@ export async function GET(
     
     // In a production app, you would check if the user has admin privileges here
     
-    // Get userId from route params
-    const userId = parseInt((await params).userId);
-    
-    if (isNaN(userId)) {
-      return NextResponse.json({ error: "Invalid user ID" }, { status: 400 });
-    }
+    // Get userId from route params (string ObjectId)
+    const userId = (await params).userId;
     
     // Check if user exists
     const userExists = await db.user.findUnique({

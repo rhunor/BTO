@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "postinstall": "prisma generate",
-    "build": "prisma generate && next build",
+    "postinstall": "",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:mongo": "node ./scripts/test-mongo.mjs"
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
@@ -28,6 +29,7 @@
     "eslint-config-next": "13.1.6",
     "framer-motion": "^11.0.3",
     "mongodb": "^6.3.0",
+  "dotenv": "^16.1.4",
     "mongoose": "^8.0.3",
     "next": "^15.2.0",
     "next-auth": "^4.24.11",

@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
+import { formatCryptoData } from "@/lib/formatCryptoData";
 
 // GET - Fetch user's crypto data
 export async function GET() {
@@ -13,7 +14,8 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     
-    const userId = parseInt(session.user.id);
+    // user IDs are stored as strings (Mongo ObjectId string)
+    const userId = session.user.id as string;
     
     // Get user crypto data
     let userData = await db.cryptoData.findUnique({
@@ -31,10 +33,10 @@ export async function GET() {
       userData = await createDefaultCryptoData(userId);
     }
     
-    // Format the data for the frontend
-    const formattedData = formatCryptoData(userData);
-    
-    return NextResponse.json(formattedData);
+  // Format the data for the frontend
+  const formattedData = formatCryptoData(userData);
+
+  return NextResponse.json(formattedData);
   } catch (error) {
     console.error("Error fetching crypto data:", error);
     return NextResponse.json({ error: "Failed to fetch crypto data" }, { status: 500 });
@@ -42,7 +44,7 @@ export async function GET() {
 }
 
 // Helper function to create default crypto data for a new user
-async function createDefaultCryptoData(userId: number) {
+async function createDefaultCryptoData(userId: string) {
   // Create the base crypto data record
   const cryptoData = await db.cryptoData.create({
     data: {
@@ -115,100 +117,4 @@ function generateDefaultChartData() {
   }
   
   return data;
-}
-
-// Format crypto data from database to frontend format
-function formatCryptoData(userData: any) {
-  // Get coin icons
-  const coinIcons: Record<string, string> = {
-    'SOL': '🔵',
-    'BTC': '🟠',
-    'ETH': '🟣',
-    'SHIB': '🟡',
-    'USDT': '🟢',
-  };
-  
-  // Format profits by coin
-  const profitsByCoin = userData.coinData.map((coin: any) => ({
-    name: coin.name,
-    value: coin.profitValue,
-    icon: coinIcons[coin.name] || '💰'
-  }));
-  
-  // Format losses by coin
-  const lossesByCoin = userData.coinData
-    .filter((coin: any) => coin.lossValue > 0)
-    .map((coin: any) => ({
-      name: coin.name,
-      value: coin.lossValue,
-      icon: coinIcons[coin.name] || '💰'
-    }));
-  
-  // Format revenue by coin
-  const revenueByCoin = userData.coinData.map((coin: any) => ({
-    name: coin.name,
-    value: coin.revenueValue,
-    icon: coinIcons[coin.name] || '💰'
-  }));
-  
-  // Format chart data
-  const chartData = userData.chartData.map((entry: any) => {
-    return {
-      date: entry.date.toISOString().split('T')[0], // Format as YYYY-MM-DD
-      SOL: entry.sol || 0,
-      BTC: entry.btc || 0,
-      ETH: entry.eth || 0,
-      SHIB: entry.shib || 0,
-      USDT: entry.usdt || 0
-    };
-  });
-  
-  // Format donut data
-  const donutData = userData.coinData.map((coin: any) => ({
-    name: coin.name,
-    value: coin.profitValue > 0 ? coin.profitValue : 0
-  }));
-  
-  // Calculate time since last update
-  const lastUpdatedDate = new Date(userData.lastUpdated);
-  const now = new Date();
-  const diffInHours = Math.floor((now.getTime() - lastUpdatedDate.getTime()) / (1000 * 60 * 60));
-  const lastUpdated = diffInHours <= 1 
-    ? "Just now" 
-    : diffInHours < 24 
-      ? `${diffInHours} hours ago` 
-      : `${Math.floor(diffInHours / 24)} days ago`;
-  
-  // Format change values for summary cards
-  const formatChange = (value: number) => {
-    return value ? `${value > 0 ? '+' : ''}${value.toFixed(1)}%` : '0%';
-  };
-  
-  // Return the formatted data with change values
-  return {
-    walletBalance: userData.walletBalance,
-    totalProfit: userData.totalProfit,
-    totalLoss: userData.totalLoss,
-    percentageEarned: userData.percentageEarned,
-    recurringRevenue: userData.recurringRevenue,
-    lastUpdated,
-    profitsByCoin,
-    lossesByCoin,
-    revenueByCoin,
-    chartData,
-    donutData,
-    notifications: userData.notifications,
-    
-    // Add change values and types
-    walletBalanceChange: formatChange(userData.walletBalanceChange),
-    walletBalanceChangeType: userData.walletBalanceChangeType || 'positive',
-    totalProfitChange: formatChange(userData.totalProfitChange),
-    totalProfitChangeType: userData.totalProfitChangeType || 'positive',
-    totalLossChange: formatChange(userData.totalLossChange),
-    totalLossChangeType: userData.totalLossChangeType || 'negative',
-    percentageEarnedChange: formatChange(userData.percentageEarnedChange),
-    percentageEarnedChangeType: userData.percentageEarnedChangeType || 'positive',
-    recurringRevenueChange: formatChange(userData.recurringRevenueChange),
-    recurringRevenueChangeType: userData.recurringRevenueChangeType || 'positive'
-  };
 }
