@@ -116,7 +116,7 @@ const CopyToClipboard = ({ text }: { text: string }) => {
       </div>
       <button
         onClick={copyToClipboard}
-        className="min-w-[100px] py-3 px-4 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+        className="min-w-[100px] py-3 px-4 bg-accent text-primary rounded-lg hover:bg-accent/90 transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 dark:focus:ring-offset-gray-900"
       >
         {copied ? "Copied!" : "Copy"}
       </button>

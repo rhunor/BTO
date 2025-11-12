@@ -123,7 +123,7 @@ const Header = () => {
 
   return (
     <header
-      className={`header left-0 top-0 z-40 flex w-full items-center bg-white dark:bg-gray-dark ${
+      className={`header left-0 top-0 z-40 flex w-full items-center bg-white dark:bg-black ${
         sticky
           ? "fixed z-[9999] shadow-sticky backdrop-blur-sm transition dark:shadow-sticky-dark"
           : "relative"
@@ -131,13 +131,13 @@ const Header = () => {
     >
       <div className="container mx-auto px-4">
         <div className="relative -mx-4 flex items-center justify-between">
-          <div className="w-60 max-w-full px-4 xl:mr-12">
+            <div className="w-60 max-w-full px-4 xl:mr-12">
             <Link
               href="/"
               className={`header-logo block w-full ${sticky ? "py-5 lg:py-2" : "py-8"}`}
             >
-              <p className="logo_text text-xl font-bold text-black dark:text-white">
-                Binary Trading Options
+              <p className="logo_text text-xl font-bold text-primary dark:text-accent">
+                GQG Private Investments
               </p>
             </Link>
           </div>
@@ -208,7 +208,7 @@ const Header = () => {
                       </Link>
                       <button
                         onClick={handleSignOut}
-                        className="block w-full rounded-sm bg-primary py-3 text-center text-base font-medium text-white hover:bg-opacity-90"
+                        className="block w-full rounded-sm bg-accent py-3 text-center text-base font-medium text-primary hover:bg-accent/90"
                       >
                         Sign Out
                       </button>
@@ -223,7 +223,7 @@ const Header = () => {
                       </Link>
                       <Link
                         href="/signup"
-                        className="block w-full rounded-sm bg-primary py-3 text-center text-base font-medium text-white hover:bg-opacity-90"
+                        className="block w-full rounded-sm bg-accent py-3 text-center text-base font-medium text-primary hover:bg-accent/90"
                       >
                         Sign Up
                       </Link>
@@ -255,7 +255,7 @@ const Header = () => {
                   </Link>
                   <button
                     onClick={handleSignOut}
-                    className="ease-in-up shadow-btn hover:shadow-btn-hover rounded-sm bg-primary px-8 py-3 text-base font-medium text-white transition duration-300 hover:bg-opacity-90 md:px-9 lg:px-6 xl:px-9"
+                    className="ease-in-up shadow-btn hover:shadow-btn-hover rounded-sm bg-accent px-8 py-3 text-base font-medium text-primary transition duration-300 hover:bg-accent/90 md:px-9 lg:px-6 xl:px-9"
                   >
                     Sign Out
                   </button>
@@ -270,7 +270,7 @@ const Header = () => {
                   </Link>
                   <Link
                     href="/signup"
-                    className="ease-in-up shadow-btn hover:shadow-btn-hover rounded-sm bg-primary px-8 py-3 text-base font-medium text-white transition duration-300 hover:bg-opacity-90 md:px-9 lg:px-6 xl:px-9"
+                    className="ease-in-up shadow-btn hover:shadow-btn-hover rounded-sm bg-accent px-8 py-3 text-base font-medium text-primary transition duration-300 hover:bg-accent/90 md:px-9 lg:px-6 xl:px-9"
                   >
                     Sign Up
                   </Link>

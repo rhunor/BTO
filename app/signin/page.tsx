@@ -258,7 +258,7 @@ const SigninPage = () => {
                   
                   <button
                     type="submit"
-                    className="flex w-full items-center justify-center rounded-md bg-primary px-9 py-4 text-base font-medium text-white shadow-submit transition-all duration-300 hover:bg-primary/90 hover:shadow-lg dark:shadow-submit-dark"
+                    className="flex w-full items-center justify-center rounded-md bg-accent px-9 py-4 text-base font-medium text-primary shadow-submit transition-all duration-300 hover:bg-accent/90 hover:shadow-lg dark:shadow-submit-dark"
                   >
                     Sign in
                   </button>

@@ -48,6 +48,7 @@ export async function POST(req: Request) {
     //   );
     // }
 
+    // Ensure every newly created user gets a default role of 'user'
     const newUser = await db.user.create({
       data: {
         firstName,
@@ -58,6 +59,7 @@ export async function POST(req: Request) {
         email,
         password,
         confirmPassword,
+        role: "user",
       },
     });
 

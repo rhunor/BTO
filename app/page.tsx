@@ -1,3 +1,4 @@
+//app/page.tsx
 import AboutSectionOne from "@/components/About/AboutSectionOne";
 import AboutSectionTwo from "@/components/About/AboutSectionTwo";
 
@@ -13,8 +14,8 @@ import { Metadata } from "next";
 import Widget from "@/components/Widget";
 
 export const metadata: Metadata = {
-  title: "Binary Crypto Options",
-  description: " ",
+  title: "GQG Private Investments - Global Quality Growth",
+  description: "Sophisticated wealth management and global investment strategies for private clients and institutions",
   // other metadata
 };
 

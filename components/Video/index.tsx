@@ -12,8 +12,8 @@ const Video = () => {
     <section className="relative z-10 py-16 md:py-20 lg:py-28 overflow-hidden">
       <div className="container">
         <SectionTitle
-          title="Understand How Bitcoin Mining Works"
-          paragraph="Watch our educational video to learn the fundamentals of bitcoin mining and how our platform leverages this technology for your investments"
+          title="Learn About Our Investment Approach"
+          paragraph="Watch a short overview of our investment philosophy and how we construct portfolios for private clients"
           center
           mb="80px"
         />
@@ -34,9 +34,9 @@ const Video = () => {
                 <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-all duration-300"></div>
                 <div className="absolute right-0 top-0 flex h-full w-full items-center justify-center">
                   <button
-                    aria-label="Play video about bitcoin mining"
+                    aria-label="Play overview video about our investment approach"
                     onClick={() => setOpen(true)}
-                    className="flex h-[80px] w-[80px] items-center justify-center rounded-full bg-primary bg-opacity-90 text-white transition-all duration-300 hover:bg-opacity-100 hover:scale-110"
+                    className="flex h-[80px] w-[80px] items-center justify-center rounded-full border border-gray-800 bg-white dark:bg-black text-black dark:text-white transition-all duration-300 hover:scale-110"
                   >
                     <svg
                       width="20"
@@ -50,9 +50,9 @@ const Video = () => {
                 </div>
                 
                 {/* Video info overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
-                  <h3 className="text-white text-xl font-semibold">Bitcoin Mining Explained</h3>
-                  <p className="text-gray-200 text-sm mt-2">Learn how mining works and powers our investment strategies</p>
+                <div className="absolute bottom-0 left-0 right-0 p-6 bg-black/50">
+                  <h3 className="text-white text-xl font-semibold">Overview of Our Strategy</h3>
+                  <p className="text-gray-200 text-sm mt-2">A concise look at our investment philosophy and portfolio construction approach</p>
                 </div>
               </div>
             </div>
@@ -60,7 +60,7 @@ const Video = () => {
             {/* Additional information cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
               <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-                <div className="text-primary mb-4">
+                <div className="text-black dark:text-white mb-4">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="12" cy="12" r="10"></circle>
                     <polyline points="12 6 12 12 16 14"></polyline>
@@ -71,7 +71,7 @@ const Video = () => {
               </div>
               
               <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-                <div className="text-primary mb-4">
+                <div className="text-black dark:text-white mb-4">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                   </svg>
@@ -81,7 +81,7 @@ const Video = () => {
               </div>
               
               <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-                <div className="text-primary mb-4">
+                <div className="text-black dark:text-white mb-4">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
                   </svg>
@@ -103,7 +103,7 @@ const Video = () => {
         onClose={() => setOpen(false)}
       />
 
-      <div className="absolute bottom-0 left-0 right-0 z-[-1] h-full w-full bg-[url(/images/video/shape.svg)] bg-cover bg-center bg-no-repeat"></div>
+      {/* Decorative video background removed for minimal aesthetic */}
     </section>
   );
 };

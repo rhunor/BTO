@@ -5,8 +5,8 @@ import Breadcrumb from "@/components/Common/Breadcrumb";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About  | Binary crypto options",
-  description: "This is About Page for Binary crypto Options",
+  title: "About  | GQG Private Investments",
+  description: "This is About Page for GQG Private Investments",
   // other metadata
 };
 
@@ -15,7 +15,7 @@ const AboutPage = () => {
     <>
       <Breadcrumb
         pageName="About"
-        description="Binary Trading Options is a distinctive investment company offering investors access to high-growth investment opportunities in Bitcoin markets and other services. Our company benefits from an extensive network of global clients, supporting over 30 countries worldwide. Here at Binary Trading Options PLC."
+        description="GQG Private Investments is a distinctive investment company offering sophisticated global investment strategies and portfolio management for private clients and institutions. Our company benefits from an extensive network of global partners, serving over 30 countries worldwide. Here at GQG Private Investments."
       />
       <AboutSectionOne />
       <AboutSectionTwo />

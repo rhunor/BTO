@@ -53,9 +53,9 @@ const Contact = () => {
         process.env.VITE_APP_EMAILJS_TEMPLATE_ID || "",
         {
           from_name: formData.name,
-          to_name: "BinaryTradingOptions",
+          to_name: "GQG Private Investments",
           from_email: formData.email,
-          to_email: "elaineedriveres@gmail.com",
+          to_email: "contact@gqgprivateinvest.com",
           message: formData.message,
         },
         process.env.VITE_APP_EMAILJS_PUBLIC_KEY || ""
@@ -79,11 +79,9 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="relative overflow-hidden py-16 md:py-20 lg:py-28 bg-white dark:bg-gray-dark">
+    <section id="contact" className="relative overflow-hidden py-16 md:py-20 lg:py-28 bg-white dark:bg-black">
       {/* Background decorative elements */}
-      <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-gray-50 to-transparent dark:from-gray-900/30 -z-10"></div>
-      <div className="absolute -left-40 top-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl -z-10"></div>
-      <div className="absolute -right-40 bottom-40 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl -z-10"></div>
+      {/* Clean minimal background */}
       
       <div className="container mx-auto px-4">
         <div className="mb-12 text-center">
@@ -97,7 +95,7 @@ const Contact = () => {
         
         <div className="-mx-4 flex flex-wrap items-stretch">
           <div className="w-full px-4 lg:w-7/12 xl:w-8/12">
-            <div className="wow fadeInUp shadow-three dark:bg-gray-dark mb-12 rounded-lg bg-white px-8 py-11 sm:p-[55px] lg:mb-5 lg:px-8 xl:p-[55px] hover:shadow-lg transition-all duration-300">
+            <div className="wow fadeInUp shadow-three mb-12 rounded-lg bg-white px-8 py-11 sm:p-[55px] lg:mb-5 lg:px-8 xl:p-[55px] hover:shadow-lg transition-all duration-300">
               <h3 className="mb-3 text-2xl font-bold text-black dark:text-white sm:text-3xl lg:text-2xl xl:text-3xl">
                 Need Help? Open a Ticket
               </h3>
@@ -132,7 +130,7 @@ const Contact = () => {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="Enter your name"
-                        className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-md border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none focus:border-primary focus:shadow-input dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+                          className="border-stroke w-full rounded-md border bg-white px-6 py-3 text-base text-gray-800 outline-none focus:border-black focus:shadow-input dark:border-transparent dark:bg-gray-900 dark:text-gray-200 dark:focus:border-white"
                       />
                     </div>
                   </div>
@@ -150,7 +148,7 @@ const Contact = () => {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="Enter your email"
-                        className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-md border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none focus:border-primary focus:shadow-input dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+                        className="border-stroke w-full rounded-md border bg-white px-6 py-3 text-base text-gray-800 outline-none focus:border-black focus:shadow-input dark:border-transparent dark:bg-gray-900 dark:text-gray-200 dark:focus:border-white"
                       />
                     </div>
                   </div>
@@ -168,7 +166,7 @@ const Contact = () => {
                         value={formData.message}
                         onChange={handleChange}
                         placeholder="Enter your Message"
-                        className="border-stroke dark:text-body-color-dark dark:shadow-two w-full resize-none rounded-md border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none focus:border-primary focus:shadow-input dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+                        className="border-stroke w-full resize-none rounded-md border bg-white px-6 py-3 text-base text-gray-800 outline-none focus:border-black focus:shadow-input dark:border-transparent dark:bg-gray-900 dark:text-gray-200 dark:focus:border-white"
                       />
                     </div>
                   </div>
@@ -176,7 +174,7 @@ const Contact = () => {
                     <button
                       type="submit"
                       disabled={loading}
-                      className="shadow-submit dark:shadow-submit-dark rounded-md bg-primary px-9 py-4 text-base font-medium text-white transition duration-300 hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden"
+                      className="shadow-submit rounded-md border border-gray-800 bg-white px-9 py-4 text-base font-medium text-black dark:text-white transition duration-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden"
                     >
                       {loading ? (
                         <>
@@ -204,8 +202,8 @@ const Contact = () => {
         
           
           {/* Hours */}
-            <div className="wow fadeInUp bg-white dark:bg-gray-dark rounded-lg p-8 shadow-md hover:shadow-lg transition-all duration-300 text-center mx-auto">
-            <div className="mx-auto mb-8 flex h-[70px] w-[70px] items-center justify-center rounded-full bg-primary bg-opacity-10 text-primary">
+            <div className="wow fadeInUp bg-white dark:bg-gray-900 rounded-lg p-8 shadow-md hover:shadow-lg transition-all duration-300 text-center mx-auto">
+            <div className="mx-auto mb-8 flex h-[70px] w-[70px] items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-black dark:text-white">
               <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M16 29.3333C23.3638 29.3333 29.3333 23.3638 29.3333 16C29.3333 8.63621 23.3638 2.66666 16 2.66666C8.63619 2.66666 2.66666 8.63621 2.66666 16C2.66666 23.3638 8.63619 29.3333 16 29.3333Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               <path d="M16 8V16L21.3333 18.6667" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>

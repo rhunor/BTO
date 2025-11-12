@@ -21,7 +21,7 @@ const ButtonWithPopup: React.FC = () => {
 
   return (
     <div
-  className="rounded-sm bg-primary mb-4 px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80 max-w-[200px]"
+  className="rounded-sm bg-accent mb-4 px-8 py-4 text-base font-semibold text-primary duration-300 ease-in-out hover:bg-accent/80 max-w-[200px]"
 >
   <button style={{ maxWidth: isPopupOpen ? '700px' : '200px' }} onClick={handleOpenPopup}>WithDraw Funds</button>
   {isPopupOpen && <PopupForm onSubmit={handleSubmit} onClose={handleClosePopup} />}

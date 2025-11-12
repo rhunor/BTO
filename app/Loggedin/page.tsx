@@ -9,7 +9,7 @@ const Hero = () => {
     <>
       <section
         id="home"
-        className="relative z-10 overflow-hidden bg-white pb-16 pt-[120px] dark:bg-gray-dark md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px]"
+        className="relative z-10 overflow-hidden bg-white pb-16 pt-[120px] dark:bg-black md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px]"
       >
         <div className="container">
           <div className="-mx-4 flex flex-wrap">
@@ -19,20 +19,20 @@ const Hero = () => {
                 data-wow-delay=".2s"
               >
                 <h1 className="z-index mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
-                  Best Trading Options in The world
+                  Global Quality Growth For Private Clients
                 </h1>
                 <p className="mb-12 text-base !leading-relaxed text-body-color dark:text-body-color-dark sm:text-lg md:text-xl">
-                  Binary Trading Options is a distinctive investment company
-                  offering investors access to high-growth investment
-                  opportunities in Bitcoin markets and other services. Binary
-                  Trading Options is a trading platform which trades using a
-                  wide variety of instruments; among them are CFDs on Forex,
-                  Crypto, Stocks, Commodities, Indices and ETFs.
+                  GQG Private Investments is a distinctive investment company
+                  offering sophisticated wealth management and global investment
+                  opportunities. GQG
+                  is an investment firm which manages portfolios using a
+                  wide variety of instruments; among them are equities, fixed income,
+                  alternative investments, commodities, and emerging markets.
                 </p>
                 <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
                   {/* <Link
                     href="/signup"
-                    className="rounded-sm bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80"
+                    className="rounded-sm bg-accent px-8 py-4 text-base font-semibold text-primary duration-300 ease-in-out hover:bg-accent/80"
                   >
                     Get Started
                   </Link> */}

@@ -4,9 +4,8 @@ import Contact from "@/components/Contact";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact Page | Binary Trading Options",
-  description: "This is Contact Page for Binary Trading Options",
-  // other metadata
+  title: "Contact Page | GQG Private Investments",
+  description: "This is Contact Page for GQG Private Investments",
 };
 
 const ContactPage = () => {
