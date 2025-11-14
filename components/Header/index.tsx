@@ -136,9 +136,14 @@ const Header = () => {
               href="/"
               className={`header-logo block w-full ${sticky ? "py-5 lg:py-2" : "py-8"}`}
             >
-              <p className="logo_text text-xl font-bold text-primary dark:text-accent">
-                GQG Private Investments
-              </p>
+              <Image
+                src="/images/logo/logo.svg"
+                alt="Columbia Threadneedle Private Investments"
+                width={150}
+                height={40}
+                className="dark:invert"
+                priority
+              />
             </Link>
           </div>
           <div className="flex w-full items-center justify-between px-4">

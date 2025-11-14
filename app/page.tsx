@@ -14,7 +14,7 @@ import { Metadata } from "next";
 import Widget from "@/components/Widget";
 
 export const metadata: Metadata = {
-  title: "GQG Private Investments - Global Quality Growth",
+  title: "Columbia Threadneedle Private Investments - Premium Global Investment Management",
   description: "Sophisticated wealth management and global investment strategies for private clients and institutions",
   // other metadata
 };

@@ -22,9 +22,9 @@ const Hero = () => {
                   Global Quality Growth For Private Clients
                 </h1>
                 <p className="mb-12 text-base !leading-relaxed text-body-color dark:text-body-color-dark sm:text-lg md:text-xl">
-                  GQG Private Investments is a distinctive investment company
+                  Columbia Threadneedle Private Investments is a distinctive investment company
                   offering sophisticated wealth management and global investment
-                  opportunities. GQG
+                  opportunities. Columbia Threadneedle
                   is an investment firm which manages portfolios using a
                   wide variety of instruments; among them are equities, fixed income,
                   alternative investments, commodities, and emerging markets.

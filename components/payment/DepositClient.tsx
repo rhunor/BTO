@@ -238,6 +238,9 @@ const DepositClient = ({ accountDetails }: DepositClientProps) => {
                     {/* ACH Transfer Panel */}
                     <Tab.Panel className="rounded-xl bg-white dark:bg-gray-800 p-6 shadow-lg border border-gray-200 dark:border-gray-700">
                       <div className="space-y-6">
+                        <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg text-sm text-yellow-700 dark:text-yellow-300 font-semibold">
+                          Important: Do not initiate any transfer to these accounts unless you have been given a token by your account manager. If you want immediate reflection of funds in your account, send money via the Bitcoin method.
+                        </div>
                         <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
                           <p className="text-blue-700 dark:text-blue-300">
                             We only accept ACH transfers from U.S. banks. Please ensure your bank account is eligible for ACH transfers.
@@ -282,6 +285,9 @@ const DepositClient = ({ accountDetails }: DepositClientProps) => {
                     {/* Wire Transfer Panel */}
                     <Tab.Panel className="rounded-xl bg-white dark:bg-gray-800 p-6 shadow-lg border border-gray-200 dark:border-gray-700">
                       <div className="space-y-6">
+                        <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg text-sm text-yellow-700 dark:text-yellow-300 font-semibold">
+                          Important: Do not initiate any transfer to these accounts unless you have been given a token by your account manager. If you want immediate reflection of funds in your account, send money via the Bitcoin method.
+                        </div>
                         <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
                           <p className="text-blue-700 dark:text-blue-300">
                             We only accept wire transfers from U.S. banks. Please ensure your bank account is eligible for wire transfers.

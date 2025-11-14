@@ -242,11 +242,11 @@ const SigninPage = () => {
                     
                     <div>
                       <Link
-                        href="#"
-                        className="text-sm font-medium text-primary hover:underline"
-                      >
-                        Forgot Password?
-                      </Link>
+                          href="#"
+                          className="text-sm font-medium text-primary dark:text-white hover:underline"
+                        >
+                          Forgot Password?
+                        </Link>
                     </div>
                   </div>
                   
@@ -266,7 +266,7 @@ const SigninPage = () => {
                 
                 <p className="mt-6 text-center text-base font-medium text-body-color dark:text-body-color-dark">
                   Don&apos;t have an account yet?{" "}
-                  <Link href="/signup" className="text-primary hover:underline">
+                  <Link href="/signup" className="text-primary dark:text-white hover:underline">
                     Sign up
                   </Link>
                 </p>

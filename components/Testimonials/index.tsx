@@ -39,7 +39,7 @@ const Testimonials = () => {
       <div className="container">
         <SectionTitle
           title="What Our Clients Say"
-          paragraph="With our team of world-class investment professionals, GQG Private Investments delivers exceptional portfolio management and personalized strategies aligned with your wealth objectives."
+          paragraph="With our team of world-class investment professionals, Columbia Threadneedle Private Investments delivers exceptional portfolio management and personalized strategies aligned with your wealth objectives."
           center
         />
 

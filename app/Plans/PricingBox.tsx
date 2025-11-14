@@ -9,8 +9,9 @@ const PricingBox = (props: {
   packageName: string;
   subtitle: string;
   children: React.ReactNode;
+  blurred?: boolean;
 }) => {
-  const { price, duration, packageName, subtitle, children } = props;
+  const { price, duration, packageName, subtitle, children, blurred } = props;
   // const router = useRouter();
   
   // const handleClick = () => {
@@ -20,7 +21,9 @@ const PricingBox = (props: {
   return (
     <div className="w-full">
       <div
-        className="wow fadeInUp shadow-three dark:bg-gray-dark dark:shadow-two dark:hover:shadow-gray-dark relative z-10 rounded-sm bg-white px-8 py-10 hover:shadow-one"
+        className={`wow fadeInUp shadow-three dark:bg-gray-dark dark:shadow-two dark:hover:shadow-gray-dark relative z-10 rounded-sm bg-white px-8 py-10 hover:shadow-one ${
+          blurred ? "pointer-events-none filter blur-sm opacity-60" : ""
+        }`}
         data-wow-delay=".1s"
       >
         <div className="flex items-center justify-between">
@@ -34,7 +37,12 @@ const PricingBox = (props: {
         </div>
         <p className="mb-7 text-base text-body-color">{subtitle}</p>
         <div className="mb-8 border-b border-body-color border-opacity-10 pb-8 dark:border-white dark:border-opacity-10">
-          <Link href="/Payment" className="flex w-full items-center justify-center rounded-sm bg-primary p-3 text-base font-semibold text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp">
+          <Link
+            href="/Payment"
+            className={`flex w-full items-center justify-center rounded-sm bg-primary p-3 text-base font-semibold text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp ${
+              blurred ? "pointer-events-none opacity-70" : ""
+            }`}
+          >
             Start Investing
           </Link>
         </div>

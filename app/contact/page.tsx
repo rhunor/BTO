@@ -4,8 +4,8 @@ import Contact from "@/components/Contact";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact Page | GQG Private Investments",
-  description: "This is Contact Page for GQG Private Investments",
+  title: "Contact Page | Columbia Threadneedle Private Investments",
+  description: "This is Contact Page for Columbia Threadneedle Private Investments",
 };
 
 const ContactPage = () => {

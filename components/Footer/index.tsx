@@ -4,13 +4,13 @@ import Link from "next/link";
 import { useEffect } from "react";
 
 const Footer = () => {
-  // Crypto widget removed — not used for GQG aesthetic
+  // Crypto widget removed — not used for Columbia Threadneedle aesthetic
 
   const currentYear = new Date().getFullYear();
 
   return (
   <footer className="relative z-10 bg-white dark:bg-black pt-10 border-t border-gray-200/10 dark:border-gray-700">
-      {/* Remove crypto widget - not needed for GQG */}
+      {/* Remove crypto widget - not needed for Columbia Threadneedle */}
 
       <div className="container">
         <div className="-mx-4 flex flex-wrap justify-between">
@@ -26,12 +26,12 @@ const Footer = () => {
               </p>
               
               <p className="mb-4 text-sm leading-relaxed text-gray-700 dark:text-gray-300">
-                Client Support: +1 (800) GQG-INVS
+                Client Support: +1 (800) COLUMBIA-1
               </p>
                
               <div className="flex items-center space-x-4">
                 <a
-                  href="https://linkedin.com/company/gqgpartners"
+                  href="https://linkedin.com/company/columbiathreadneedle"
                   aria-label="LinkedIn"
                   className="flex items-center text-gray-700 dark:text-gray-300 hover:text-accent dark:hover:text-accent transition-colors"
                 >
@@ -46,7 +46,7 @@ const Footer = () => {
                   </svg>
                 </a>
                 <a
-                  href="https://twitter.com/gqgpartners"
+                  href="https://twitter.com/columbiathreadneedle"
                   aria-label="Twitter"
                   className="flex items-center text-gray-200 dark:text-body-color-dark hover:text-accent dark:hover:text-accent transition-colors"
                 >
@@ -141,10 +141,10 @@ const Footer = () => {
                 Contact
               </h2>
               <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
-                Email: contact@gqgprivateinvest.com
+                Email: contact@columbiathreadneedle.com
               </p>
               <p className="text-sm text-gray-700 dark:text-gray-300">
-                Phone: +1 (800) GQG-INVS
+                Phone: +1 (800) COLUMBIA-1
               </p>
             </div>
           </div>
@@ -156,7 +156,7 @@ const Footer = () => {
         {/* Copyright section */}
         <div className="py-6 text-center">
           <p className="text-sm text-gray-700 dark:text-gray-300">
-            © {currentYear} GQG Private Investments. All rights reserved.
+            © {currentYear} Columbia Threadneedle Private Investments. All rights reserved.
           </p>
         </div>
       </div>

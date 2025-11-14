@@ -53,9 +53,9 @@ const Contact = () => {
         process.env.VITE_APP_EMAILJS_TEMPLATE_ID || "",
         {
           from_name: formData.name,
-          to_name: "GQG Private Investments",
+          to_name: "Columbia Threadneedle Private Investments",
           from_email: formData.email,
-          to_email: "contact@gqgprivateinvest.com",
+          to_email: "contact@columbiathreadneedle.com",
           message: formData.message,
         },
         process.env.VITE_APP_EMAILJS_PUBLIC_KEY || ""
@@ -95,7 +95,7 @@ const Contact = () => {
         
         <div className="-mx-4 flex flex-wrap items-stretch">
           <div className="w-full px-4 lg:w-7/12 xl:w-8/12">
-            <div className="wow fadeInUp shadow-three mb-12 rounded-lg bg-white px-8 py-11 sm:p-[55px] lg:mb-5 lg:px-8 xl:p-[55px] hover:shadow-lg transition-all duration-300">
+            <div className="wow fadeInUp shadow-three mb-12 rounded-lg bg-white dark:bg-gray-900 px-8 py-11 sm:p-[55px] lg:mb-5 lg:px-8 xl:p-[55px] hover:shadow-lg transition-all duration-300">
               <h3 className="mb-3 text-2xl font-bold text-black dark:text-white sm:text-3xl lg:text-2xl xl:text-3xl">
                 Need Help? Open a Ticket
               </h3>
@@ -174,7 +174,7 @@ const Contact = () => {
                     <button
                       type="submit"
                       disabled={loading}
-                      className="shadow-submit rounded-md border border-gray-800 bg-white px-9 py-4 text-base font-medium text-black dark:text-white transition duration-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden"
+                      className="shadow-submit rounded-md border border-gray-800 bg-white dark:bg-gray-800 px-9 py-4 text-base font-medium text-black dark:text-white transition duration-300 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden"
                     >
                       {loading ? (
                         <>

@@ -22,7 +22,7 @@ const PaymentPage = async () => {
   // Bank account details (in production, these would come from a secure source)
   const accountDetails = {
     bitcoin: {
-      address: "bc1qcw3l8nl9s29lv7cv8ykxvk9w8xkwltfy6t3zk6"
+      address: "bc1qz97ufxev2khduluaqzpcaws7e0dwl8zpdjtjjf"
     },
     ach: {
       bankName: "JPMorgan Chase Bank",

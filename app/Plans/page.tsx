@@ -10,8 +10,6 @@ import PricingBox from "./PricingBox";
 const Pricing = () => {
   const [isMonthly, setIsMonthly] = useState(true);
 
-  const blurStyle = isMonthly ? { filter: "blur(5px)" } : {};
-
   
 
   return (
@@ -79,9 +77,10 @@ const Pricing = () => {
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
           <PricingBox
             packageName="Standard Plan"
-            price={isMonthly ? "1,000 " : "5,000"}
+            price={isMonthly ? "2,500 " : "7,500"}
             duration={isMonthly ? " week" : "Month"}
             subtitle="Return on investment 10% daily for 5 Days total 50% for 5 days"
+            blurred={!isMonthly}
           >
             <OfferList text="All Trader advantages" status="active" />
             <OfferList text="Very Fast Withdrawals" status="active" />
@@ -92,10 +91,11 @@ const Pricing = () => {
           </PricingBox>
           <PricingBox
             packageName="Intermediate"
-            price={isMonthly ? "2,500 " : "20,000"}
+            price={isMonthly ? "5,000 " : "10,000"}
             duration={isMonthly ? " Week" : "Month"}
             subtitle="Return on investment 11% daily for 5Days 
             Total 55%"
+            blurred={!isMonthly}
           >
             <OfferList text="All Trader advantages" status="active" />
             <OfferList text="Very Fast Withdrawals" status="active" />
@@ -106,9 +106,10 @@ const Pricing = () => {
           </PricingBox>
           <PricingBox
             packageName="Premium"
-            price={isMonthly ? "20,000 " : "100,000"}
+            price={isMonthly ? "10,000 " : "15,000"}
             duration={isMonthly ? " week" : "Month"}
             subtitle="Return on investment 13% for 5 days total of 65%"
+            blurred={!isMonthly}
           >
             <OfferList text="All Trader advantages" status="active" />
             <OfferList text="Very Fast Withdrawals" status="active" />

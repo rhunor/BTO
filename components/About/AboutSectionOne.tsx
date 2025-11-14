@@ -25,7 +25,7 @@ const AboutSectionOne = () => {
             <div className="w-full px-4 lg:w-1/2">
               <SectionTitle
                 title="Global Investment Excellence"
-                paragraph="GQG Private Investments delivers sophisticated portfolio management with expertise across global equities, emerging markets, and alternative investments, designed to grow and preserve your wealth."
+                paragraph="Columbia Threadneedle Private Investments delivers sophisticated portfolio management with expertise across global equities, emerging markets, and alternative investments, designed to grow and preserve your wealth."
                 mb="44px"
               />
 

@@ -3,8 +3,8 @@ import 'swiper/swiper-bundle.css';
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms  | GQG Private Investments",
-  description: "This is Terms and conditions for GQG Private Investments",
+  title: "Terms  | Columbia Threadneedle Private Investments",
+  description: "This is Terms and conditions for Columbia Threadneedle Private Investments",
   // other metadata
 };
 
@@ -32,21 +32,21 @@ const Hero = () => {
                 <p className="dark:text-body-color-dark mb-12 text-base !leading-relaxed text-body-color sm:text-lg md:text-xl">
                 Last Updated: 08.12.23
 
-These Terms constitute a legally binding agreement between you (&quot;you&quot; or &quot;your&quot;) and GQG Private Investments (&quot;GQG Private Investments&quot;, &quot;we&quot;, &quot;our&quot; or &quot;us&quot;). The Terms govern your use of the Investment Services made available to you on or through the Platform or otherwise. Investment Services may be provided by GQG Private Investments or, if specified in these Terms, any Product Terms or any additional terms, by any GQG Affiliate.
+These Terms constitute a legally binding agreement between you (&quot;you&quot; or &quot;your&quot;) and Columbia Threadneedle Private Investments (&quot;Columbia Threadneedle Private Investments&quot;, &quot;we&quot;, &quot;our&quot; or &quot;us&quot;). The Terms govern your use of the Investment Services made available to you on or through the Platform or otherwise. Investment Services may be provided by Columbia Threadneedle Private Investments or, if specified in these Terms, any Product Terms or any additional terms, by any Columbia Threadneedle Affiliate.
 
-By registering for a GQG Private Investments Account, accessing the Platform and/or using the GQG Private Investments Services, you agree that you have read, understood and accepted these Terms, together with any additional documents or terms referred to in these Terms. You acknowledge and agree that you will be bound by and will comply with these Terms, as updated and amended from time to time.
+By registering for a Columbia Threadneedle Private Investments Account, accessing the Platform and/or using the Columbia Threadneedle Private Investments Services, you agree that you have read, understood and accepted these Terms, together with any additional documents or terms referred to in these Terms. You acknowledge and agree that you will be bound by and will comply with these Terms, as updated and amended from time to time.
 
-If you do not understand and accept these Terms in their entirety, you should not register for a GQG Private Investments Account or access or use the Platform or any GQG Private Investments Service.
+If you do not understand and accept these Terms in their entirety, you should not register for a Columbia Threadneedle Private Investments Account or access or use the Platform or any Columbia Threadneedle Private Investments Service.
 
 RISK WARNING
 
 As with any asset, the value of Digital Assets can fluctuate significantly and there is a material risk of economic loss when buying, selling, holding or investing in Digital Assets. You should therefore consider whether trading or holding Digital Assets is suitable for you in light of your financial circumstances.
 
-Further information on the risks associated with using the GQG Private Investments Services is set out in our Risk Warning, which may be updated from time to time. You should read the Risk Warning carefully, however it does not explain all of the risks that may arise, or how such risks relate to your personal circumstances.
+Further information on the risks associated with using the Columbia Threadneedle Private Investments Services is set out in our Risk Warning, which may be updated from time to time. You should read the Risk Warning carefully, however it does not explain all of the risks that may arise, or how such risks relate to your personal circumstances.
 
-It is important that you fully understand the risks involved before making a decision to use the GQG Private Investments Services.
+It is important that you fully understand the risks involved before making a decision to use the Columbia Threadneedle Private Investments Services.
 
-We are not your broker, intermediary, agent or advisor and we have no fiduciary relationship or obligation to you in connection with any Transactions or other activities you undertake when using the GQG Private Investments Services. We do not provide investment or consulting advice of any kind and no communication or information that we provide to you is intended as, or should be construed as, advice of any kind. 
+We are not your broker, intermediary, agent or advisor and we have no fiduciary relationship or obligation to you in connection with any Transactions or other activities you undertake when using the Columbia Threadneedle Private Investments Services. We do not provide investment or consulting advice of any kind and no communication or information that we provide to you is intended as, or should be construed as, advice of any kind. 
 
 It is your responsibility to determine whether any investment, investment strategy or related transaction is appropriate for you according to your personal investment objectives, financial circumstances and risk tolerance and you are responsible for any associated loss or liability. We do not recommend that any Digital Asset should be bought, earned, sold or held by you. Before making the decision to buy, sell or hold any Digital Asset, you should conduct your own due diligence and consult your financial advisor. We are not responsible for the decisions you make to buy, earn, sell or hold Digital Assets based on the information provided by us, including any losses you incur arising from those decisions.
 
@@ -54,29 +54,29 @@ INFORMATION ABOUT OUR AGREEMENT WITH YOU
 
 1.	Introduction
 
-1.1.	About us. The GQG Private Investments group is an ecosystem centred around global wealth management and investment opportunities. The GQG Private Investments group provides clients with sophisticated investment management, institutional-grade custody solutions allowing clients to safeguard their assets and other investment-related services.
+1.1.	About us. The Columbia Threadneedle Private Investments group is an ecosystem centred around global wealth management and investment opportunities. The Columbia Threadneedle Private Investments group provides clients with sophisticated investment management, institutional-grade custody solutions allowing clients to safeguard their assets and other investment-related services.
 
-1.2.	These Terms. By registering to open a GQG Private Investments Account you are entering into a legally binding agreement with us. These Terms will govern your use of the GQG Private Investments Services and tell you who we are, how we will provide the GQG Private Investments Services to you, how these Terms may be changed or terminated, what to do if there is a problem, along with other important information.
+1.2.	These Terms. By registering to open a Columbia Threadneedle Private Investments Account you are entering into a legally binding agreement with us. These Terms will govern your use of the Columbia Threadneedle Private Investments Services and tell you who we are, how we will provide the Columbia Threadneedle Private Investments Services to you, how these Terms may be changed or terminated, what to do if there is a problem, along with other important information.
 
 You must read these Terms, together with the documents referenced in the Terms, carefully and let us know if you do not understand anything.
 
-Where any Local Terms apply to your use of the GQG Private Investments Services, such Local Terms will take precedence over these Terms.
+Where any Local Terms apply to your use of the Columbia Threadneedle Private Investments Services, such Local Terms will take precedence over these Terms.
 
-1.3.	Additional documents. These Terms refer to a number of additional documents which also apply to your use of the GQG Private Investments Services. This includes:
+1.3.	Additional documents. These Terms refer to a number of additional documents which also apply to your use of the Columbia Threadneedle Private Investments Services. This includes:
 
-a.	Our Privacy Notice, which sets out the terms on which we process any personal data we collect about you, or that you provide to us. By using the GQG Private Investments Services, you understand and agree to such processing and you promise that all data provided by you is accurate and up to date. 
+a.	Our Privacy Notice, which sets out the terms on which we process any personal data we collect about you, or that you provide to us. By using the Columbia Threadneedle Private Investments Services, you understand and agree to such processing and you promise that all data provided by you is accurate and up to date. 
 
 b.	Our Risk Warning, which sets out important information on the risks that can arise when buying, selling, holding or investing in Digital Assets. 
 
 c.	The Fee Structure page on our Website. 
 
-d.	Product Terms, which set out additional terms and conditions that will apply to your use of specific GQG Private Investments Services.
+d.	Product Terms, which set out additional terms and conditions that will apply to your use of specific Columbia Threadneedle Private Investments Services.
 
-You acknowledge that you will be bound by, and agree that you will comply with, any relevant additional terms and conditions that apply to your use of the GQG Private Investments Services.
+You acknowledge that you will be bound by, and agree that you will comply with, any relevant additional terms and conditions that apply to your use of the Columbia Threadneedle Private Investments Services.
 
 2.	Eligibility
 
-2.1.	Eligibility criteria. To be eligible to register for a GQG Private Investments Account and use the GQG Private Investments Services, you must:
+2.1.	Eligibility criteria. To be eligible to register for a Columbia Threadneedle Private Investments Account and use the Columbia Threadneedle Private Investments Services, you must:
 
 a.	be an individual, corporation, legal person, entity or other organisation with the full power, authority and capacity to (1) access and use the Binance Services; and (2) enter into and comply with your obligations under these Terms;
 
@@ -84,7 +84,7 @@ b.	if you are an individual, be at least 18 years old;
 
 c.	if you act as an employee or agent of a legal entity, and enter into these Terms on their behalf, you must be duly authorised to act on behalf of and bind such legal entity for the purposes of entering into these Terms;
 
-d.	not have been previously suspended or removed from using GQG Private Investments Services;
+d.	not have been previously suspended or removed from using Columbia Threadneedle Private Investments Services;
 
 e.	not be a Restricted Person; 
 

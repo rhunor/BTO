@@ -1,7 +1,7 @@
 // app/Dashboard/page.tsx — server component
 import { getServerAuthSession } from "@/lib/getServerAuthSession";
 import { redirect } from "next/navigation";
-import DashboardClient from "./DashboardClient";
+import DashboardClientModern from "./DashboardClientModern";
 import { db } from "@/lib/db";
 import { formatCryptoData } from "@/lib/formatCryptoData";
 
@@ -80,5 +80,5 @@ export default async function Dashboard() {
     lastName: session.user.lastName || ''
   };
 
-  return <DashboardClient userData={user} cryptoData={formatted} />;
+  return <DashboardClientModern userData={user} cryptoData={formatted} />;
 }

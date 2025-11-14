@@ -5,8 +5,8 @@ import Breadcrumb from "@/components/Common/Breadcrumb";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About  | GQG Private Investments",
-  description: "This is About Page for GQG Private Investments",
+  title: "About  | Columbia Threadneedle Private Investments",
+  description: "This is About Page for Columbia Threadneedle Private Investments",
   // other metadata
 };
 
@@ -15,7 +15,7 @@ const AboutPage = () => {
     <>
       <Breadcrumb
         pageName="About"
-        description="GQG Private Investments is a distinctive investment company offering sophisticated global investment strategies and portfolio management for private clients and institutions. Our company benefits from an extensive network of global partners, serving over 30 countries worldwide. Here at GQG Private Investments."
+        description="Columbia Threadneedle Private Investments is a distinctive investment company offering sophisticated global investment strategies and portfolio management for private clients and institutions. Our company benefits from an extensive network of global partners, serving over 30 countries worldwide. Here at Columbia Threadneedle Private Investments."
       />
       <AboutSectionOne />
       <AboutSectionTwo />
